@@ -9406,18 +9406,29 @@ function HtmlViewer({
     // while a file-watch token accumulated during inactivity changes
     // filesRefreshKey and therefore still runs this effect on activation.
     if (!workspaceActiveRef.current) return;
-    let cancelled = false;
+    // This viewer's pending file-list read must die with the viewer. Without
+    // an AbortSignal, `fetchProjectFiles` PINS the shared single-flight entry
+    // (`sharedCancellableGet`): a read that stalls (a request queued behind
+    // saturated connections neither resolves nor rejects — every failure path
+    // resolves `[]`) then survives unmount forever, and every later viewer
+    // mount for the same project + workspace identity silently rejoins the
+    // same dead promise. For a workspace-scoped deck that hold keeps
+    // `previewSource` at null, i.e. a bare white stage on every return to the
+    // project. Aborting on cleanup lets a fresh mount issue a fresh read.
+    const controller = new AbortController();
     setProjectFilePathSet(null);
-    void fetchProjectFiles(projectId, { workspaceContext })
+    void fetchProjectFiles(projectId, { workspaceContext, signal: controller.signal })
       .then((files) => {
-        if (!cancelled) setProjectFilePathSet(new Set(files.map((entry) => entry.name)));
+        if (!controller.signal.aborted) {
+          setProjectFilePathSet(new Set(files.map((entry) => entry.name)));
+        }
       })
       .catch(() => {
         // Keep the conservative `null` state: a failed read is not proof that
         // the project has no root-relative assets.
       });
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, [projectId, file.mtime, filesRefreshKey, reloadKey, workspaceContext]);
   const projectRootAssetRefs = useMemo(
@@ -15468,6 +15479,24 @@ function HtmlViewer({
                         // navigation may still be queued behind heavy same-origin
                         // traffic (drafts/all-projects cover iframes) — without
                         // this cover the pane reads as a dead white screen.
+                        <div
+                          className="artifact-preview-first-load"
+                          role="status"
+                          aria-busy="true"
+                          aria-label={t('fileViewer.loading')}
+                          data-testid="artifact-preview-first-load"
+                        >
+                          <CenteredLoader label={t('fileViewer.loading')} />
+                        </div>
+                      ) : null}
+                      {!useUrlLoadPreview && !srcDocTransportContent ? (
+                        // srcDoc-path twin of the cover above: while the
+                        // srcdoc document is still empty — the scoped-asset
+                        // rewrite waiting on the project file list (deck on a
+                        // workspace-scoped project), or a Reload's synchronous
+                        // clear before its re-fetch lands — the active iframe
+                        // is a blank document and the pane reads as a dead
+                        // white screen without this cover.
                         <div
                           className="artifact-preview-first-load"
                           role="status"
