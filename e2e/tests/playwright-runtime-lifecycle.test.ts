@@ -148,4 +148,67 @@ describe('Playwright tools-dev runtime lifecycle', () => {
       }),
     ).rejects.toThrow('Playwright daemon warmup timed out after 20ms');
   });
+
+  test('retries when an ok health response body cannot be drained', async () => {
+    let calls = 0;
+    const fetchRuntime = vi.fn(async () => {
+      calls += 1;
+      if (calls === 1) {
+        return {
+          ok: true,
+          status: 200,
+          statusText: 'OK',
+          arrayBuffer: async () => {
+            throw new Error('body truncated');
+          },
+        } as unknown as Response;
+      }
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+
+    await warmPlaywrightDaemonRuntime('http://127.0.0.1:31001/api/health', {
+      fetch: fetchRuntime,
+      intervalMs: 1,
+      timeoutMs: 1_000,
+    });
+
+    expect(calls).toBe(2);
+  });
+
+  test('drains non-ok health bodies before the next probe', async () => {
+    let calls = 0;
+    let drained503 = false;
+    const fetchRuntime = vi.fn(async () => {
+      calls += 1;
+      if (calls === 1) {
+        return {
+          ok: false,
+          status: 503,
+          statusText: 'Service Unavailable',
+          arrayBuffer: async () => {
+            drained503 = true;
+            return new ArrayBuffer(0);
+          },
+        } as unknown as Response;
+      }
+      return new Response(JSON.stringify({ ok: true }), {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+
+    await warmPlaywrightDaemonRuntime('http://127.0.0.1:31001/api/health', {
+      fetch: fetchRuntime,
+      intervalMs: 1,
+      timeoutMs: 1_000,
+    });
+
+    expect(calls).toBe(2);
+    expect(drained503).toBe(true);
+  });
 });

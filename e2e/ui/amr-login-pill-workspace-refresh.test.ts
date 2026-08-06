@@ -160,8 +160,11 @@ async function wireVelaMocks(page: Page, state: VelaMockState) {
       json: { context: state.loggedIn ? MOCK_PERSONAL_WORKSPACE : null },
     });
   });
+  // Exact pathname only (query params allowed). Nested routes such as
+  // /api/workspace/billing/checkout must fall through, not get the summary mock.
   await page.route('**/api/workspace/billing**', async (route) => {
-    if (route.request().method() !== 'GET') {
+    const pathname = new URL(route.request().url()).pathname;
+    if (pathname !== '/api/workspace/billing' || route.request().method() !== 'GET') {
       await route.fallback();
       return;
     }

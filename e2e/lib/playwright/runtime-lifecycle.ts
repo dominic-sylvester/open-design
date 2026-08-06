@@ -62,9 +62,12 @@ export async function warmPlaywrightDaemonRuntime(
       });
       if (response.ok) {
         // Drain the body so keep-alive sockets stay reusable under Node fetch.
-        await response.arrayBuffer().catch(() => undefined);
+        // Body-drain failures must retry — a truncated 2xx is not readiness.
+        await response.arrayBuffer();
         return;
       }
+      // Consume non-OK bodies so repeated 503 probes do not leave streams open.
+      await response.arrayBuffer().catch(() => undefined);
       lastError = new Error(
         `Playwright daemon warmup failed with ${response.status} ${response.statusText}`,
       );
