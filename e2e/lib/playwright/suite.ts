@@ -5,6 +5,7 @@ import { expect, test as base } from '@playwright/test';
 
 import {
   PLAYWRIGHT_TOOLS_DEV_FIXTURE_TIMEOUT_MS,
+  warmPlaywrightDaemonRuntime,
   warmPlaywrightWebRuntime,
 } from './runtime-lifecycle.ts';
 import { resolvePlaywrightSlotNamespace } from './runtime-identity.ts';
@@ -42,6 +43,7 @@ export const test = base.extend<TestFixtures, WorkerFixtures>({
       try {
         await toolsDev.startWeb();
         await warmPlaywrightWebRuntime(toolsDev.url.web('/'));
+        await warmPlaywrightDaemonRuntime(toolsDev.url.daemon('/api/health'));
         await use(toolsDev);
       } catch (error) {
         useError = error;

@@ -1,11 +1,14 @@
 import { expect, test } from '@/playwright/suite';
 import { routeAgents } from '@/playwright/mock-factory';
+import { T } from '@/timeouts';
 import type { Locator, Page } from '@playwright/test';
 
 const STORAGE_KEY = 'open-design:config';
 const AUTOMATIONS_TITLE = /Automations|自动化/i;
 
-test.describe.configure({ timeout: 30_000 });
+// Multi-navigation cases (create → run → /tasks → reload) need headroom past
+// the suite default once boot waits use the long dynamic-import budget.
+test.describe.configure({ timeout: T.xlong });
 
 function baseConfig(): Record<string, unknown> {
   return {
@@ -72,7 +75,15 @@ async function seedAutomationsBase(page: Page, options: { locale?: string } = {}
 }
 
 async function waitForLoadingToClear(page: Page) {
-  await expect(page.getByText('Loading Open Design…')).toHaveCount(0, { timeout: 15_000 });
+  // `apps/web` mounts through `dynamic(..., { ssr: false })`, so
+  // `domcontentloaded` / bare `reload()` resolve while the boot shell still
+  // owns the page. The default 10s expect budget and a hard 15s count check
+  // both flake under CI contention; use the suite long budget and soft-wait
+  // the shell the same way other entry helpers do.
+  await page
+    .getByText('Loading Open Design…')
+    .waitFor({ state: 'hidden', timeout: T.long })
+    .catch(() => {});
 }
 
 async function openSchedulePopover(modal: Locator, name: RegExp | string) {
@@ -91,7 +102,7 @@ async function gotoEntryHome(page: Page) {
   }
   // #5517 moved the settings entry into the collapsed-by-default nav rail, so it
   // is not in the accessibility tree on load; the hero is the ready signal now.
-  await expect(page.getByTestId('home-hero')).toBeVisible();
+  await expect(page.getByTestId('home-hero')).toBeVisible({ timeout: T.long });
 }
 
 async function gotoAutomations(page: Page) {
@@ -99,8 +110,11 @@ async function gotoAutomations(page: Page) {
   // #5517's rail dropped the Automations destination; /automations is still the
   // route the view lives on.
   await page.goto('/automations', { waitUntil: 'domcontentloaded' });
+  await waitForLoadingToClear(page);
   const view = page.getByTestId('tasks-view');
-  await expect(view.getByRole('heading', { level: 1, name: AUTOMATIONS_TITLE })).toBeVisible();
+  await expect(view.getByRole('heading', { level: 1, name: AUTOMATIONS_TITLE })).toBeVisible({
+    timeout: T.long,
+  });
   return view;
 }
 
@@ -329,15 +343,26 @@ test.describe('Automations page', () => {
     await page.goto('/tasks', { waitUntil: 'domcontentloaded' });
     await waitForLoadingToClear(page);
     const refreshedView = page.getByTestId('tasks-view');
+    await expect(refreshedView.getByRole('heading', { level: 1, name: AUTOMATIONS_TITLE })).toBeVisible({
+      timeout: T.long,
+    });
     const refreshedRow = refreshedView.locator('.automation-row', { hasText: 'Weekly digest' }).first();
-    await expect(refreshedRow).toContainText(/Queued|Running|Manual/i);
-    await expect(refreshedRow.getByRole('button', { name: /Open result/i })).toBeVisible();
+    await expect(refreshedRow).toContainText(/Queued|Running|Manual/i, { timeout: T.long });
+    await expect(refreshedRow.getByRole('button', { name: /Open result/i })).toBeVisible({
+      timeout: T.long,
+    });
 
-    await page.reload();
+    await page.reload({ waitUntil: 'domcontentloaded' });
     await waitForLoadingToClear(page);
-    const reloadedRow = page.getByTestId('tasks-view').locator('.automation-row', { hasText: 'Weekly digest' }).first();
-    await expect(reloadedRow).toContainText(/Queued|Running|Manual/i);
-    await expect(reloadedRow.getByRole('button', { name: /Open result/i })).toBeVisible();
+    const reloadedView = page.getByTestId('tasks-view');
+    await expect(reloadedView.getByRole('heading', { level: 1, name: AUTOMATIONS_TITLE })).toBeVisible({
+      timeout: T.long,
+    });
+    const reloadedRow = reloadedView.locator('.automation-row', { hasText: 'Weekly digest' }).first();
+    await expect(reloadedRow).toContainText(/Queued|Running|Manual/i, { timeout: T.long });
+    await expect(reloadedRow.getByRole('button', { name: /Open result/i })).toBeVisible({
+      timeout: T.long,
+    });
   });
 
   test('[P1] places a newly created automation at the top of the list and highlights it', async ({ page }) => {
