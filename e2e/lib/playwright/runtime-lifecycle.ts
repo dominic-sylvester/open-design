@@ -1,6 +1,8 @@
-// Reserve an extra minute beyond start + warmup + stop command budgets so
+// Reserve an extra minute beyond start + web/daemon warmup + stop budgets so
 // Playwright can finish fixture bookkeeping without cutting teardown short.
-export const PLAYWRIGHT_TOOLS_DEV_FIXTURE_TIMEOUT_MS = 390_000;
+// Budgets: 180s start + 120s web warmup + 60s daemon warmup + 30s stop + 60s
+// bookkeeping = 450s.
+export const PLAYWRIGHT_TOOLS_DEV_FIXTURE_TIMEOUT_MS = 450_000;
 export const PLAYWRIGHT_WEB_WARMUP_TIMEOUT_MS = 120_000;
 export const PLAYWRIGHT_DAEMON_WARMUP_TIMEOUT_MS = 60_000;
 
