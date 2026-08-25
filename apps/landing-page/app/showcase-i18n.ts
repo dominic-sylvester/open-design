@@ -254,8 +254,8 @@ const en: ShowcaseCopy = {
       blurb: '“Bring any model. Run any agent.” The 0.9.0 release film, authored in Hyperframes.',
     },
     'cloud-fable5': {
-      title: 'OpenDesign Cloud × Claude Fable 5',
-      blurb: 'Partnership announcement film for Claude Fable 5 on OpenDesign Cloud, generated with Seedance 2.0.',
+      title: 'OpenDesign × Claude Fable 5',
+      blurb: 'Partnership announcement film for Claude Fable 5 on OpenDesign, generated with Seedance 2.0.',
     },
     'event-shanghai': {
       title: 'Shanghai meetup teaser',
@@ -356,8 +356,8 @@ const zhCN: DeepPartial<ShowcaseCopy> = {
       blurb: '「Bring any model. Run any agent.」0.9.0 版本发布片，用 Hyperframes 制作。',
     },
     'cloud-fable5': {
-      title: 'OpenDesign Cloud × Claude Fable 5',
-      blurb: 'Claude Fable 5 登陆 OpenDesign Cloud 的合作宣传片，用 Seedance 2.0 生成。',
+      title: 'OpenDesign × Claude Fable 5',
+      blurb: 'Claude Fable 5 登陆 OpenDesign 的合作宣传片，用 Seedance 2.0 生成。',
     },
     'event-shanghai': {
       title: '上海线下活动预告',

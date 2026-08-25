@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const de: OpenDesignPluginCopy = {
   metadata: {
-    title: 'OpenDesign für Codex/ChatGPT | OpenDesign Cloud Plugin installieren',
+    title: 'OpenDesign für Codex/ChatGPT | OpenDesign Plugin installieren',
     description:
-      'Installieren Sie OpenDesign Cloud in Codex/ChatGPT und erstellen Sie Websites, Präsentationen, Prototypen und Designsysteme direkt in derselben Aufgabe.',
+      'Installieren Sie OpenDesign in Codex/ChatGPT und erstellen Sie Websites, Präsentationen, Prototypen und Designsysteme direkt in derselben Aufgabe.',
     keywords:
-      'OpenDesign Codex Plugin, ChatGPT Desktop Plugin, Codex Plugin installieren, OpenDesign Cloud, Codex Design Plugin, Codex MCP',
+      'OpenDesign Codex Plugin, ChatGPT Desktop Plugin, Codex Plugin installieren, OpenDesign, Codex Design Plugin, Codex MCP',
   },
   hero: {
     title: 'OpenDesign Plugin für Codex/ChatGPT',
     leadBefore: 'Geben Sie die folgende Anweisung in eine beliebige Aufgabe in Ihrer',
     chatgptLabel: 'ChatGPT-Desktop-App ein',
-    installAria: 'OpenDesign Cloud in Codex/ChatGPT installieren',
+    installAria: 'OpenDesign in Codex/ChatGPT installieren',
     copy: 'Kopieren',
     github: 'Installationsanleitung auf GitHub öffnen ↗',
   },
@@ -87,7 +87,7 @@ const de: OpenDesignPluginCopy = {
         label: 'Interaktive Story',
       },
     ],
-    promptListAria: 'Prompt-Beispiele für OpenDesign Cloud',
+    promptListAria: 'Prompt-Beispiele für OpenDesign',
     prompts: [
       { title: 'Website' },
       { title: 'Präsentationen' },
@@ -117,7 +117,7 @@ const de: OpenDesignPluginCopy = {
       {
         q: 'Warum benötige ich eine neue Codex-Aufgabe?',
         a:
-          'Codex lädt Plugin- und MCP-Funktionen beim Start einer Aufgabe. Eine neue Aufgabe erkennt das soeben installierte OpenDesign Cloud Plugin.',
+          'Codex lädt Plugin- und MCP-Funktionen beim Start einer Aufgabe. Eine neue Aufgabe erkennt das soeben installierte OpenDesign Plugin.',
       },
       {
         q: 'Muss das OpenDesign Fenster geöffnet bleiben?',
@@ -127,7 +127,7 @@ const de: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'OpenDesign Cloud in Codex/ChatGPT installieren',
+    aria: 'OpenDesign in Codex/ChatGPT installieren',
     title: 'OpenDesign in Ihrer nächsten Codex/ChatGPT-Aufgabe nutzen.',
     bodyBeforeMention: 'Installieren Sie das Plugin, verbinden Sie das lokale MCP und rufen Sie',
     bodyAfterMention: 'auf.',
@@ -141,8 +141,8 @@ const de: OpenDesignPluginCopy = {
     failed: 'Auswählen und kopieren',
   },
   schema: {
-    pageName: 'OpenDesign Cloud Plugin für Codex/ChatGPT',
-    applicationName: 'OpenDesign Cloud Plugin für Codex/ChatGPT',
+    pageName: 'OpenDesign Plugin für Codex/ChatGPT',
+    applicationName: 'OpenDesign Plugin für Codex/ChatGPT',
   },
 };
 

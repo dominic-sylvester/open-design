@@ -104,17 +104,17 @@ export type OpenDesignPluginCopy = {
 
 export const OPEN_DESIGN_PLUGIN_EN: OpenDesignPluginCopy = {
   metadata: {
-    title: 'OpenDesign for Codex/ChatGPT | Install the OpenDesign Cloud Plugin',
+    title: 'OpenDesign for Codex/ChatGPT | Install the OpenDesign Plugin',
     description:
-      'Install OpenDesign Cloud in Codex/ChatGPT and create websites, slides, prototypes and design systems from the same task.',
+      'Install OpenDesign in Codex/ChatGPT and create websites, slides, prototypes and design systems from the same task.',
     keywords:
-      'OpenDesign Codex plugin, ChatGPT desktop plugin, Codex plugin install, OpenDesign Cloud, Codex design plugin, Codex MCP',
+      'OpenDesign Codex plugin, ChatGPT desktop plugin, Codex plugin install, OpenDesign, Codex design plugin, Codex MCP',
   },
   hero: {
     title: 'OpenDesign plugin for Codex/ChatGPT',
     leadBefore: 'Enter the instruction below into any task in your',
     chatgptLabel: 'ChatGPT desktop app',
-    installAria: 'Install OpenDesign Cloud in Codex/ChatGPT',
+    installAria: 'Install OpenDesign in Codex/ChatGPT',
     copy: 'Copy',
     github: 'View installation guide on GitHub ↗',
   },
@@ -191,7 +191,7 @@ export const OPEN_DESIGN_PLUGIN_EN: OpenDesignPluginCopy = {
         label: 'Interactive story',
       },
     ],
-    promptListAria: 'OpenDesign Cloud prompt examples',
+    promptListAria: 'OpenDesign prompt examples',
     prompts: [
       { title: 'Website' },
       { title: 'Slides' },
@@ -221,7 +221,7 @@ export const OPEN_DESIGN_PLUGIN_EN: OpenDesignPluginCopy = {
       {
         q: 'Why do I need a new Codex task?',
         a:
-          'Codex loads plugin and MCP capabilities when a task starts. A fresh task picks up the newly installed OpenDesign Cloud plugin.',
+          'Codex loads plugin and MCP capabilities when a task starts. A fresh task picks up the newly installed OpenDesign plugin.',
       },
       {
         q: 'Does the OpenDesign window need to stay open?',
@@ -231,7 +231,7 @@ export const OPEN_DESIGN_PLUGIN_EN: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'Install OpenDesign Cloud in Codex/ChatGPT',
+    aria: 'Install OpenDesign in Codex/ChatGPT',
     title: 'Bring OpenDesign into your next Codex/ChatGPT task.',
     bodyBeforeMention: 'Install the plugin, connect the local MCP and invoke',
     bodyAfterMention: '.',
@@ -245,8 +245,8 @@ export const OPEN_DESIGN_PLUGIN_EN: OpenDesignPluginCopy = {
     failed: 'Select and copy',
   },
   schema: {
-    pageName: 'OpenDesign Cloud Plugin for Codex/ChatGPT',
-    applicationName: 'OpenDesign Cloud Plugin for Codex/ChatGPT',
+    pageName: 'OpenDesign Plugin for Codex/ChatGPT',
+    applicationName: 'OpenDesign Plugin for Codex/ChatGPT',
   },
 };
 

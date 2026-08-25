@@ -226,7 +226,7 @@ export interface HeaderCopy {
   starAria: string;
   starTitle: string;
   starPrefix: string;
-  /** OpenDesign Cloud account entry — see header-enhancer.astro. */
+  /** Header community entry — see header-enhancer.astro. */
   signIn: string;
   /** aria-label for the signed-in avatar / account menu trigger. */
   accountAria: string;

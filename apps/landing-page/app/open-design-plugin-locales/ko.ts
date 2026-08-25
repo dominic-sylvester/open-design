@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const ko: OpenDesignPluginCopy = {
   metadata: {
-    title: 'Codex/ChatGPT용 OpenDesign | OpenDesign Cloud 플러그인 설치',
+    title: 'Codex/ChatGPT용 OpenDesign | OpenDesign 플러그인 설치',
     description:
-      'Codex/ChatGPT에 OpenDesign Cloud를 설치하고 같은 작업 안에서 웹사이트, 슬라이드, 프로토타입, 디자인 시스템을 제작하세요.',
+      'Codex/ChatGPT에 OpenDesign를 설치하고 같은 작업 안에서 웹사이트, 슬라이드, 프로토타입, 디자인 시스템을 제작하세요.',
     keywords:
-      'OpenDesign Codex 플러그인, ChatGPT 데스크톱 플러그인, Codex 플러그인 설치, OpenDesign Cloud, Codex 디자인 플러그인, Codex MCP',
+      'OpenDesign Codex 플러그인, ChatGPT 데스크톱 플러그인, Codex 플러그인 설치, OpenDesign, Codex 디자인 플러그인, Codex MCP',
   },
   hero: {
     title: 'Codex/ChatGPT용 OpenDesign 플러그인',
     leadBefore: '아래 안내 문구를 원하는 작업의',
     chatgptLabel: 'ChatGPT 데스크톱 앱에 입력하세요',
-    installAria: 'Codex/ChatGPT에 OpenDesign Cloud 설치',
+    installAria: 'Codex/ChatGPT에 OpenDesign 설치',
     copy: '복사',
     github: 'GitHub에서 설치 가이드 보기 ↗',
   },
@@ -87,7 +87,7 @@ const ko: OpenDesignPluginCopy = {
         label: '인터랙티브 스토리',
       },
     ],
-    promptListAria: 'OpenDesign Cloud 프롬프트 예시',
+    promptListAria: 'OpenDesign 프롬프트 예시',
     prompts: [
       { title: '웹사이트' },
       { title: '슬라이드' },
@@ -117,7 +117,7 @@ const ko: OpenDesignPluginCopy = {
       {
         q: '왜 새 Codex 작업을 시작해야 하나요?',
         a:
-          'Codex는 작업을 시작할 때 플러그인과 MCP 기능을 불러옵니다. 새 작업을 열어야 방금 설치한 OpenDesign Cloud 플러그인을 사용할 수 있습니다.',
+          'Codex는 작업을 시작할 때 플러그인과 MCP 기능을 불러옵니다. 새 작업을 열어야 방금 설치한 OpenDesign 플러그인을 사용할 수 있습니다.',
       },
       {
         q: 'OpenDesign 창을 계속 열어 두어야 하나요?',
@@ -127,7 +127,7 @@ const ko: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'Codex/ChatGPT에 OpenDesign Cloud 설치',
+    aria: 'Codex/ChatGPT에 OpenDesign 설치',
     title: '다음 Codex/ChatGPT 작업에 OpenDesign을 더하세요.',
     bodyBeforeMention: '플러그인을 설치하고 로컬 MCP를 연결한 뒤',
     bodyAfterMention: '을 호출하세요.',
@@ -141,8 +141,8 @@ const ko: OpenDesignPluginCopy = {
     failed: '선택하여 복사',
   },
   schema: {
-    pageName: 'Codex/ChatGPT용 OpenDesign Cloud 플러그인',
-    applicationName: 'Codex/ChatGPT용 OpenDesign Cloud 플러그인',
+    pageName: 'Codex/ChatGPT용 OpenDesign 플러그인',
+    applicationName: 'Codex/ChatGPT용 OpenDesign 플러그인',
   },
 };
 

@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const zh: OpenDesignPluginCopy = {
   metadata: {
-    title: 'OpenDesign for Codex/ChatGPT | 安装 OpenDesign Cloud 插件',
+    title: 'OpenDesign for Codex/ChatGPT | 安装 OpenDesign 插件',
     description:
-      '在 Codex/ChatGPT 中安装 OpenDesign Cloud，直接在同一个任务里创建网站、幻灯片、原型和设计系统。',
+      '在 Codex/ChatGPT 中安装 OpenDesign，直接在同一个任务里创建网站、幻灯片、原型和设计系统。',
     keywords:
-      'OpenDesign Codex 插件, ChatGPT 桌面插件, Codex 插件安装, OpenDesign Cloud, Codex 设计插件, Codex MCP',
+      'OpenDesign Codex 插件, ChatGPT 桌面插件, Codex 插件安装, OpenDesign, Codex 设计插件, Codex MCP',
   },
   hero: {
     title: '面向 Codex/ChatGPT 的 OpenDesign 插件',
     leadBefore: '将下方指令输入你的',
     chatgptLabel: 'ChatGPT 桌面应用中的任意任务',
-    installAria: '在 Codex/ChatGPT 中安装 OpenDesign Cloud',
+    installAria: '在 Codex/ChatGPT 中安装 OpenDesign',
     copy: '复制',
     github: '在 GitHub 查看安装指南 ↗',
   },
@@ -87,7 +87,7 @@ const zh: OpenDesignPluginCopy = {
         label: '互动叙事',
       },
     ],
-    promptListAria: 'OpenDesign Cloud 提示词示例',
+    promptListAria: 'OpenDesign 提示词示例',
     prompts: [
       { title: '网站' },
       { title: '幻灯片' },
@@ -117,7 +117,7 @@ const zh: OpenDesignPluginCopy = {
       {
         q: '为什么需要新建一个 Codex 任务？',
         a:
-          'Codex 会在任务启动时加载插件和 MCP 能力。新建任务后，刚刚安装的 OpenDesign Cloud 插件就会生效。',
+          'Codex 会在任务启动时加载插件和 MCP 能力。新建任务后，刚刚安装的 OpenDesign 插件就会生效。',
       },
       {
         q: '需要一直打开 OpenDesign 窗口吗？',
@@ -127,7 +127,7 @@ const zh: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: '在 Codex/ChatGPT 中安装 OpenDesign Cloud',
+    aria: '在 Codex/ChatGPT 中安装 OpenDesign',
     title: '在下一个 Codex/ChatGPT 任务中使用 OpenDesign。',
     bodyBeforeMention: '安装插件、连接本地 MCP，然后调用',
     bodyAfterMention: '即可开始创作。',
@@ -141,8 +141,8 @@ const zh: OpenDesignPluginCopy = {
     failed: '请选择并复制',
   },
   schema: {
-    pageName: '面向 Codex/ChatGPT 的 OpenDesign Cloud 插件',
-    applicationName: '面向 Codex/ChatGPT 的 OpenDesign Cloud 插件',
+    pageName: '面向 Codex/ChatGPT 的 OpenDesign 插件',
+    applicationName: '面向 Codex/ChatGPT 的 OpenDesign 插件',
   },
 };
 
