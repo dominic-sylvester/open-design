@@ -1,12 +1,9 @@
 /*
- * Shared lead-form copy for the Workspace-for-Teams contact-sales surfaces.
+ * Copy for the Workspace-for-Teams enterprise interest page.
  *
- * Extracted from app/pages/enterprise/index.astro so the /enterprise page and
- * the /pricing "Request team access" modal render the exact same form (fields,
- * required rules, options, copy) from one source of truth. The rendering +
- * behavior live in app/_components/enterprise-lead-form.astro; this module is
- * content only. All authored locales below (plus the retired zh-tw) stay in
- * lockstep; anything else falls back to en.
+ * Extracted from app/pages/enterprise/index.astro so localized pitch copy stays
+ * in one source of truth. All authored locales below (plus the retired zh-tw)
+ * stay in lockstep; anything else falls back to en.
  */
 
 export type SelectOption = { value: string; label: string };

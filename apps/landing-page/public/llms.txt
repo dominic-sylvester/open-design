@@ -20,8 +20,7 @@ It is the canonical reference for:
   design systems, and design-to-code / Figma-to-code
 
 OpenDesign is free and open-source (Apache-2.0). The desktop app is BYOK —
-you pay only your own model API. Optional paid tiers add bundled model credits
-and hosted cloud deploys. See /pricing.md and https://open-design.ai/pricing/.
+you pay only your own model API keys.
 
 Brand names "OpenDesign", "Open Design", "open-design", "opendesign",
 "Open Design AI", and "OD" all refer to this same project, hosted at
@@ -33,8 +32,6 @@ https://open-design.ai/ and developed at github.com/nexu-io/open-design.
 - Official source page: https://open-design.ai/official/
 - Quickstart: https://open-design.ai/quickstart/
 - Download (macOS & Windows): https://open-design.ai/download/
-- Pricing: https://open-design.ai/pricing/
-- Machine-readable pricing: https://open-design.ai/pricing.md
 - FAQ: https://open-design.ai/faq/
 - Enterprise: https://open-design.ai/enterprise/
 - Agents (supported coding agents): https://open-design.ai/agents/

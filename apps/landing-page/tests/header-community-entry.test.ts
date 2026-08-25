@@ -23,7 +23,7 @@ test('header action cluster carries icon-only community + X links, no text pill'
   const zh = render('zh');
   assert.match(zh, /class="nav-social-link"[^>]*href="https:\/\/discord\.gg\/[^"]+"[^>]*aria-label="加入 Discord"/);
   assert.match(zh, /class="nav-community-qr-card"/);
-  assert.match(zh, /群内每周发放 Credits/);
+  assert.match(zh, /与设计者交流/);
   assert.doesNotMatch(zh, /feishu|kokiai|nav-community-qr-img/);
   assert.match(zh, /aria-label="X"/);
 
@@ -35,7 +35,7 @@ test('header action cluster carries icon-only community + X links, no text pill'
   assert.match(en, /class="nav-social-link"[^>]*href="https:\/\/discord\.gg\/[^"]+"[^>]*aria-label="Join Discord"/);
   assert.match(en, /nav-community-qr-card/);
   assert.doesNotMatch(en, /nav-community-qr-img/);
-  assert.match(en, /Weekly credit drops inside/);
+  assert.match(en, /Chat with builders/);
 
   assert.doesNotMatch(headerSource, /benefits/);
   assert.match(stylesSource, /\.nav-community-entry:hover \.nav-community-qr-card/);
@@ -72,10 +72,16 @@ test('header row stays intact from phones to desktop', async (t) => {
   ).replace('/logo-lockup.svg', logo);
 
   const localChrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-  const browser = await chromium.launch({
-    headless: true,
-    ...(existsSync(localChrome) ? { executablePath: localChrome } : {}),
-  });
+  let browser;
+  try {
+    browser = await chromium.launch({
+      headless: true,
+      ...(existsSync(localChrome) ? { executablePath: localChrome } : {}),
+    });
+  } catch {
+    t.skip('Playwright chromium is not installed in this environment');
+    return;
+  }
   t.after(() => browser.close());
   const page = await (await browser.newContext({ viewport: { width: 1367, height: 900 } })).newPage();
   await page.setContent(

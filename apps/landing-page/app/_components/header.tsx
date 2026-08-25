@@ -24,17 +24,6 @@ const REPO_DISCUSSIONS = `${REPO}/discussions`;
 const DISCORD = 'https://discord.gg/mHAjSMV6gz';
 const X_PROFILE = 'https://x.com/OpenDesignHQ';
 
-// Pricing can opt into the existing Cloud account menu without restoring it
-// across the marketing site. The enhancer reads these values from data-*
-// because its inline script cannot access import.meta.env at runtime.
-const env = (import.meta.env ?? {}) as Record<string, string | undefined>;
-const CLOUD_API_BASE =
-  env.PUBLIC_CLOUD_API_BASE ?? env.PUBLIC_AMR_API_BASE ?? 'https://amr-api.open-design.ai';
-const CLOUD_CONSOLE_URL =
-  env.PUBLIC_CLOUD_CONSOLE_URL ??
-  env.PUBLIC_AMR_CONSOLE_URL ??
-  'https://open-design.ai/cloud/dashboard?source=open_design';
-
 // Solution → Use cases / Roles. Hrefs mirror upstream main's header 1:1 and
 // pair positionally with the localized `useCaseItems` / `roleItems` tuples.
 const USE_CASE_HREFS = [
@@ -114,7 +103,6 @@ export interface HeaderProps {
     | 'solution'
     | 'agent'
     | 'plugins'
-    | 'pricing'
     | 'library'
     | 'skills'
     | 'systems'
@@ -163,8 +151,6 @@ export interface HeaderProps {
   copy?: HeaderCopy;
   /** Brand link target — `#top` on the homepage, `/` on sub-pages. */
   brandHref?: string;
-  /** Render the signed-in Cloud avatar/menu. Disabled on marketing pages by default. */
-  showAccount?: boolean;
 }
 
 export function Header({
@@ -174,7 +160,6 @@ export function Header({
   locale = DEFAULT_LOCALE,
   copy,
   brandHref = '#top',
-  showAccount = false,
 }: HeaderProps) {
   const headerCopy = copy ?? getCommonCopy(locale).header;
   const href = (path: string) => localizedHref(path, locale);
@@ -184,13 +169,12 @@ export function Header({
   // (the zh / zh-tw Feishu group entry was retired in favour of one community).
   const communityLabel =
     locale === 'zh' || locale === 'zh-tw' ? '加入 Discord' : 'Join Discord';
-  // Hover card copy: the community hands out credits, say so right at the entry.
   const communityPerk =
     locale === 'zh'
-      ? '群内每周发放 Credits'
+      ? '与设计者交流'
       : locale === 'zh-tw'
-        ? '群內每週發放 Credits'
-        : 'Weekly credit drops inside';
+        ? '與設計者交流'
+        : 'Chat with builders';
 
   return (
     <header className='nav' data-od-id='nav'>
@@ -363,19 +347,6 @@ export function Header({
                     another <li className='nav-mega-col'> with its own head +
                     list; the panel widens automatically. */}
               </ul>
-            </li>
-
-            {/* Pricing — localized page. The plan numbers it renders stay in
-                sync with the vela commerce app at runtime (see
-                app/_lib/pricing.ts); the card copy mirrors vela's subscription
-                modal (see app/_lib/pricing-content.ts). */}
-            <li>
-              <a
-                href={href('/pricing/')}
-                className={active === 'pricing' ? 'is-active' : undefined}
-              >
-                {productMenuCopy.pricing}
-              </a>
             </li>
 
             {/* Resources — a category label (Blog / Tutorials / Compare), not
@@ -604,53 +575,6 @@ export function Header({
           >
             {headerCopy.download}
           </a>
-          {showAccount ? (
-            <div
-              className='nav-account'
-              data-amr-account
-              data-amr-api={CLOUD_API_BASE}
-              data-amr-console={CLOUD_CONSOLE_URL}
-            >
-              <details className='nav-account-menu' data-amr-menu hidden>
-                <summary
-                  className='nav-account-trigger'
-                  aria-label={headerCopy.accountAria}
-                  title={headerCopy.accountAria}
-                >
-                  <img className='nav-avatar' alt='' data-amr-avatar />
-                  <span
-                    className='nav-avatar-fallback'
-                    data-amr-avatar-fallback
-                    aria-hidden='true'
-                  />
-                </summary>
-                <div className='nav-account-dropdown' role='menu'>
-                  <div className='nav-account-id'>
-                    <span className='nav-account-name' data-amr-name />
-                    <span className='nav-account-email' data-amr-email />
-                  </div>
-                  <a
-                    className='nav-account-item'
-                    role='menuitem'
-                    href={CLOUD_CONSOLE_URL}
-                    target='_blank'
-                    rel='noreferrer noopener'
-                    data-amr-console-link
-                  >
-                    {headerCopy.menuConsole}
-                  </a>
-                  <button
-                    type='button'
-                    className='nav-account-item nav-account-signout'
-                    role='menuitem'
-                    data-amr-signout
-                  >
-                    {headerCopy.menuSignOut}
-                  </button>
-                </div>
-              </details>
-            </div>
-          ) : null}
         </div>
       </div>
       {/*

@@ -63,11 +63,6 @@
 /llms.txt
   Cache-Control: public, max-age=3600
 
-# Public pricing contract consumed by /pricing/ client-side reconciliation.
-/pricing/plans.json
-  Content-Type: application/json; charset=utf-8
-  Cache-Control: public, max-age=0, s-maxage=60, must-revalidate
-
 # Static assets in public/. Filenames don't carry a content hash, so we use
 # a moderate browser TTL. Production deploy purges the open-design.ai host.
 /favicon.png
@@ -95,8 +90,4 @@
 
 # Newsletter subscribe function writes to KV — must not be cached.
 /subscribe
-  Cache-Control: no-store
-
-# Contact-sales (Workspace-for-Teams leads) function writes to KV — no caching.
-/contact-sales
   Cache-Control: no-store

@@ -95,8 +95,8 @@ function runDownloadDirectAssetGate(
   return { hero, attributes, notice };
 }
 
-describe('landing header account and download entry', () => {
-  it('makes the nav CTA a platform-aware direct download and removes the signed-out login entry', async () => {
+describe('landing header download entry', () => {
+  it('makes the nav CTA a platform-aware direct download without cloud account chrome', async () => {
     const header = await readFile(headerPath, 'utf8');
     const enhancer = await readFile(enhancerPath, 'utf8');
 
@@ -109,22 +109,13 @@ describe('landing header account and download entry', () => {
     assert.match(enhancer, /applyNavDownloadAsset\(directAssets\[navPlatform\.assetKey\]\)/);
     assert.match(enhancer, /navPlatform\.match\(entry\.name\)/);
     assert.match(enhancer, /navNeedsLiveRefresh = navPlatform && !downloadPrompt/);
-    assert.doesNotMatch(header, /data-amr-signin|className='nav-signin'/);
-    // Account chrome is opt-in so only Pricing can restore it.
-    assert.match(header, /showAccount = false/);
-    assert.match(header, /showAccount \? \(/);
-    assert.match(header, /data-amr-account/);
+    assert.doesNotMatch(header, /data-amr-signin|className='nav-signin'|data-amr-account|showAccount/);
+    assert.doesNotMatch(enhancer, /data-amr-account|fetchSession\(\)/);
   });
 
-  it('silently reveals the avatar for an existing session without wiring login', async () => {
-    const enhancer = await readFile(enhancerPath, 'utf8');
+  it('does not wire cloud login or session probes on the homepage', async () => {
     const homePage = await readFile(homePagePath, 'utf8');
-
-    for (const source of [enhancer, homePage]) {
-      assert.match(source, /fetchSession\(\)\.then\(\(user\) =>/);
-      assert.match(source, /if \(user\) showSignedIn\(user\)/);
-      assert.doesNotMatch(source, /sign_in_click|data-amr-signin|od-cloud-login|window\.open\(/);
-    }
+    assert.doesNotMatch(homePage, /sign_in_click|data-amr-signin|od-cloud-login|data-amr-account|fetchSession\(\)/);
   });
 });
 

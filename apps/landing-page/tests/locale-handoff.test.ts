@@ -97,15 +97,15 @@ async function runLocaleScript(initialUrl: string) {
 
 describe('locale handoff', () => {
   it('applies an explicit source locale once and keeps other attribution', async () => {
-    const fixture = await runLocaleScript('/pricing/?od_locale=zh&utm_source=amr#plans');
+    const fixture = await runLocaleScript('/blog/?od_locale=zh&utm_source=newsletter#top');
 
-    assert.deepEqual(fixture.assigned, ['/zh/pricing/?utm_source=amr#plans']);
+    assert.deepEqual(fixture.assigned, ['/zh/blog/?utm_source=newsletter#top']);
   });
 
   it('consumes a matching handoff before a manual language switch', async () => {
-    const fixture = await runLocaleScript('/zh/pricing/?od_locale=zh&utm_source=amr#plans');
+    const fixture = await runLocaleScript('/zh/blog/?od_locale=zh&utm_source=newsletter#top');
 
-    assert.deepEqual(fixture.replaced, ['/zh/pricing/?utm_source=amr#plans']);
+    assert.deepEqual(fixture.replaced, ['/zh/blog/?utm_source=newsletter#top']);
     assert.ok(fixture.click);
     fixture.click({
       altKey: false,
@@ -116,7 +116,7 @@ describe('locale handoff', () => {
       preventDefault: () => undefined,
       shiftKey: false,
     });
-    assert.deepEqual(fixture.assigned, ['/ja/pricing/?utm_source=amr#plans']);
+    assert.deepEqual(fixture.assigned, ['/ja/blog/?utm_source=newsletter#top']);
 
     const reload = await runLocaleScript(fixture.assigned[0]);
     assert.deepEqual(reload.assigned, []);
