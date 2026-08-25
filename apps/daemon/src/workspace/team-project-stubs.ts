@@ -50,13 +50,13 @@ export function projectResourceIdFor(
 
 export function velaProjectSyncStateToProject(
   syncState: VelaTeamProjectSyncState,
-): 'local_only' | 'pending' | 'synced' | 'failed' {
+): 'local_only' | 'pending_upload' | 'synced' | 'sync_failed' {
   switch (syncState) {
     case 'synced': return 'synced';
-    case 'failed': return 'failed';
+    case 'failed': return 'sync_failed';
     case 'pending_upload':
     case 'syncing':
-      return 'pending';
+      return 'pending_upload';
     default: return 'local_only';
   }
 }

@@ -435,8 +435,8 @@ export function workspaceResourceContextFromVerified(
     role: context.role,
     memberStatus: context.memberStatus,
     lifecycleState: context.lifecycleState,
-    canShareProjects: context.permissions.canShareProjects,
-    canWriteSyncedFiles: context.permissions.canWriteSyncedFiles,
+    canShareProjects: context.permissions?.canShareProjects ?? context.canShareProjects ?? false,
+    canWriteSyncedFiles: context.permissions?.canWriteSyncedFiles ?? context.canWriteSyncedFiles ?? false,
   };
 }
 

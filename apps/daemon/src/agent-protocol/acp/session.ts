@@ -60,7 +60,10 @@ import {
 } from './models.js';
 import { buildAcpSessionNewParams, buildPromptBlocks, type AcpMcpServerInput } from './session-params.js';
 import { withholdStdioMcpServersForBuild } from './stdio-mcp.js';
-import { createVelaChildEvidenceConsumer } from '../../runtimes/vela-child-evidence-stub.js';
+import {
+  createVelaChildEvidenceConsumer,
+  type VelaChildEvidenceConsumer,
+} from '../../runtimes/vela-child-evidence-stub.js';
 
 const NON_DISPLAYABLE_ACP_SESSION_UPDATES = new Set([
   'usage_update',
@@ -236,7 +239,7 @@ export function attachAcpSession({
   // The AMR discriminator is deliberately required here. A generic ACP agent
   // advertising a same-named extension must not silently expand the daemon's
   // accepted protocol surface.
-  const velaChildEvidenceConsumer = null;
+  const velaChildEvidenceConsumer = null as VelaChildEvidenceConsumer | null;
   const acpArtifactWriteToolCallIds = new Set<string>();
   // Per toolCallId: accumulate name/input/path/result across partial ACP frames
   // and emit exactly one tool_use + one tool_result at terminal status (or on

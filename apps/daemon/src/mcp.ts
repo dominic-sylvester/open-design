@@ -49,7 +49,6 @@ import {
   OPEN_DESIGN_BRIEF_APP_HTML,
   OPEN_DESIGN_BRIEF_APP_VERSION,
 } from './mcp-apps/brief-resource.js';
-import { DEFAULT_AMR_RECHARGE_URL } from './workspace/amr-stubs.js';
 import {
   type ExternalPluginContext,
   logicalPluginRequestDigest,
@@ -71,7 +70,7 @@ export const OPEN_DESIGN_BRIEF_APP_RESOURCE =
   'ui://open-design/artifact-card-v8.html';
 
 export const MCP_SERVER_INSTRUCTIONS = [
-  'Use only these product names in user-facing replies: OpenDesign Cloud and Local Codex.',
+  'Use only "Local Codex" as the user-facing product name for this daemon.',
   'Tool names, runtime ids, endpoints, and correlation values are machine protocol. Never repeat them as product copy.',
 ].join('\n');
 
@@ -118,7 +117,6 @@ const SAFE_MCP_DAEMON_RETRY_CALLS = new Set([
   'get_file',
   'get_project',
   'get_run',
-  'get_vela_login_status',
   'list_agents',
   'list_files',
   'list_plugins',
@@ -718,36 +716,6 @@ export const TOOL_DEFS = [
     annotations: { ...READ_ANNOTATIONS, title: 'List OpenDesign plugins' },
   },
   {
-    name: 'start_vela_login',
-    description:
-      'Start OpenDesign Cloud browser sign-in through the local OpenDesign daemon. Returns the activation URL and user code when manual browser completion is needed. The tool name is an internal compatibility identifier and must not be repeated to the user.',
-    inputSchema: {
-      type: 'object',
-      properties: { pluginWorkflowId: PLUGIN_WORKFLOW_ID_ARG },
-      additionalProperties: false,
-    },
-    annotations: {
-      ...WRITE_ANNOTATIONS,
-      openWorldHint: true,
-      title: 'Sign in to OpenDesign Cloud',
-    },
-  },
-  {
-    name: 'get_vela_login_status',
-    description:
-      'Check whether OpenDesign Cloud browser sign-in is complete. Does not expose credentials. The tool name is an internal compatibility identifier and must not be repeated to the user.',
-    inputSchema: {
-      type: 'object',
-      properties: { pluginWorkflowId: PLUGIN_WORKFLOW_ID_ARG },
-      additionalProperties: false,
-    },
-    annotations: {
-      ...READ_ANNOTATIONS,
-      openWorldHint: true,
-      title: 'Check OpenDesign Cloud sign-in',
-    },
-  },
-  {
     name: 'start_run',
     description:
       'Commission OpenDesign to generate or refine a design. OpenDesign spawns its own agent to do the work and returns a runId immediately. Poll get_run(runId) until status is terminal; its Preview/Studio reference is the default delivery. Call get_artifact only when source context is genuinely needed. Project optional; defaults to the active project. Requires an existing project (create one first with create_project).',
@@ -798,7 +766,7 @@ export const TOOL_DEFS = [
         resume: {
           type: 'boolean',
           description:
-            'Set true only after the user has topped up a paused OpenDesign Cloud run. Reuse the exact original requestId and payload; OpenDesign resumes the same logical run.',
+            'Set true only when retrying start_run after a transport failure. Reuse the exact original requestId and payload.',
         },
         pluginWorkflowId: PLUGIN_WORKFLOW_ID_ARG,
       },
@@ -939,7 +907,7 @@ export function localMcpResourceDefinitions() {
       name: 'OpenDesign brief',
       title: 'Choose the artifact direction',
       description:
-        'Interactive local OpenDesign brief card shared by OpenDesign Cloud and Local Codex modes.',
+        'Interactive local OpenDesign brief card for Local Codex mode.',
       mimeType: 'text/html;profile=mcp-app',
       _meta: {
         ui: {
@@ -1497,9 +1465,7 @@ function mcpFailureFacts(
   const failureStage =
     name === 'collect_brief' || name === 'confirm_brief'
       ? 'brief'
-      : name.includes('vela_login')
-        ? 'auth'
-        : name.includes('project')
+      : name.includes('project')
           ? 'project'
         : name === 'start_run'
           ? 'run_accept'
@@ -1850,14 +1816,10 @@ export async function runMcpStdio(options: RunMcpOptions): Promise<void> {
         'read/edit files), commission a run - you do not run skills yourself:',
         ' - collect_brief first for a new artifact unless the user explicitly',
         '    asks to skip questions. Let the user complete the rendered card;',
-        '    confirm_brief returns the readable brief to reuse with OpenDesign',
-        '    Cloud or Local Codex. Never print or ask the user to copy',
-        '    briefDraftId, nonce, or any other internal correlation value.',
+        '    confirm_brief returns the readable brief to reuse with Local Codex.',
+        '    Never print or ask the user to copy briefDraftId, nonce, or any',
+        '    other internal correlation value.',
         ' - list_skills / list_plugins to see what you can ask OD to make.',
-        ' - for OpenDesign Cloud, call the Cloud login-status tool first.',
-        '    If signed out, call the Cloud sign-in tool once, show its activation',
-        '    URL/code when present, and poll login status until loggedIn:true.',
-        '    The tool and runtime ids are internal protocol; never show them.',
         ' - list_agents when you need to pass start_run.agent — do not',
         '    guess "claude" / "codex" / "opencode"; only agents in the',
         '    returned list will actually spawn on this machine.',
@@ -1869,9 +1831,6 @@ export async function runMcpStdio(options: RunMcpOptions): Promise<void> {
         '    user action and reuse the exact same value after a timeout/lost',
         '    response. Do not call',
         '    start_run again while get_run reports the original run in flight.',
-        '    If get_run returns failureAction:"recharge", show rechargeUrl;',
-        '    after the user confirms top-up, call the exact original start_run',
-        '    once with the same requestId and resume:true.',
         '    OpenDesign spawns its own agent to do the work.',
         ' - get_run(runId) polls until status is succeeded/failed/canceled;',
         '    on success it returns a previewUrl you can open in a browser',
@@ -2028,12 +1987,6 @@ function containsMcpCredentialField(value: unknown, depth = 0): boolean {
     MCP_CREDENTIAL_FIELD_PATTERN.test(key)
     || containsMcpCredentialField(entry, depth + 1),
   );
-}
-
-function publicVelaLoginStatus(status: unknown): unknown {
-  if (!status || typeof status !== 'object' || Array.isArray(status)) return status;
-  const { configPath: _configPath, ...publicStatus } = status as JsonObject;
-  return publicStatus;
 }
 
 // Tools that address projects or runs are workspace-scoped after 0.18.0:
@@ -2244,25 +2197,6 @@ async function handleMcpToolCall(
         return ok(await listPlugins(baseUrl));
       case 'list_agents':
         return ok(await listAgents(baseUrl, args.includeUnavailable === true));
-      case 'start_vela_login': {
-        const started = await postJson<JsonObject>(
-          `${baseUrl}/api/integrations/vela/login`,
-          options.pluginAttribution
-            ? { pluginWorkflowId: options.pluginAttribution.pluginWorkflowId }
-            : {},
-          options.analyticsHeaders,
-        );
-        const status = publicVelaLoginStatus(
-          await getJson<JsonObject>(`${baseUrl}/api/integrations/vela/status`),
-        );
-        return ok({ started, status });
-      }
-      case 'get_vela_login_status':
-        return ok(
-          publicVelaLoginStatus(
-            await getJson<JsonObject>(`${baseUrl}/api/integrations/vela/status`),
-          ),
-        );
       case 'start_run':
         return await startRun(baseUrl, args, options, headers);
       case 'get_run':
@@ -2648,15 +2582,8 @@ async function getRun(
     const studioUrl = buildStudioUrl(webBase, status.projectId, status.conversationId, null);
     const enriched: JsonObject = { ...status };
     if (studioUrl) enriched.studioUrl = studioUrl;
-    if (status.failureAction === 'recharge') {
-      enriched.rechargeUrl = DEFAULT_AMR_RECHARGE_URL;
-      enriched.hint =
-        'OpenDesign Cloud paused this logical run because the account balance is insufficient. Preserve the brief and project, show rechargeUrl to the user, and do not switch modes. After the user confirms the top-up, call start_run once with the exact original payload, the same requestId, and resume:true; OpenDesign Cloud will resume the existing run and billing operation. Do not expose internal runtime or tool identifiers.';
-    }
     if (typeof status.eventsLogPath === 'string' && status.eventsLogPath.length > 0) {
-      if (status.failureAction !== 'recharge') {
-        enriched.hint = 'Run still in flight. Tail eventsLogPath in your own shell (e.g. `tail -n 50 -f "' + status.eventsLogPath + '"`) to see live text_delta / tool_use events from the inner agent — that is your in-flight progress signal. Keep polling get_run every 30–60s; do not cancel because file mtimes look static, that is the agent thinking between writes.';
-      }
+      enriched.hint = 'Run still in flight. Tail eventsLogPath in your own shell (e.g. `tail -n 50 -f "' + status.eventsLogPath + '"`) to see live text_delta / tool_use events from the inner agent — that is your in-flight progress signal. Keep polling get_run every 30–60s; do not cancel because file mtimes look static, that is the agent thinking between writes.';
       if (studioUrl) {
         enriched.hint += ` While the run is in flight, studioUrl can be used as an optional workspace progress link — render it as \`[Watch progress in OpenDesign studio](${studioUrl})\` if you choose to show it. This URL is valid for the current OpenDesign runtime; call get_run again after OpenDesign restarts.`;
       }

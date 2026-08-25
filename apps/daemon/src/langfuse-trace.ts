@@ -483,42 +483,14 @@ export function readTaskTelemetrySinkConfig(
   return readTelemetrySinkConfig(env);
 }
 
-function isVelaTelemetryEnabled(_env: NodeJS.ProcessEnv): boolean {
-  return false;
-}
-
 /**
- * Completed-run and feedback telemetry share the same sink selection: Vela when
- * a Control Key is present, otherwise the anonymous relay / direct Langfuse.
- * Feedback score-only batches keep the client run id as `data.traceId`; Vela
- * re-scopes it with the same account hash as the original run batch.
+ * Completed-run and feedback telemetry share the same sink selection as task
+ * telemetry: the anonymous relay / direct Langfuse path.
  */
 export function readRunTelemetrySinkConfig(
   env: NodeJS.ProcessEnv = process.env,
-  configuredEnv: Record<string, string> = {},
+  _configuredEnv: Record<string, string> = {},
 ): RunTelemetrySinkConfig | null {
-  if (isVelaTelemetryEnabled(env)) {
-    const context = readVelaControlApiContext(env, configuredEnv);
-    const controlKey = context?.controlKey?.trim() ?? '';
-    if (context && controlKey) {
-      return {
-        kind: 'vela',
-        apiUrl: (context.apiUrl.trim() || 'https://amr-api.open-design.ai').replace(
-          /\/+$/,
-          '',
-        ),
-        controlKey,
-        timeoutMs: parsePositiveInt(
-          env.OPEN_DESIGN_TELEMETRY_TIMEOUT_MS ?? env.LANGFUSE_TIMEOUT_MS,
-          DEFAULT_FETCH_TIMEOUT_MS,
-        ),
-        retries: parseNonNegativeInt(
-          env.OPEN_DESIGN_TELEMETRY_RETRIES ?? env.LANGFUSE_RETRIES,
-          DEFAULT_FETCH_RETRIES,
-        ),
-      };
-    }
-  }
   return readTelemetrySinkConfig(env);
 }
 

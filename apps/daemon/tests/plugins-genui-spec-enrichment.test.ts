@@ -12,12 +12,12 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../src/workspace/types.js';
 import Database from 'better-sqlite3';
 import express from 'express';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { createAuthorizeProjectRequest } from '../src/collab/project-request-authority.js';
+import { createAuthorizeProjectRequest } from '../src/workspace/project-request-authority.js';
 import {
   ensureWorkspaceProject,
   getWorkspaceProject,

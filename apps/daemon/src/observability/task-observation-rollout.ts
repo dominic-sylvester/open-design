@@ -580,7 +580,8 @@ async function taskAggregate(
         : {}),
     });
     const knownChildCount = new Set(childObservations
-      .filter((observation) => observation.kind === 'child_agent')
+      .filter((observation): observation is NonNullable<typeof observation> =>
+        observation != null && observation.kind === 'child_agent')
       .map((observation) => observation.identity.observationId)).size;
     const taskRunObservation = NormalizedAgentObservationV1Schema.parse({
       ...taskRunObservationBase,

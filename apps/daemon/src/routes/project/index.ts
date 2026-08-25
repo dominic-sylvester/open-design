@@ -35,8 +35,8 @@ import {
   type RestoreProjectAutomaticScenarioRequest,
   type RestoreProjectAutomaticScenarioResponse,
   type ProjectSyncState,
-  type WorkspaceCollabContext,
 } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../workspace/types.js';
 import { readMeta as readBrandMeta } from '../../brands/store.js';
 import { createProjectArtifactFile } from '../../artifacts/create.js';
 import { ArtifactPublicationBlockedError } from '../../artifacts/publication-guard.js';

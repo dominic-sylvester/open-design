@@ -47,6 +47,19 @@ export type TeamResourceCopyTarget =
   | { scope: 'personal' }
   | { scope: 'team'; state: TeamResourceState };
 
+export type WorkspaceDirectoryItem = {
+  workspaceId: string;
+  workspaceMemberId: string;
+  workspaceType: WorkspaceType;
+  memberStatus: 'active' | 'removed';
+  lifecycleState: 'active' | 'billing_past_due' | 'locked' | 'deleting' | 'deleted';
+  workspaceName?: string | null;
+};
+
+export type WorkspaceDirectoryResponse = {
+  items: WorkspaceDirectoryItem[];
+};
+
 export function assertTeamResourceCopyAllowed(target: TeamResourceCopyTarget): void {
   if (target.scope === 'team' && target.state === 'frozen') {
     throw new TeamResourceCopyForbiddenError();
@@ -60,13 +73,3 @@ export class TeamResourceCopyForbiddenError extends Error {
     this.name = 'TeamResourceCopyForbiddenError';
   }
 }
-
-export type WorkspaceDirectoryItem = {
-  workspaceId: string;
-  workspaceType?: WorkspaceType | null;
-  workspaceName?: string | null;
-};
-
-export type WorkspaceDirectoryResponse = {
-  items: WorkspaceDirectoryItem[];
-};
