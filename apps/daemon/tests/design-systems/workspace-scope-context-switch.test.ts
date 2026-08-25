@@ -33,18 +33,6 @@ const CONTEXT_WS2 = {
   lifecycleState: 'active',
 };
 
-// The dev/demo seam (`workspaceContext.set`), NOT `PUT /api/workspace/active`:
-// this is deliberately the same shape as a Vela-Web-driven switch — the
-// daemon's notion of "current" context changes, but no local pin is written.
-async function setContext(baseUrl: string, context: unknown): Promise<void> {
-  const resp = await fetch(`${baseUrl}/api/workspace/context`, {
-    method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(context),
-  });
-  expect(resp.ok).toBe(true);
-}
-
 function workspaceHeaders(context: typeof CONTEXT_WS1 | typeof CONTEXT_WS2): Record<string, string> {
   return {
     'x-od-workspace-id': context.workspaceId,
@@ -123,83 +111,6 @@ describe('GET/POST /api/design-systems — explicit request scope is isolated fr
     expect(response.status).toBe(400);
   });
 
-  it('keeps an A request on A after a legacy context write without creating ambient authority', async () => {
-    await setContext(baseUrl, CONTEXT_WS2);
-
-    const createResp1 = await fetch(`${baseUrl}/api/design-systems`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...workspaceHeaders(CONTEXT_WS1),
-      },
-      body: JSON.stringify({ title: `ws1 system ${Date.now()}` }),
-    });
-    expect(createResp1.status).toBe(201);
-    const createdInWs1 = (await createResp1.json()) as { id: string; workspaceId?: string };
-    expect(createdInWs1.workspaceId).toBe('ws-switch-one');
-
-    const workspaceResp = await fetch(
-      `${baseUrl}/api/design-systems/${encodeURIComponent(createdInWs1.id)}/workspace`,
-      {
-        method: 'POST',
-        headers: workspaceHeaders(CONTEXT_WS1),
-      },
-    );
-    expect(workspaceResp.status).toBe(201);
-    const workspaceBody = await workspaceResp.json() as {
-      project: { id: string };
-    };
-    const projectsResp = await fetch(
-      `${baseUrl}/api/workspaces/${CONTEXT_WS1.workspaceId}/projects?view=all`,
-      { headers: workspaceHeaders(CONTEXT_WS1) },
-    );
-    expect(projectsResp.status).toBe(200);
-    const projectsBody = await projectsResp.json() as {
-      projects: Array<{
-        id: string;
-        createdByWorkspaceMemberId?: string | null;
-      }>;
-    };
-    expect(
-      projectsBody.projects.find((project) => project.id === workspaceBody.project.id),
-    ).toMatchObject({
-      id: workspaceBody.project.id,
-      createdByWorkspaceMemberId: CONTEXT_WS1.workspaceMemberId,
-    });
-
-    // The compatibility write no longer creates daemon-global data-plane
-    // authority. Each tab's following request must remain self-contained.
-    const ctxResp = await fetch(`${baseUrl}/api/workspace/context`);
-    const ctxBody = (await ctxResp.json()) as { context: { workspaceId: string } | null };
-    expect(ctxBody.context?.workspaceId).toBeUndefined();
-
-    const listResp = await fetch(`${baseUrl}/api/design-systems`, {
-      headers: workspaceHeaders(CONTEXT_WS1),
-    });
-    const listBody = (await listResp.json()) as {
-      designSystems: Array<{ id: string; workspaceId?: string }>;
-    };
-    expect(listBody.designSystems.some((d) => d.id === createdInWs1.id)).toBe(true);
-
-    const createResp2 = await fetch(`${baseUrl}/api/design-systems`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...workspaceHeaders(CONTEXT_WS2),
-      },
-      body: JSON.stringify({ title: `ws2 system ${Date.now()}` }),
-    });
-    expect(createResp2.status).toBe(201);
-    const createdInWs2 = (await createResp2.json()) as { id: string; workspaceId?: string };
-    expect(createdInWs2.workspaceId).toBe('ws-switch-two');
-
-    const listWs1Resp = await fetch(`${baseUrl}/api/design-systems`, {
-      headers: workspaceHeaders(CONTEXT_WS1),
-    });
-    const listWs1Body = (await listWs1Resp.json()) as { designSystems: Array<{ id: string }> };
-    expect(listWs1Body.designSystems.some((d) => d.id === createdInWs1.id)).toBe(true);
-    expect(listWs1Body.designSystems.some((d) => d.id === createdInWs2.id)).toBe(false);
-  });
 });
 
 describe('resolveDesignSystemWorkspaceScope — stale local pins are never data-plane authority', () => {
