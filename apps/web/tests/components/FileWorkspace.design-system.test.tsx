@@ -5,17 +5,14 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { createRoot, type Root } from 'react-dom/client';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { FileWorkspace } from '../../src/components/FileWorkspace';
 import {
   CollabProvider,
   type CollabContextValue,
-} from '../../src/collab/collab-context';
+} from '../../src/local/collab-context';
 import type { AgentEvent, DesignSystemSummary, ProjectFile } from '../../src/types';
 
 const registryMocks = vi.hoisted(() => ({

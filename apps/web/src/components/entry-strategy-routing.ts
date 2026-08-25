@@ -1,9 +1,4 @@
-import {
-  automaticStrategyTaskProfileForProjectMetadata,
-  type CreateProjectExampleReference,
-  type ProjectMetadata,
-  type ProjectScenarioTaskProfile,
-} from '@open-design/contracts';
+import { automaticStrategyTaskProfileForProjectMetadata, type CreateProjectExampleReference, type ProjectMetadata, type ProjectScenarioTaskProfile } from '@open-design/contracts';
 
 interface EntryStrategyRoutingInput {
   automaticStrategyTaskProfile?: ProjectScenarioTaskProfile | null;

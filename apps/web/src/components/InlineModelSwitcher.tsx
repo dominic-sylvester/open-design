@@ -18,7 +18,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react';
-import type { AmrWalletSnapshot } from '@open-design/contracts';
+import type { AmrWalletSnapshot } from '../local/types';
 import { VisuallyHidden } from '@open-design/components';
 import { useT } from '../i18n';
 import {

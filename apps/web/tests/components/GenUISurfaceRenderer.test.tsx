@@ -12,10 +12,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { GenUISurfaceRenderer } from '../../src/components/GenUISurfaceRenderer';
-import type {
-  GenUISurfaceSpec,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { GenUISurfaceSpec } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 afterEach(() => cleanup());
 

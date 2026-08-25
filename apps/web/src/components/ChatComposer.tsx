@@ -48,19 +48,8 @@ import { fetchMcpServers } from "../state/mcp";
 import type { McpServerConfig, McpTemplate } from "../state/mcp";
 import { listPlugins } from "../state/projects";
 import type { AppConfig, ChatAttachment, ChatCommentAttachment, Project, ProjectFile, ProjectMetadata, SkillSummary } from "../types";
-import type {
-  ContextItem,
-  AppliedPluginSnapshot,
-  ChatAnalyticsEntryFrom,
-  ChatSessionMode,
-  ConnectorDetail,
-  InstalledPluginRecord,
-  PluginSourceKind,
-  ResearchOptions,
-  RunContextSelection,
-  WorkspaceCollabContext,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
+import type { ContextItem, AppliedPluginSnapshot, ChatAnalyticsEntryFrom, ChatSessionMode, ConnectorDetail, InstalledPluginRecord, PluginSourceKind, ResearchOptions, RunContextSelection, WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { buildVisualAnnotationAttachment, commentTargetDisplayName } from '../comments';
 import { Icon, type IconName } from "./Icon";
 import { ComposerPlusMenu, PLUS_SUBMENU_RESOURCE_KIND, type PlusMenuSubmenu } from './ComposerPlusMenu';

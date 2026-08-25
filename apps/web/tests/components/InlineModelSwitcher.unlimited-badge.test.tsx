@@ -9,10 +9,7 @@
 // of a duplicated per-tier table in Open Design.
 
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import type {
-  WorkspaceBillingResponse,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { WorkspaceBillingResponse, WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { InlineModelSwitcher } from '../../src/components/InlineModelSwitcher';
@@ -59,9 +56,9 @@ const workspaceState: {
   loading: boolean;
 } = { context: null, billing: null, loading: false };
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => {
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => {
   const actual = await importOriginal<
-    typeof import('../../src/collab/useWorkspaceContext')
+    typeof import('../../src/local/useWorkspaceContext')
   >();
   return {
     ...actual,

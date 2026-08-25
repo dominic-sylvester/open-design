@@ -17,13 +17,13 @@
 // the workspace-resolved tier. Both must read the SAME resolved tier.
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SettingsDialog } from '../../src/components/SettingsDialog';
 import { I18nProvider } from '../../src/i18n';
 import type { AgentInfo, AppConfig } from '../../src/types';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 
 vi.mock('../../src/providers/registry', async () => {
   const actual = await vi.importActual<typeof import('../../src/providers/registry')>(

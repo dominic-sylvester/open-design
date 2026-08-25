@@ -1,13 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../src/local/types'
+import type { WorkspaceCollabContext } from '../src/local/types';
 import {
   canPublishPublicFile,
   publicFilePublishFailureKey,
-} from '../src/collab/public-file-publish';
+} from '../src/local/public-file-publish';
 
 function context(overrides: Partial<WorkspaceCollabContext> = {}): WorkspaceCollabContext {
   return {

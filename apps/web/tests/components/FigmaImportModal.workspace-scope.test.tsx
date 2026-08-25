@@ -5,7 +5,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 
 import { FigmaImportModal } from '../../src/components/FigmaImportModal';
 import { importProjectFigma } from '../../src/providers/registry';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 vi.mock('../../src/providers/registry', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../../src/providers/registry')>()),

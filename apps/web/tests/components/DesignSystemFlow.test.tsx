@@ -2,12 +2,8 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type ConnectorDetail,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { type ConnectorDetail } from '@open-design/contracts'
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary, type WorkspaceCollabContext } from '../../src/local/types';
 
 import {
   buildDesignSystemPackageAuditRepairPrompt,
@@ -59,7 +55,7 @@ const workspaceContextState = vi.hoisted(() => ({
   context: null as WorkspaceCollabContext | null,
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({
     context: workspaceContextState.context,
     loading: false,

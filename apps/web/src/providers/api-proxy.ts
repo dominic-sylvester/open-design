@@ -1,12 +1,7 @@
 import { effectiveMaxTokens } from '../state/maxTokens';
 import type { AppConfig, ChatMessage } from '../types';
-import type {
-  ProxyImageContentBlock,
-  ProxyMessage,
-  ProxyMessageContent,
-  ProxyTextContentBlock,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { ProxyImageContentBlock, ProxyMessage, ProxyMessageContent, ProxyTextContentBlock } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { projectFileUrl } from './registry';
 import { workspaceProjectHeaders } from '../local/workspace-identity';
 import type { StreamHandlers } from './anthropic';

@@ -27,7 +27,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Button, Textarea } from '@open-design/components';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../local/types';
 import type { DesignSystemEditClickProps } from '@open-design/contracts/analytics';
 import { useT } from '../i18n';
 import {

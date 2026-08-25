@@ -1,4 +1,4 @@
-export type EntryRailAccountFooterState = 'hidden';
+export type EntryRailAccountFooterState = 'hidden' | 'sign-in' | 'syncing' | 'recovering';
 
 export function shouldShowCreditsBalance(_input: {
   tier: string | null | undefined;
@@ -14,6 +14,10 @@ export function requiresAmrReauthentication(
   return false;
 }
 
-export function resolveEntryRailAccountFooterState(): EntryRailAccountFooterState {
+export function resolveEntryRailAccountFooterState(
+  _workspaceContextState?: unknown,
+  _amrLoggedIn?: unknown,
+  _amrSessionState?: unknown,
+): EntryRailAccountFooterState {
   return 'hidden';
 }

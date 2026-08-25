@@ -28,7 +28,7 @@
 // (a local switch must correct itself locally).
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { buildWorkspacePermissions } from '@open-design/contracts';
+import { buildWorkspacePermissions } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { App } from '../../src/App';
@@ -54,10 +54,10 @@ import {
   notifyWorkspaceContextRefresh,
   resetTeamProjectsCache,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 import { resetCoalescedGet } from '../../src/lib/coalesced-get';
 import { resetProjectDisplaySnapshots } from '../../src/state/project-display-cache';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 
 const projectViewLifecycle = vi.hoisted(() => ({
   mounts: vi.fn(),

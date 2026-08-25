@@ -14,10 +14,8 @@ import {
   shouldSyncMediaProvidersOnSave,
 } from '../src/App';
 import type { AppConfig, Project } from '../src/types';
-import type {
-  WorkspaceCollabContext,
-  WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import type { WorkspaceProjectSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../src/local/types';
 
 describe('projectRouteSurfaceState', () => {
   it('only shows an unbounded loader while the initial project list is loading', () => {

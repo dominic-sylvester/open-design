@@ -1,10 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { installMockOpenDesignHost } from '@open-design/host/testing';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import {
   cancelConnectorAuthorization,

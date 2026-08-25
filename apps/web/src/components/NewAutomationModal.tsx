@@ -4,15 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent, KeyboardEvent as ReactKeyboardEvent, ReactNode } from 'react';
-import type {
-  CreateRoutineRequest,
-  ConnectorDetail,
-  InstalledPluginRecord,
-  Routine,
-  RoutineProjectTarget,
-  RoutineSchedule,
-  Weekday,
-} from '@open-design/contracts';
+import type { CreateRoutineRequest, ConnectorDetail, InstalledPluginRecord, Routine, RoutineProjectTarget, RoutineSchedule, Weekday } from '@open-design/contracts';
 
 import { Icon, type IconName } from './Icon';
 import type { SkillSummary } from '../types';

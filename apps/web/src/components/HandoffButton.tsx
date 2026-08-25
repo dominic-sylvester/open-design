@@ -3,12 +3,7 @@
 // exposes copy-to-CLI prompts for handing the same local folder to code agents.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  AgentInfo,
-  HostEditor,
-  HostEditorId,
-  HostEditorsResponse,
-} from '@open-design/contracts';
+import type { AgentInfo, HostEditor, HostEditorId, HostEditorsResponse } from '@open-design/contracts';
 import {
   handoffTargetIdToTracking,
   type TrackingArtifactKind,

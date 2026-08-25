@@ -13,7 +13,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import type { FigmaImportResult, WorkspaceCollabContext } from '@open-design/contracts';
+import type { FigmaImportResult } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { Button } from '@open-design/components';
 import { Icon } from './Icon';
 import { modalOverlay, modalContent } from '../motion';

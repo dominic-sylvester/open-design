@@ -11,16 +11,9 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Dialog } from '@open-design/components';
-import {
-  PLUGIN_SHARE_ACTION_PLUGIN_IDS,
-  resolveLocalizedText,
-  workspaceContextHasTeamIdentity,
-  type ApplyResult,
-  type InstalledPluginRecord,
-  type PluginSourceKind,
-  type SkillSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { PLUGIN_SHARE_ACTION_PLUGIN_IDS, resolveLocalizedText, type ApplyResult, type InstalledPluginRecord, type PluginSourceKind, type SkillSummary } from '@open-design/contracts'
+import { workspaceContextHasTeamIdentity } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   fetchSkills,
   importSkill,

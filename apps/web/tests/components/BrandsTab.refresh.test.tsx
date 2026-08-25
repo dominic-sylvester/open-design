@@ -3,8 +3,9 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { BrandSummary, WorkspaceCollabContext } from '@open-design/contracts';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import type { BrandSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 // EntryShell keeps the Brands sub-view mounted and only toggles visibility, so
 // the route is the signal for "Brands is the active view". A mutable hoisted
@@ -30,7 +31,7 @@ vi.mock('../../src/runtime/brands', () => ({
 vi.mock('../../src/runtime/useBrandExtract', () => ({
   useBrandExtract: () => ({ state: { phase: 'idle' }, run: runExtractMock }),
 }));
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => workspaceContextState,
   workspaceResourceReadContext: (state: typeof workspaceContextState) =>
     state.resourceReadIdentity?.context ?? state.context,

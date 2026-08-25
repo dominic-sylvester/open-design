@@ -1,4 +1,4 @@
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../local/types';
 
 import { workspaceIdentityCacheKey } from '../local/workspace-identity';
 import type { Project } from '../types';

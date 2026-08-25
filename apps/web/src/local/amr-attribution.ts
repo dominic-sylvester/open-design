@@ -9,7 +9,7 @@ import {
   readOnboardingProfile,
   type OnboardingProfile,
 } from '../state/onboarding-profile';
-import { trackAmrEntryClick } from './events';
+import { trackAmrEntryClick } from '../analytics/events';
 
 type Track = (
   event: string,
@@ -398,3 +398,5 @@ function randomId(): string {
   }
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
+
+export function setRuntimeAmrConsoleOrigin(_origin?: string): void {}

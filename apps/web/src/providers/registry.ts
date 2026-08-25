@@ -1,40 +1,7 @@
-import {
-  PUBLIC_FILE_MANUAL_REVOKE_REQUIRED,
-  workspaceContextHasTeamIdentity,
-  type PublicFileManualRevokeRequiredData,
-  type PublicProjectFilePublication,
-} from '@open-design/contracts';
+import { PUBLIC_FILE_MANUAL_REVOKE_REQUIRED, workspaceContextHasTeamIdentity, type PublicFileManualRevokeRequiredData, type PublicProjectFilePublication } from '../local/collab-contracts';
 import { boundedRequestErrorCode } from '../analytics/workspace';
-import type {
-  ConnectorAuthConfigPrepareResponse,
-  ConnectorDetail,
-  ConnectorConnectResponse,
-  ConnectorDiscoveryResponse,
-  ConnectorDetailResponse,
-  ConnectorListResponse,
-  ConnectorStatusResponse,
-  FigmaImportResult,
-  ImportGitHubDesignSystemRequest,
-  ImportGitHubDesignSystemResponse,
-  ImportShadcnDesignSystemRequest,
-  ImportShadcnDesignSystemResponse,
-  OpenDesignGithubLatestReleaseResponse,
-  ImportLocalDesignSystemRequest,
-  ImportLocalDesignSystemResponse,
-  ReplaceProjectWorkingDirResponse,
-  ProjectFileTextPreviewResponse,
-  ProjectFileResponse,
-  ProjectPreviewScopeRenewResponse,
-  ProjectPreviewUrlResponse,
-  ProjectFileVersion,
-  ProjectFileVersionSource,
-  ProjectFileVersionResponse,
-  ProjectFileVersionsResponse,
-  RestoreProjectFileVersionResponse,
-  SocialShareRequest,
-  SocialShareResponse,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { ConnectorAuthConfigPrepareResponse, ConnectorDetail, ConnectorConnectResponse, ConnectorDiscoveryResponse, ConnectorDetailResponse, ConnectorListResponse, ConnectorStatusResponse, FigmaImportResult, ImportGitHubDesignSystemRequest, ImportGitHubDesignSystemResponse, ImportShadcnDesignSystemRequest, ImportShadcnDesignSystemResponse, OpenDesignGithubLatestReleaseResponse, ImportLocalDesignSystemRequest, ImportLocalDesignSystemResponse, ReplaceProjectWorkingDirResponse, ProjectFileTextPreviewResponse, ProjectFileResponse, ProjectPreviewScopeRenewResponse, ProjectPreviewUrlResponse, ProjectFileVersion, ProjectFileVersionSource, ProjectFileVersionResponse, ProjectFileVersionsResponse, RestoreProjectFileVersionResponse, SocialShareRequest, SocialShareResponse } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import type {
   AgentInfo,
   AppVersionInfo,
@@ -3492,16 +3459,7 @@ export async function uninstallDesignSystem(
 
 // --- OD Library ------------------------------------------------------------
 
-import type {
-  LibraryApplyResponse,
-  LibraryAsset,
-  LibraryAssetListResponse,
-  LibraryConnectionStatus,
-  LibraryEditAsPageResponse,
-  LibraryIngestResponse,
-  LibraryPairingStartResponse,
-  LibrarySyncResponse,
-} from '@open-design/contracts';
+import type { LibraryApplyResponse, LibraryAsset, LibraryAssetListResponse, LibraryConnectionStatus, LibraryEditAsPageResponse, LibraryIngestResponse, LibraryPairingStartResponse, LibrarySyncResponse } from '@open-design/contracts';
 import { LIBRARY_UPLOAD_MAX_BYTES, isLibraryUploadMimeAllowed } from '@open-design/contracts';
 
 /** Raw bytes URL for a library asset (image src / download href). */

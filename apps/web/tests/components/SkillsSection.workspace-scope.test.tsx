@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import type { SkillSummary, WorkspaceCollabContext } from '@open-design/contracts';
+import type { SkillSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const workspace = vi.hoisted(() => ({
@@ -19,7 +20,7 @@ const workspaceInvalidationHarness = vi.hoisted(() => ({
   autoActivate: true,
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn((
     handlers: Record<string, (payload: any) => void>,
     options?: { onActive?: () => void; enabled?: boolean; workspaceContext?: unknown },
@@ -36,8 +37,8 @@ vi.mock('../../src/collab/workspace-events', () => ({
   }),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>()),
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useWorkspaceContext')>()),
   useWorkspaceContext: () => ({
     context: workspace.context,
     loading: workspace.loading,

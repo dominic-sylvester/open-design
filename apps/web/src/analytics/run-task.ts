@@ -1,7 +1,4 @@
-import type {
-  ChatMessage,
-  ChatTaskExecutionAnalytics,
-} from '@open-design/contracts';
+import type { ChatMessage, ChatTaskExecutionAnalytics } from '@open-design/contracts';
 import type { TrackingRunRecoveryActionType } from '@open-design/contracts/analytics';
 
 export function runAgentProviderId(agentId: string): string {

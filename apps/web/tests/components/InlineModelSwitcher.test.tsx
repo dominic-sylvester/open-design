@@ -2,17 +2,17 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { InlineModelSwitcher } from '../../src/components/InlineModelSwitcher';
 import {
   AMR_LOGIN_POLL_INTERVAL_MS,
   AMR_LOGIN_TIMEOUT_MS,
-} from '../../src/components/amrLoginPolling';
+} from '../../src/local/amrLoginPolling';
 import { fetchProviderModels } from '../../src/providers/provider-models';
 import { providerModelsCacheKey } from '../../src/components/providerModelsCache';
-import { resetWorkspaceContextCache } from '../../src/collab/useWorkspaceContext';
+import { resetWorkspaceContextCache } from '../../src/local/useWorkspaceContext';
 import type { AgentInfo, AppConfig, ProviderModelOption } from '../../src/types';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 
 const analyticsMocks = vi.hoisted(() => ({ track: vi.fn() }));
 

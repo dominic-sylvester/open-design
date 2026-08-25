@@ -20,7 +20,7 @@ import {
   isOpenDesignHostAvailable,
   printHostPdf,
 } from '@open-design/host';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   workspaceProjectHeaders,
   workspaceResourceUrl,

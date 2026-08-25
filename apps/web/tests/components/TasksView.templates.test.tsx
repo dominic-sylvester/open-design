@@ -2,10 +2,7 @@
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type {
-  AutomationEvolutionProposal,
-  AutomationTemplate as ContractAutomationTemplate,
-} from '@open-design/contracts';
+import type { AutomationEvolutionProposal, AutomationTemplate as ContractAutomationTemplate } from '@open-design/contracts';
 
 import { TasksView } from '../../src/components/TasksView';
 

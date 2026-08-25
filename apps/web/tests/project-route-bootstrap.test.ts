@@ -5,7 +5,7 @@ import {
   bootstrapProjectRoute,
 } from '../src/state/projects';
 import { resetCoalescedGet } from '../src/lib/coalesced-get';
-import { workspaceContextFixture } from './helpers/workspace-context';
+import { workspaceContextFixture } from './helpers/local-workspace-context';
 
 const PROJECT_ID = 'project-a';
 const CONTEXT_A = workspaceContextFixture({

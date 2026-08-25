@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type {
   ProjectWorkspaceScope,
   ProjectWorkspaceScopeResponse,
-  WorkspaceCollabContext,
-} from './types';
+} from '@open-design/contracts';
+import type { WorkspaceCollabContext } from './types';
 import {
   WORKSPACE_CONTEXT_REFRESH_EVENT,
 } from './useWorkspaceContext';
@@ -57,9 +57,11 @@ export interface ProjectWorkspaceScopeState {
 export function projectWorkspaceContext(
   scope: ProjectWorkspaceScope | null | undefined,
 ): WorkspaceCollabContext | null {
-  return scope?.kind === 'personal' || scope?.kind === 'team'
-    ? scope.context
-    : null;
+  if (!scope) return null;
+  if (scope.kind === 'unbound' || scope.kind === 'unavailable') {
+    return scope.context;
+  }
+  return null;
 }
 
 export function projectWorkspaceScopeReady(
@@ -180,7 +182,7 @@ export function runWorkspaceIdentity(
 export function projectWorkspaceScopeAuthorizesAmr(
   scope: ProjectWorkspaceScope | null | undefined,
 ): boolean {
-  return scope?.kind === 'personal' || scope?.kind === 'team';
+  return false;
 }
 
 class ProjectWorkspaceScopeFetchError extends Error {
@@ -200,13 +202,9 @@ function validScopeForProject(
   if (scope.kind === 'unbound') {
     return scope.workspaceId === null && scope.context === null;
   }
-  if (!scope.workspaceId || scope.context === undefined) return false;
+  if (!scope.workspaceId) return false;
   if (scope.kind === 'unavailable') return scope.context === null;
-  return (
-    scope.context.workspaceId === scope.workspaceId &&
-    scope.context.workspaceMemberId.trim().length > 0 &&
-    scope.context.workspaceType === scope.kind
-  );
+  return scope.kind === 'personal' || scope.kind === 'team';
 }
 
 async function fetchProjectWorkspaceScope(

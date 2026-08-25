@@ -5,7 +5,7 @@
 // invite flow. Teams with capacity keep the local invite dialog.
 
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { EntryNavRail, resetWorkspaceDirectoryCache } from '../../src/components/EntryNavRail';
@@ -15,7 +15,7 @@ const originalFetch = globalThis.fetch;
 
 // A personal ("Free") workspace: one seat, already occupied by its owner — the
 // default shape both the dev context stub and B's real billing use for a
-// never-upgraded account (see apps/daemon/src/collab/workspace-context.ts).
+// never-upgraded account (see apps/daemon/src/local/workspace-context.ts).
 function freeContext(): WorkspaceCollabContext {
   return {
     workspaceId: 'ws-personal',

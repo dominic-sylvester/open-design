@@ -9,8 +9,8 @@ vi.mock('../../src/components/home-hero/PlaceholderCarousel', () => ({
   PlaceholderCarousel: () => null,
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>();
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../src/local/useWorkspaceContext')>();
   return {
     ...actual,
     useWorkspaceContext: () => ({

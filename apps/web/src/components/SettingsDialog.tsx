@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { Button, VisuallyHidden } from '@open-design/components';
-import type {
-  AmrWalletSnapshot,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { AmrWalletSnapshot } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
 import {
   agentIdToTracking,

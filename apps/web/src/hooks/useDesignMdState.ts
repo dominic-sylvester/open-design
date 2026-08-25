@@ -7,12 +7,8 @@
 // DESIGN.md likely no longer matches the current project state.
 
 import { useCallback, useEffect, useState } from 'react';
-import type {
-  Conversation,
-  ProjectFile,
-  ProjectFilesResponse,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { Conversation, ProjectFile, ProjectFilesResponse } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { parseProvenance } from '../lib/parse-provenance';
 import { listConversations } from '../state/projects';
 import {

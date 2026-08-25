@@ -1,4 +1,4 @@
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../local/types';
 import { Icon } from './Icon';
 import { canShowWorkspaceSettings } from '../local/settings-access';
 import { useT } from '../i18n';

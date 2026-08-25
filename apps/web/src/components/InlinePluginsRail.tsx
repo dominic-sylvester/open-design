@@ -7,10 +7,7 @@
 // (hydrate the brief, show the input form, etc.).
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type {
-  ApplyResult,
-  InstalledPluginRecord,
-} from '@open-design/contracts';
+import type { ApplyResult, InstalledPluginRecord } from '@open-design/contracts';
 import {
   applyPlugin,
   listPlugins,

@@ -13,13 +13,8 @@
 //     just the daemon's category label (#450 verification commitment).
 
 import { useCallback, useRef, useState } from 'react';
-import type {
-  ApiErrorCode,
-  FinalizeAnthropicRequest,
-  FinalizeAnthropicResponse,
-  FinalizeProviderProtocol,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { ApiErrorCode, FinalizeAnthropicRequest, FinalizeAnthropicResponse, FinalizeProviderProtocol } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { workspaceProjectHeaders } from '../local/workspace-identity';
 
 // 130 000 ms = daemon timeout (120 s) + 10 s buffer so the daemon's

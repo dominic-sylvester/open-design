@@ -9,10 +9,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { Button } from '@open-design/components';
-import type {
-  InstalledPluginRecord,
-  PluginConnectorRef,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord, PluginConnectorRef } from '@open-design/contracts';
 import {
   applyPlugin,
   resolvedWorkspaceContextForWrite,

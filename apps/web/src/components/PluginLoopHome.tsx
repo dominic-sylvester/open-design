@@ -1,15 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  ApplyResult,
-  ChatSessionMode,
-  CreateProjectExampleReference,
-  InstalledPluginRecord,
-  ProjectKind,
-  ProjectMetadata,
-  ProjectScenarioTaskProfile,
-  LocalCatalogScope,
-  RunContextSelection,
-} from '@open-design/contracts';
+import type { ApplyResult, ChatSessionMode, CreateProjectExampleReference, InstalledPluginRecord, ProjectKind, ProjectMetadata, ProjectScenarioTaskProfile, LocalCatalogScope, RunContextSelection } from '@open-design/contracts';
 import {
   applyPlugin,
   duplicatePluginAsProject,

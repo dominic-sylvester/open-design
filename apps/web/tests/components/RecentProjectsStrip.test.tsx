@@ -34,7 +34,7 @@ const recentWorkspaceState = vi.hoisted(() => ({
   },
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   notifyTeamProjectsChanged: vi.fn(),
   useWorkspaceBilling: () => null,
   useWorkspaceContext: () => ({

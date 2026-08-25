@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({
     context: {
       workspaceId: 'workspace-a',

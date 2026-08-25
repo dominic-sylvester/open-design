@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import type { Dispatch } from 'react';
 
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../../local/types';
 import { isPanelEvent, type PanelEvent } from '@open-design/contracts/critique';
 
 import {

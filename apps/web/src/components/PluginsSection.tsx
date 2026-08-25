@@ -30,11 +30,7 @@ import {
   useImperativeHandle,
   useState,
 } from 'react';
-import type {
-  ApplyResult,
-  ContextItem,
-  InstalledPluginRecord,
-} from '@open-design/contracts';
+import type { ApplyResult, ContextItem, InstalledPluginRecord } from '@open-design/contracts';
 import {
   applyPlugin,
   renderPluginBriefTemplate,

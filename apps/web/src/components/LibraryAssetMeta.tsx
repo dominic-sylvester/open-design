@@ -7,12 +7,7 @@
 // Copy is intentionally inline (not yet i18n-keyed) — the Library surface's
 // localization is a tracked follow-up, matching LibrarySection.tsx.
 
-import type {
-  LibraryAsset,
-  LibraryAssetKind,
-  LibraryElementMeta,
-  LibrarySourceKind,
-} from '@open-design/contracts';
+import type { LibraryAsset, LibraryAssetKind, LibraryElementMeta, LibrarySourceKind } from '@open-design/contracts';
 
 export const SOURCE_LABELS: Record<LibrarySourceKind, string> = {
   clipper: 'Clipper',

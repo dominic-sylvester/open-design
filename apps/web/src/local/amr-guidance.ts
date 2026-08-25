@@ -3,10 +3,7 @@
 // the error text, and whether to show the AMR promotion card below. Kept in
 // its own module so ChatPane / ProjectView / AssistantMessage can import it
 // without a circular dependency.
-import {
-  isModelWindowLimitFailure,
-  readModelWindowResetAt,
-} from './types';
+import { isModelWindowLimitFailure, readModelWindowResetAt } from '@open-design/contracts';
 
 // AMR model-gateway console (account, balance, top-up, plans).
 // `source=open_design` tags the landing page_view so vela analytics can
@@ -684,3 +681,6 @@ export function resolveRunFailureUi(
     showSwitchCard: promote,
   };
 }
+
+export { isPaidAmrPlan, resolveAmrPlan } from './amr-low-balance-plan';
+export { codingPlanModelDecision } from './amr-unlimited-models';

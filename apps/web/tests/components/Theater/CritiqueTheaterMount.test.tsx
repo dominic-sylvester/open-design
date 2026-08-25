@@ -3,16 +3,13 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ComponentProps } from 'react';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../../src/local/types'
+import type { WorkspaceCollabContext } from '../../../src/local/types';
 
 import { CritiqueTheaterMount } from '../../../src/components/Theater/CritiqueTheaterMount';
 import type { CritiqueAction } from '../../../src/components/Theater/state/reducer';
 import type { CritiqueEventsConnectionOptions } from '../../../src/components/Theater/state/sse';
-import { WORKSPACE_CONTEXT_REFRESH_EVENT } from '../../../src/collab/useWorkspaceContext';
+import { WORKSPACE_CONTEXT_REFRESH_EVENT } from '../../../src/local/useWorkspaceContext';
 
 afterEach(() => {
   cleanup();

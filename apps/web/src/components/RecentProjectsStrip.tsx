@@ -44,11 +44,9 @@ import {
   workspaceUpgradeUrl,
 } from './EntryNavRail';
 import { moveWorkspaceProject, workspaceProjectMoveErrorCode } from '../state/projects';
-import {
-  workspaceContextHasTeamIdentity,
-  type WorkspaceCollabContext,
-  type WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import { type WorkspaceProjectSummary } from '@open-design/contracts'
+import { workspaceContextHasTeamIdentity } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import { useWorkspaceInvalidation } from '../local/workspace-events';
 import {
   THUMBNAIL_OVERSCAN_MARGIN,
@@ -941,6 +939,7 @@ export function RecentProjectsStrip({
   useWorkspaceInvalidation(
     {
       'team-project-content-ready': ({ projectId, workspaceId }) => {
+        if (!projectId || !workspaceId) return;
         if (!activeRef.current) return;
         if (workspaceContext?.workspaceId !== workspaceId) return;
         void refreshProjectCover(projectId);

@@ -59,7 +59,7 @@ const TEAM_CONTEXT = {
   },
 };
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({ context: TEAM_CONTEXT, loading: false, refresh: vi.fn() }),
   useWorkspaceBilling: () => ({ membershipTier: '' }),
 }));

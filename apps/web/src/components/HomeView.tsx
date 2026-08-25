@@ -9,25 +9,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Dialog, DialogFooter, DialogTitle } from '@open-design/components';
-import type {
-  ApplyResult,
-  ChatSessionMode,
-  ConnectorDetail,
-  CreateProjectExampleReference,
-  InputFieldSpec,
-  McpServerConfig,
-  InstalledPluginRecord,
-  LocalCatalogScope,
-  ProjectKind,
-  WorkspaceCollabContext,
-  WorkspaceProjectSummary,
-  AudioVoiceOption,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
-import {
-  automaticStrategyTaskProfileForRouteId,
-  DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID,
-} from '@open-design/contracts';
+import type { ApplyResult, ChatSessionMode, ConnectorDetail, CreateProjectExampleReference, InputFieldSpec, McpServerConfig, InstalledPluginRecord, LocalCatalogScope, ProjectKind, WorkspaceProjectSummary, AudioVoiceOption, WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
+import { automaticStrategyTaskProfileForRouteId, DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID } from '@open-design/contracts';
 import { projectKindFromMetadataToTracking } from '@open-design/contracts/analytics';
 import { useAnalytics } from '../analytics/provider';
 import {

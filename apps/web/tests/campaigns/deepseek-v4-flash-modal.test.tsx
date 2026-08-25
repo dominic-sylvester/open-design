@@ -27,7 +27,7 @@ vi.mock('../../src/analytics/provider', () => ({
   useAnalytics: () => ({ track: trackSpy }),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({
     context: null,
     resourceReadIdentity: null,

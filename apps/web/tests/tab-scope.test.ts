@@ -5,7 +5,7 @@ import {
   UNSET_ACCOUNT_BUCKET,
   type TabIdentityScopeInputs,
   type TabScopeLoginStatus,
-} from '../src/collab/tab-scope';
+} from '../src/local/tab-scope';
 
 function loggedOut(profile = 'default'): TabScopeLoginStatus {
   return { loggedIn: false, profile, user: null };

@@ -10,11 +10,8 @@
 import { act, cleanup, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../../../src/local/types'
+import type { WorkspaceCollabContext } from '../../../../src/local/types';
 import {
   setCritiqueTheaterEnabled,
   useCritiqueTheaterEnabled,

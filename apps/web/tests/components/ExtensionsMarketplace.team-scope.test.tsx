@@ -26,7 +26,7 @@ const workspaceInvalidationHarness = vi.hoisted(() => ({
   autoActivate: true,
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn((
     handlers: Record<string, (payload: any) => void>,
     options?: { onActive?: () => void; enabled?: boolean; workspaceContext?: unknown },
@@ -102,8 +102,8 @@ let workspaceAccountGeneration = 0;
 // Spread the real module: this component also calls its PURE helpers
 // (beginWorkspaceScopedRead / workspaceIdentityCacheKey), and a mock that
 // replaces the whole module leaves them undefined at call time.
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>()),
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useWorkspaceContext')>()),
   useWorkspaceContext: () => ({
     context: workspaceContext,
     loading: workspaceContextLoading,

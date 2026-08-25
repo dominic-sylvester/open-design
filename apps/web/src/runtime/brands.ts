@@ -9,13 +9,8 @@
 // picker tests).
 
 import { useEffect, useState } from 'react';
-import type {
-  BrandExtractStartResponse,
-  BrandExtractFromHtmlRequest,
-  BrandFinalizeResponse,
-  BrandSummary,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { BrandExtractStartResponse, BrandExtractFromHtmlRequest, BrandFinalizeResponse, BrandSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { workspaceProjectHeaders } from '../state/projects';
 
 // One-shot cross-route handoff: the design-system id a navigation wants the

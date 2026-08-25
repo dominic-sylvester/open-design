@@ -8,7 +8,7 @@ vi.mock('@open-design/host', () => ({
   pickAndImportHostProject: vi.fn(),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({
     context: null,
     failure: 'unavailable',

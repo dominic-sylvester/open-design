@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 import { planLostAnchorWriteBacks, type CommentAnchorResolution } from '../src/comments.js';
-import { persistCommentAnchor, persistCommentAnchors } from '../src/collab/comment-anchor-client.js';
+import { persistCommentAnchor, persistCommentAnchors } from '../src/local/comment-anchor-client.js';
 import type { PreviewComment } from '../src/types.js';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../src/local/types';
 
 const POS = { x: 10, y: 20, width: 30, height: 40 };
 

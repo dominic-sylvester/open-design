@@ -1,8 +1,10 @@
+import type { WorkspaceCollabContext } from './types';
 import type {
-  WorkspaceCollabContext,
   WorkspaceInvalidationEventName,
   WorkspaceInvalidationSsePayload,
-} from './types';
+} from './collab-contracts';
+
+export type { WorkspaceInvalidationEventName, WorkspaceInvalidationSsePayload };
 import {
   useEventStream,
   type EventStreamActiveReason,

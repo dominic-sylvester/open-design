@@ -15,14 +15,14 @@
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../src/collab/workspace-events', () => ({
+vi.mock('../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn(() => ({ connected: false })),
 }));
 
 import { fetchProjectFiles, fetchRecentLinkedDirs } from '../src/providers/registry';
 import { listConversations, loadTabs } from '../src/state/projects';
-import { CollabClient, fetchProjectCollabStatus } from '../src/collab/collab-client';
-import { useProjectWorkspaceScope } from '../src/collab/useProjectWorkspaceScope';
+import { CollabClient, fetchProjectCollabStatus } from '../src/local/collab-client';
+import { useProjectWorkspaceScope } from '../src/local/useProjectWorkspaceScope';
 import {
   bootstrapExceptionTracking,
   getAnalyticsClient,

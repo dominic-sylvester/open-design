@@ -26,7 +26,7 @@ import {
 import { deriveUpdaterModel } from '../../src/lib/updater';
 import type { OpenDesignHostUpdaterStatusSnapshot } from '@open-design/host';
 import type { AppConfig, AppVersionInfo, ConnectionTestResponse } from '../../src/types';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 const originalFetch = globalThis.fetch;
 

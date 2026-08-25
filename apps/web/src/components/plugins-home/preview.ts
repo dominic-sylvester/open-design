@@ -16,10 +16,8 @@
 // branch on a single discriminator and lets the unit tests assert
 // classification without touching React.
 
-import type {
-  InstalledPluginRecord,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../local/types';
 import { workspaceResourceUrl } from '../../local/workspace-identity';
 
 export type PluginPreviewKind = 'media' | 'html' | 'design' | 'text';

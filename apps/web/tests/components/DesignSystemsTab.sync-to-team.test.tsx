@@ -18,12 +18,13 @@
 import React from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { DesignSystemSummary, WorkspaceCollabContext } from '@open-design/contracts';
+import type { DesignSystemSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { DesignSystemsTab } from '../../src/components/DesignSystemsTab';
 import { I18nProvider } from '../../src/i18n';
 import { resetCoalescedGet } from '../../src/lib/coalesced-get';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 const workspaceInvalidationHarness = vi.hoisted(() => ({
   handlers: [] as Array<Record<string, (payload: any) => void>>,
@@ -31,7 +32,7 @@ const workspaceInvalidationHarness = vi.hoisted(() => ({
   autoActivate: true,
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn((
     handlers: Record<string, (payload: any) => void>,
     options?: { onActive?: () => void; enabled?: boolean; workspaceContext?: unknown },
@@ -97,7 +98,7 @@ const SECOND_TEAM_CONTEXT = workspaceContextFixture({
 
 let workspaceContext: WorkspaceCollabContext | null = TEAM_CONTEXT;
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({ context: workspaceContext, loading: false, refresh: vi.fn() }),
   useWorkspaceBilling: () => ({ membershipTier: '' }),
 }));

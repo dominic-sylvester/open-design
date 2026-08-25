@@ -1,15 +1,7 @@
 import type { OkResponse } from '@open-design/contracts';
 import type { ProjectMetadata } from '@open-design/contracts';
 import type { ProjectSyncState } from '@open-design/contracts';
-import type {
-  PreviewAnnotationStyle,
-  PreviewCommentAnchorState,
-  PreviewCommentAttachment,
-  PreviewCommentMember,
-  PreviewCommentPosition,
-  PreviewCommentSelectionKind,
-  PreviewCommentStatus,
-} from '@open-design/contracts';
+import type { PreviewAnnotationStyle, PreviewCommentAnchorState, PreviewCommentAttachment, PreviewCommentMember, PreviewCommentPosition, PreviewCommentSelectionKind, PreviewCommentStatus } from '@open-design/contracts';
 
 // Team-edition collaboration shared DTOs: presence overlay (presence) and
 // the sync trigger. Single source of truth for the daemon routes, the web
@@ -873,4 +865,118 @@ export interface CollabCloudCommentPushResponse extends OkResponse {
 export interface CollabCloudCommentsResponse {
   comments: CollabCloudComment[];
   latestSeq: number;
+}
+
+export type WorkspaceInvalidationEventName =
+  | 'team-projects-changed'
+  | 'team-project-content-ready'
+  | 'team-resources-changed'
+  | 'workspace-context-changed'
+  | 'workspace-directory-changed'
+  | 'members-changed'
+  | 'billing-changed'
+  | 'billing-subscription-changed'
+  | 'wallet-balance-changed';
+
+export type WorkspaceInvalidationSsePayload =
+  | {
+      type: 'team-projects-changed';
+      projectId?: string;
+      kind?: 'catalog' | 'metadata';
+    }
+  | {
+      type: 'team-project-content-ready';
+      projectId?: string;
+      workspaceId?: string;
+    }
+  | {
+      type: 'team-resources-changed';
+      workspaceId?: string;
+      kind?: string;
+      resourceKind?: string;
+      resourceId?: string;
+    }
+  | { type: 'workspace-context-changed' }
+  | { type: 'workspace-directory-changed' }
+  | { type: 'members-changed' }
+  | {
+      type: 'billing-changed';
+      workspaceId?: string;
+      revision?: string;
+      at?: string;
+    }
+  | {
+      type: 'billing-subscription-changed';
+      workspaceId?: string;
+      workspaceMemberId?: string;
+      revision?: string;
+      at?: string;
+    }
+  | {
+      type: 'wallet-balance-changed';
+      workspaceId?: string;
+      workspaceMemberId?: string;
+      revision?: string;
+      at?: string;
+    };
+
+// Project-scoped collab SSE (local stubs after contracts removal).
+export const COLLAB_PROJECT_INVALIDATION_EVENTS = [
+  'comment-changed',
+  'presence-changed',
+  'project-metadata-changed',
+] as const;
+
+export const PROJECT_CONTENT_TRANSFER_STATE_EVENT = 'project-content-transfer-state';
+
+export type CollabProjectInvalidationSsePayload =
+  | { type: 'comment-changed'; projectId?: string }
+  | { type: 'presence-changed'; projectId?: string }
+  | { type: 'project-metadata-changed'; projectId?: string };
+
+export type ProjectContentTransferStateSsePayload = {
+  type: typeof PROJECT_CONTENT_TRANSFER_STATE_EVENT;
+  projectId?: string;
+  status?: 'downloading' | 'idle';
+};
+
+// Invite flow stubs (cloud team invites removed from contracts).
+export type WorkspaceInviteRole = 'admin' | 'member';
+
+export type LocalPendingInviteContinuationStatus =
+  | 'pending'
+  | 'accepted'
+  | 'failed'
+  | 'expired';
+
+export interface LocalPendingInviteContinuation {
+  token: string;
+  workspaceId: string;
+  status: LocalPendingInviteContinuationStatus;
+  lastAttemptAt?: number;
+}
+
+export interface LocalWorkspaceActivation {
+  workspaceId: string;
+}
+
+export interface InviteDeeplinkPayload {
+  token: string;
+  workspaceId?: string;
+}
+
+export interface WorkspaceInviteAcceptResponse {
+  ok: boolean;
+}
+
+export function normalizeWorkspaceInviteCreateErrorCode(code: string | undefined): string {
+  return code?.trim() ?? '';
+}
+
+export function buildInviteDeeplink(_payload: InviteDeeplinkPayload): string {
+  return '';
+}
+
+export function parseInviteDeeplink(_url: string): InviteDeeplinkPayload | null {
+  return null;
 }

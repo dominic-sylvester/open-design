@@ -2,17 +2,9 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID,
-  type DesignSystemSummary,
-  type InstalledPluginRecord,
-  type ConnectorDetail,
-  type McpServerConfig,
-  type SkillSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID, type DesignSystemSummary, type InstalledPluginRecord, type ConnectorDetail, type McpServerConfig, type SkillSummary } from '@open-design/contracts'
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 const workspaceA: WorkspaceCollabContext = {
   workspaceId: 'workspace-a',
@@ -38,8 +30,8 @@ vi.mock('../../src/components/home-hero/PlaceholderCarousel', () => ({
   PlaceholderCarousel: () => null,
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>();
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../src/local/useWorkspaceContext')>();
   return {
     ...actual,
     useWorkspaceContext: () => workspaceContextState,

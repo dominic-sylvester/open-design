@@ -1,18 +1,15 @@
 // @vitest-environment jsdom
 
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import type {
-  InstalledPluginRecord,
-  SkillSummary,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord, SkillSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PluginsView } from '../../src/components/PluginsView';
 import {
   notifyWorkspaceContextRefresh,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 import { I18nProvider } from '../../src/i18n';
 import { fetchSkills } from '../../src/providers/registry';
 import { listPluginMarketplaces, listPlugins } from '../../src/state/projects';
@@ -22,8 +19,8 @@ vi.mock('../../src/analytics/provider', async (importOriginal) => {
   return { ...actual, useAnalytics: () => ({ track: vi.fn() }) };
 });
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>()),
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useWorkspaceContext')>()),
   useWorkspaceContext: () => ({
     context: currentWorkspaceContext,
     loading: currentWorkspaceLoading,

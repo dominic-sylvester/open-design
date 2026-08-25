@@ -24,13 +24,7 @@
 // user is already looking at.
 
 import { useMemo, useState, type ReactNode } from 'react';
-import type {
-  InputField,
-  InstalledPluginRecord,
-  McpServerSpec,
-  PluginConnectorRef,
-  PluginManifest,
-} from '@open-design/contracts';
+import type { InputField, InstalledPluginRecord, McpServerSpec, PluginConnectorRef, PluginManifest } from '@open-design/contracts';
 import { Icon } from '../Icon';
 import { TrustBadge } from '../TrustBadge';
 import { authorInitials, derivePluginSourceLinks } from '../../runtime/plugin-source';

@@ -1,4 +1,5 @@
-import type { Brand, BrandColorRole, WorkspaceCollabContext } from '@open-design/contracts';
+import type { Brand, BrandColorRole } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   deleteProjectFile,
   fetchProjectFileText,

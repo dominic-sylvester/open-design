@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createElement, type ComponentProps } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { DesignSystemPreviewModal } from '../../src/components/DesignSystemPreviewModal';
 import { I18nProvider } from '../../src/i18n';
@@ -54,7 +54,7 @@ vi.mock('../../src/providers/registry', () => ({
   projectRawUrl: projectRawUrlMock,
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => workspaceContextState,
   workspaceResourceReadContext: (state: typeof workspaceContextState) =>
     state.resourceReadIdentity?.context ?? state.context,

@@ -34,14 +34,8 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { coalescedGet, evictCoalescedGet } from '../lib/coalesced-get';
-import {
-  workspaceSeatCapacityState,
-  type WorkspaceActiveResponse,
-  type WorkspaceBillingSummary,
-  type WorkspaceCollabContext,
-  type WorkspaceDirectoryItem,
-  type WorkspaceDirectoryResponse,
-} from '@open-design/contracts';
+import { workspaceSeatCapacityState } from '../local/types'
+import type { WorkspaceActiveResponse, WorkspaceBillingSummary, WorkspaceCollabContext, WorkspaceDirectoryItem, WorkspaceDirectoryResponse } from '../local/types';
 import {
   fetchVelaLoginStatus,
   formatVelaBalanceUsd,

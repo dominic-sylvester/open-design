@@ -16,10 +16,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../../src/App';
 import type { Route } from '../../src/router';
 import type { AppConfig, Project } from '../../src/types';
-import type {
-  WorkspaceCollabContext,
-  WorkspaceDirectoryItem,
-} from '@open-design/contracts';
+import type { WorkspaceCollabContext, WorkspaceDirectoryItem } from '../../src/local/types';
 import {
   fetchComposioConfigFromDaemon,
   fetchDaemonConfig,
@@ -40,7 +37,7 @@ import { listProjects, listTemplates } from '../../src/state/projects';
 import {
   resetWorkspaceBillingCache,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 import { resetWorkspaceDirectoryCache } from '../../src/components/EntryNavRail';
 
 const PROJECT_ROUTE: Route = {
@@ -59,9 +56,9 @@ vi.mock('../../src/router', () => ({
   useRoute: () => useRouteMock(),
 }));
 
-vi.mock('../../src/collab/useProjectRouteWorkspaceContext', async (importOriginal) => {
+vi.mock('../../src/local/useProjectRouteWorkspaceContext', async (importOriginal) => {
   const actual = await importOriginal<
-    typeof import('../../src/collab/useProjectRouteWorkspaceContext')
+    typeof import('../../src/local/useProjectRouteWorkspaceContext')
   >();
   return {
     ...actual,

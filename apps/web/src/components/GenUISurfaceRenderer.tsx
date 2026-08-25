@@ -10,10 +10,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useT } from '../i18n';
-import type {
-  GenUISurfaceSpec,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { GenUISurfaceSpec } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { workspaceResourceUrl } from '../local/workspace-identity';
 
 export interface PendingSurface {

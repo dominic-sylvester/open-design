@@ -12,10 +12,8 @@
 // the exact same view-model the Community grid uses — no third modal, no
 // duplicated data shaping.
 
-import type {
-  InstalledPluginRecord,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { createPortal } from 'react-dom';
 import { useT } from '../i18n';
 import type { Dict, Locale } from '../i18n/types';

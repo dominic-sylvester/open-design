@@ -12,16 +12,7 @@
 // The parser + payload types live in '@open-design/contracts' (od-card.ts) so
 // web and daemon share one source of truth. This file only renders.
 import { useEffect, useMemo, useState } from 'react';
-import type {
-  OdCard,
-  OdCardTaskBrief,
-  OdCardMemoryApplied,
-  OdCardMemoryRef,
-  OdCardVerifyScorecard,
-  OdCardRowStatus,
-  OdCardRuleProposal,
-  OdCardBrandBrowserAssist,
-} from '@open-design/contracts';
+import type { OdCard, OdCardTaskBrief, OdCardMemoryApplied, OdCardMemoryRef, OdCardVerifyScorecard, OdCardRowStatus, OdCardRuleProposal, OdCardBrandBrowserAssist } from '@open-design/contracts';
 import { Button } from '@open-design/components';
 import { Icon, type IconName } from './Icon';
 import { UserActionCard } from './UserActionCard';

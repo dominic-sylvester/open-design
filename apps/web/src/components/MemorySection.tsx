@@ -14,24 +14,7 @@ import { useT } from '../i18n';
 
 type Translate = ReturnType<typeof useT>;
 import { renderMarkdown } from '../runtime/markdown';
-import type {
-  ConnectorDetail,
-  ConnectorDiscoveryResponse,
-  ConnectorMemorySuggestionResponse,
-  ConnectorStatusResponse,
-  MemoryChangeEvent,
-  MemoryEntry,
-  MemoryEntrySummary,
-  MemoryExtractionEvent,
-  MemoryExtractionRecord,
-  MemoryExtractionSkipReason,
-  MemoryExtractionsResponse,
-  MemoryListResponse,
-  MemoryTreeListResponse,
-  MemoryTreeNode,
-  MemorySuggestion,
-  MemoryType,
-} from '@open-design/contracts';
+import type { ConnectorDetail, ConnectorDiscoveryResponse, ConnectorMemorySuggestionResponse, ConnectorStatusResponse, MemoryChangeEvent, MemoryEntry, MemoryEntrySummary, MemoryExtractionEvent, MemoryExtractionRecord, MemoryExtractionSkipReason, MemoryExtractionsResponse, MemoryListResponse, MemoryTreeListResponse, MemoryTreeNode, MemorySuggestion, MemoryType } from '@open-design/contracts';
 import {
   connectConnector,
   fetchConnectorStatuses,

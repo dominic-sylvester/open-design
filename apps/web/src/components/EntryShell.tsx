@@ -21,18 +21,8 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import {
-  automaticStrategyTaskProfileForProjectMetadata,
-  defaultScenarioPluginIdForProjectMetadata,
-  type AmrWalletSnapshot,
-  type ChatSessionMode,
-  type ConnectorDetail,
-  type CreateProjectExampleReference,
-  type InstalledPluginRecord,
-  type RunContextSelection,
-  type ProjectScenarioTaskProfile,
-  type WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import { automaticStrategyTaskProfileForProjectMetadata, defaultScenarioPluginIdForProjectMetadata, type ChatSessionMode, type ConnectorDetail, type CreateProjectExampleReference, type InstalledPluginRecord, type RunContextSelection, type ProjectScenarioTaskProfile, type WorkspaceProjectSummary } from '@open-design/contracts';
+import type { AmrWalletSnapshot, AmrSessionState } from '../local/types';
 import type { OpenDesignHostProjectImportSuccess } from '@open-design/host';
 import { useAnalytics } from '../analytics/provider';
 import {
@@ -428,7 +418,7 @@ interface Props {
   // During a transient Cloud outage it prevents the rail from presenting a
   // still-signed-in user as signed out.
   amrLoggedIn?: boolean | null;
-  amrSessionState?: import('@open-design/contracts').AmrSessionState;
+  amrSessionState?: AmrSessionState;
   /**
    * vela login-status account/user plan (ACCOUNT-scoped). Used for personal
    * workspaces so a confirmed free account is not stuck as campaign audience
@@ -883,6 +873,7 @@ export function EntryShell({
   ]);
   useWorkspaceInvalidation({
     'team-project-content-ready': ({ projectId, workspaceId }) => {
+      if (!projectId || !workspaceId) return;
       const currentWorkspaceId = workspaceContext?.workspaceId;
       const currentWorkspaceMemberId = workspaceContext?.workspaceMemberId;
       if (

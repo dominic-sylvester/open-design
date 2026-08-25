@@ -5,13 +5,7 @@
 // `PUT /api/mcp/servers` replaces the whole list — same pattern the media
 // providers PUT uses (the daemon takes the full set rather than merging).
 
-import type {
-  McpOAuthStatusResponse,
-  McpServerConfig,
-  McpServersResponse,
-  McpTemplate,
-  StartMcpOAuthResponse,
-} from '@open-design/contracts';
+import type { McpOAuthStatusResponse, McpServerConfig, McpServersResponse, McpTemplate, StartMcpOAuthResponse } from '@open-design/contracts';
 
 export type {
   McpOAuthStatusResponse,

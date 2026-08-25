@@ -1,13 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
-import type {
-  CreateRoutineRequest,
-  Routine,
-  RoutineProjectTarget,
-  RoutineRun,
-  RoutineSchedule,
-  Weekday,
-} from '@open-design/contracts';
+import type { CreateRoutineRequest, Routine, RoutineProjectTarget, RoutineRun, RoutineSchedule, Weekday } from '@open-design/contracts';
 
 import { Icon } from './Icon';
 import { navigate } from '../router';

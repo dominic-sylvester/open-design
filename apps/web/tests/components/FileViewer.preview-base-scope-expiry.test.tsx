@@ -23,15 +23,12 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ReactElement } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import {
   CollabProvider,
   type CollabContextValue,
-} from '../../src/collab/collab-context';
+} from '../../src/local/collab-context';
 import { FileViewer } from '../../src/components/FileViewer';
 import type { ProjectFile } from '../../src/types';
 

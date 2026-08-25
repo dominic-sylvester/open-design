@@ -17,7 +17,7 @@ import type {
   AmrAuthStage,
   AmrAuthStageResult,
   AmrAuthStageSource,
-} from '@open-design/contracts/analytics';
+} from '../local/amr-analytics-types';
 import type {
   ApiErrorResponse,
   ChatAnalyticsHints,
@@ -993,7 +993,7 @@ export interface VelaLiveAccount {
 
 export interface VelaLoginStatus {
   loggedIn: boolean;
-  sessionState?: import('@open-design/contracts').AmrSessionState;
+  sessionState?: import('../local/types').AmrSessionState;
   credentialRevision?: string;
   loginInFlight?: boolean;
   profile: string;

@@ -9,7 +9,7 @@ import {
   AMR_LOGIN_POLL_INTERVAL_MS,
   AMR_LOGIN_STATUS_EVENT,
   AMR_LOGIN_TIMEOUT_MS,
-} from '../../src/components/amrLoginPolling';
+} from '../../src/local/amrLoginPolling';
 import { I18nProvider } from '../../src/i18n';
 import { fetchProjectFiles } from '../../src/providers/registry';
 import type { AgentInfo, AppConfig } from '../../src/types';
@@ -1521,7 +1521,7 @@ describe('EntryShell onboarding OpenDesign AMR runtime', () => {
     // in its signed-out shape (still showing "Sign in to use OpenDesign
     // Cloud") right after a successful onboarding sign-in.
     const { WORKSPACE_CONTEXT_REFRESH_EVENT, WORKSPACE_BILLING_REFRESH_EVENT, TEAM_PROJECTS_CHANGED_EVENT } =
-      await import('../../src/collab/useWorkspaceContext');
+      await import('../../src/local/useWorkspaceContext');
     const contextRefresh = vi.fn();
     const billingRefresh = vi.fn();
     const teamProjectsChanged = vi.fn();

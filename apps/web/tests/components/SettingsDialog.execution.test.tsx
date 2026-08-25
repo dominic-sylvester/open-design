@@ -4,7 +4,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testi
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { OpenDesignHostUpdaterStatusSnapshot } from '@open-design/host';
 import { installMockOpenDesignHost } from '@open-design/host/testing';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { en } from '../../src/i18n/locales/en';
 
 function optionNames(container: HTMLElement): string[] {
@@ -113,7 +113,7 @@ import { providerModelsCacheKey } from '../../src/components/providerModelsCache
 import { I18nProvider } from '../../src/i18n';
 import { LOCALES } from '../../src/i18n/types';
 import { MAX_MAX_TOKENS, MIN_MAX_TOKENS } from '../../src/state/maxTokens';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 import type {
   AgentInfo,
   AppConfig,

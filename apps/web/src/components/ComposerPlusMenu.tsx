@@ -8,13 +8,8 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import type {
-  ConnectorDetail,
-  InstalledPluginRecord,
-  McpServerConfig,
-  SkillSummary,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { ConnectorDetail, InstalledPluginRecord, McpServerConfig, SkillSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { useI18n, useT } from '../i18n';
 import { LIBRARY_UI_VISIBLE } from '../features/libraryUi';
 import { ComposerPluginPreview } from './ComposerPluginPreview';

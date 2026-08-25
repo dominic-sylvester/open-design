@@ -30,10 +30,8 @@ import {
   useWorkspaceInvalidation,
 } from '../local/workspace-events';
 import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
-import {
-  workspaceContextHasTeamIdentity,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { workspaceContextHasTeamIdentity } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import type { Locale } from '../i18n/types';
 import {
   localizeDesignSystemCategory,

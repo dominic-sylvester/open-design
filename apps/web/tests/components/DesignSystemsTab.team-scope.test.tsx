@@ -65,7 +65,7 @@ const PERSONAL_CONTEXT = {
 
 let workspaceContext: unknown = FREE_TEAM_CONTEXT;
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({ context: workspaceContext, loading: false, refresh: vi.fn() }),
   useWorkspaceBilling: () => ({ membershipTier: '' }),
 }));

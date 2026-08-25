@@ -53,12 +53,7 @@ import { takeComposerSeedFor } from '../state/libraryHandoff';
 import { splitOnQuestionForms } from '../artifacts/question-form';
 import { stripArtifact } from '../artifacts/strip';
 import type { TodoItem } from '../runtime/todos';
-import type {
-  AppliedPluginSnapshot,
-  ChatSessionMode,
-  RunContextSelection,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, ChatSessionMode, RunContextSelection, WorkspaceContextItem } from '@open-design/contracts';
 import type {
   TrackingProjectKind,
   TrackingRunRecoveryActionType,
@@ -2913,7 +2908,7 @@ export function ChatPane({
                                   });
                                 }
                               }}
-                              onStatusChange={(loginStatus) => {
+                              onStatusChange={(loginStatus: VelaLoginStatus) => {
                                 consumeAmrAuthRetryIfAuthorized(loginStatus);
                               }}
                             />

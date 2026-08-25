@@ -13,18 +13,9 @@ import {
   commentSendSucceeded,
   type CommentSendResult,
 } from './comment-send-result';
-import {
-  buildSocialSharePayload,
-  OPEN_DESIGN_GITHUB_REPO_URL,
-  workspaceContextHasTeamIdentity,
-  type CollabCloudMemberDirectoryEntry,
-  type CollabMemberRole,
-  type AgentInfo,
-  type ProjectFileVersion,
-  type SocialShareRequest,
-  type SocialShareResponse,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildSocialSharePayload, OPEN_DESIGN_GITHUB_REPO_URL, type AgentInfo, type ProjectFileVersion, type SocialShareRequest, type SocialShareResponse } from '@open-design/contracts'
+import { workspaceContextHasTeamIdentity } from '../local/types';
+import type { CollabCloudMemberDirectoryEntry, CollabMemberRole, WorkspaceCollabContext } from '../local/types';
 import { PREVIEW_OBSERVABILITY_HOST_STATE_MESSAGE_TYPE } from '@open-design/contracts/runtime/preview-observability';
 import { PREVIEW_URL_GUARD_MAX_HTML_BYTES } from '@open-design/contracts/runtime/preview-guards';
 import {

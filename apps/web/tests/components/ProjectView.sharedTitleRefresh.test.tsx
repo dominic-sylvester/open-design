@@ -2,7 +2,7 @@
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useState, type ReactNode } from 'react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -16,7 +16,7 @@ import type {
   ProjectRenameFenceToken,
 } from '../../src/components/ProjectView';
 import { useIframeKeepAlivePool } from '../../src/components/IframeKeepAlivePool';
-import { useProjectCollab, type ProjectCollab } from '../../src/collab/useProjectCollab';
+import { useProjectCollab, type ProjectCollab } from '../../src/local/useProjectCollab';
 import { useProjectFileEvents, type ProjectEvent } from '../../src/providers/project-events';
 import type {
   AgentInfo,
@@ -90,9 +90,9 @@ vi.mock('../../src/providers/project-events', () => ({
   useProjectFileEvents: vi.fn(),
 }));
 
-vi.mock('../../src/collab/useProjectCollab', async () => {
-  const actual = await vi.importActual<typeof import('../../src/collab/useProjectCollab')>(
-    '../../src/collab/useProjectCollab',
+vi.mock('../../src/local/useProjectCollab', async () => {
+  const actual = await vi.importActual<typeof import('../../src/local/useProjectCollab')>(
+    '../../src/local/useProjectCollab',
   );
   return {
     ...actual,
@@ -100,8 +100,8 @@ vi.mock('../../src/collab/useProjectCollab', async () => {
   };
 });
 
-vi.mock('../../src/collab/useProjectWorkspaceScope', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useProjectWorkspaceScope')>()),
+vi.mock('../../src/local/useProjectWorkspaceScope', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useProjectWorkspaceScope')>()),
   useProjectWorkspaceScope: (
     projectId: string,
     workspaceContext: WorkspaceCollabContext | null,

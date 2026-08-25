@@ -23,17 +23,11 @@ import {
   projectKindFromMetadataToTracking,
   fidelityToTracking,
 } from '@open-design/contracts/analytics';
-import type {
-  ChatSessionMode,
-  CreateProjectExampleReference,
-  LocalCatalogScope,
-  RunContextSelection,
-  ProjectWorkspaceScope,
-  ProjectScenarioTaskProfile,
-  WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import type { ChatSessionMode, CreateProjectExampleReference, LocalCatalogScope, RunContextSelection, ProjectWorkspaceScope, ProjectScenarioTaskProfile, WorkspaceProjectSummary } from '@open-design/contracts';
 import type { AmrModelsResponse } from '@open-design/contracts';
-import type { WorkspaceCollabContext, WorkspaceInvalidationSsePayload, TeamProject } from './local/types';
+import { projectWorkspaceContext } from './local/useProjectWorkspaceScope';
+import type { WorkspaceCollabContext, TeamProject } from './local/types';
+import type { WorkspaceInvalidationSsePayload } from './local/workspace-events';
 import { DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID } from '@open-design/contracts';
 import { EntryView } from './components/EntryView';
 import type { ProjectTitleHint } from './components/EntryShell';
@@ -4107,7 +4101,7 @@ function AppInner() {
     const routeSnapshot = routeProjectSnapshotRef.current;
     const routeSnapshotContext =
       routeSnapshot?.workspaceContext
-      ?? routeSnapshot?.workspaceScope?.context
+      ?? projectWorkspaceContext(routeSnapshot?.workspaceScope ?? null)
       ?? null;
     const routeSnapshotMatches =
       routeRef.current.kind === 'project'
@@ -4374,7 +4368,7 @@ function AppInner() {
     workspaceContextState,
     routeProjectSnapshotRef.current?.project.id === loadedActiveProject?.id
       ? routeProjectSnapshotRef.current?.workspaceContext
-        ?? routeProjectSnapshotRef.current?.workspaceScope?.context
+        ?? projectWorkspaceContext(routeProjectSnapshotRef.current?.workspaceScope ?? null)
       : null,
   );
   // Never mount ProjectView around the synthetic "Untitled" placeholder. Its
@@ -5366,6 +5360,7 @@ function AppInner() {
         artifactUpgradeSlot={
           amrArtifactUpgradeHomeOffer ? (
             <AmrArtifactUpgradeHomeCard
+              offer={amrArtifactUpgradeHomeOffer}
               key={amrArtifactUpgradeHomeOffer.sessionKey}
               profile={amrLoginStatus?.profile ?? null}
               metricsConsent={config.telemetry?.metrics === true}
@@ -5508,7 +5503,9 @@ function AppInner() {
         onHomeOfferChange={
           amrArtifactUpgradeHomeMock
             ? undefined
-            : setAmrArtifactUpgradeHomeOffer
+            : (offer) => setAmrArtifactUpgradeHomeOffer(
+              offer as AmrArtifactUpgradeHomeOffer | null,
+            )
         }
       />
       <AnimatePresence>

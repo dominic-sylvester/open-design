@@ -6,7 +6,7 @@ import {
   stableAnalyticsRequestErrorCode,
   workspaceAnalyticsDimensions,
 } from '../../src/analytics/workspace';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 describe('workspace analytics dimensions', () => {
   it('emits stable Workspace dimensions without names or member identity', () => {

@@ -1,7 +1,4 @@
-import type {
-  FinalizeAnthropicRequest,
-  FinalizeProviderProtocol,
-} from '@open-design/contracts';
+import type { FinalizeAnthropicRequest, FinalizeProviderProtocol } from '@open-design/contracts';
 
 import { effectiveMaxTokens } from '../state/maxTokens';
 import type { ApiProtocol, AppConfig } from '../types';

@@ -3,14 +3,14 @@
 import React from 'react';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { DesignSystemPreviewModal } from '../../src/components/DesignSystemPreviewModal';
 import { DesignSystemsTab } from '../../src/components/DesignSystemsTab';
 import { BrandLogo } from '../../src/components/DesignKitView';
 import { I18nProvider } from '../../src/i18n';
 import type { DesignSystemDetail, DesignSystemSummary } from '../../src/types';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
@@ -29,15 +29,15 @@ const registryMocks = vi.hoisted(() => ({
   updateDesignSystemDraft: vi.fn(),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => workspaceHarness.state,
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn(),
 }));
 
-vi.mock('../../src/collab/workspace-snapshot-activation', () => ({
+vi.mock('../../src/local/workspace-snapshot-activation', () => ({
   useWorkspaceSnapshotActivation: () => vi.fn(),
 }));
 

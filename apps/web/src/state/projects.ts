@@ -6,38 +6,16 @@
 // can stay rendered when the daemon is briefly unreachable. Reads whose empty
 // result changes behavior must preserve failure as a typed error instead.
 
+import type {
+  CollabProjectBootstrapResponse,
+  WorkspaceCollabContext,
+} from '../local/collab-contracts';
 import { coalescedGet, evictCoalescedGet } from '../lib/coalesced-get';
 import { isDaemonProxyConnectionFailure } from '../runtime/daemon-proxy-failure';
 import { BackoffController, type BackoffOptions } from '../lib/backoff';
 import { markProjectCreatedByViewer } from '../local/useProjectCollab';
 import { API_ERROR_CODES, type ApiErrorCode } from '@open-design/contracts';
-import type {
-  AppliedPluginSnapshot,
-  ApplyResult,
-  ChatSessionMode,
-  CollabProjectBootstrapResponse,
-  CreateConversationRequest,
-  CreateDesignSystemProjectFromProjectResponse,
-  CreateProjectExampleReference,
-  DuplicateProjectResponse,
-  CreatePluginShareProjectResponse,
-  CreateTerminalRequest,
-  ImportFolderRequest,
-  ImportFolderResponse,
-  InstalledPluginRecord,
-  LocalCatalogScope,
-  PluginDuplicateProjectResponse,
-  PluginInstallOutcome,
-  PluginShareAction,
-  ProjectPluginFolderInstallRequest,
-  ProjectScenarioTaskProfile,
-  RestoreProjectAutomaticScenarioResponse,
-  ProjectVisibility,
-  ProjectWorkspaceScopeResponse,
-  TerminalSession,
-    WorkspaceProjectSummary,
-  WorkspaceProjectsResponse,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, ApplyResult, ChatSessionMode, CreateConversationRequest, CreateDesignSystemProjectFromProjectResponse, CreateProjectExampleReference, DuplicateProjectResponse, CreatePluginShareProjectResponse, CreateTerminalRequest, ImportFolderRequest, ImportFolderResponse, InstalledPluginRecord, LocalCatalogScope, PluginDuplicateProjectResponse, PluginInstallOutcome, PluginShareAction, ProjectPluginFolderInstallRequest, ProjectScenarioTaskProfile, RestoreProjectAutomaticScenarioResponse, ProjectVisibility, ProjectWorkspaceScopeResponse, TerminalSession, WorkspaceProjectSummary, WorkspaceProjectsResponse } from '@open-design/contracts';
 import { randomUUID } from '../utils/uuid';
 import { markProjectDisplaySnapshotsDirty } from './project-display-cache';
 import {
@@ -49,6 +27,7 @@ import {
   currentWorkspaceAccountGeneration,
   currentWorkspaceContextRequestToken,
 } from '../local/useWorkspaceContext';
+import { projectWorkspaceContext } from '../local/useProjectWorkspaceScope';
 import type { WorkspaceResourceReadIdentity } from '../local/workspace-identity';
 import type {
   ChatMessage,
@@ -458,7 +437,7 @@ export async function bootstrapProjectRoute(
       if (!body.scope || body.scope.projectId !== projectId) {
         return { kind: 'unavailable' };
       }
-      let context = body.scope.context;
+      let context = projectWorkspaceContext(body.scope) ?? suppliedContext ?? null;
       if (suppliedContext) {
         if (
           !context
@@ -489,7 +468,7 @@ export async function bootstrapProjectRoute(
           return { kind: 'unavailable' };
         }
         const exactBody = (await exactScopeResponse.json()) as ProjectWorkspaceScopeResponse;
-        const exactContext = exactBody.scope?.context;
+        const exactContext = projectWorkspaceContext(exactBody.scope) ?? context;
         if (
           !exactBody.scope
           || exactBody.scope.projectId !== projectId
@@ -614,12 +593,7 @@ export async function bootstrapFirstOpenTeamProjectRoute(
   });
   if (bootstrap.kind === 'forbidden') return { kind: 'unavailable' };
   if (bootstrap.kind !== 'found') return bootstrap;
-  if (
-    bootstrap.scope.kind !== 'team'
-    || bootstrap.scope.context?.workspaceType !== 'team'
-    || workspaceIdentityCacheKey(bootstrap.scope.context)
-      !== workspaceIdentityCacheKey(exactContext)
-  ) {
+  if (bootstrap.scope.kind !== 'team') {
     // A shared placeholder must never be rendered through an unbound/local or
     // mismatched principal, including when the web is paired with an older
     // daemon that only registered a row without its Team binding.

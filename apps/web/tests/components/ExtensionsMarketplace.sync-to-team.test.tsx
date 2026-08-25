@@ -61,8 +61,8 @@ const TEAM_CONTEXT = {
 let workspaceContext: unknown = TEAM_CONTEXT;
 
 // Spread the real module — see the note in ExtensionsMarketplace.team-scope.test.tsx.
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>()),
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useWorkspaceContext')>()),
   useWorkspaceContext: () => ({ context: workspaceContext, loading: false, refresh: vi.fn() }),
   useWorkspaceBilling: () => ({ membershipTier: '' }),
 }));

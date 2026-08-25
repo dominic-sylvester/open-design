@@ -1,9 +1,4 @@
-import type {
-  ProjectLocation,
-  ProjectLocationsResponse,
-  ScanProjectLocationsResponse,
-  UpdateProjectLocationsRequest,
-} from '@open-design/contracts';
+import type { ProjectLocation, ProjectLocationsResponse, ScanProjectLocationsResponse, UpdateProjectLocationsRequest } from '@open-design/contracts';
 
 export async function fetchProjectLocations(): Promise<ProjectLocation[]> {
   try {

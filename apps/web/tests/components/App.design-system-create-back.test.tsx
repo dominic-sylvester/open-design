@@ -33,9 +33,9 @@ import {
 } from '../../src/providers/registry';
 import { fetchAmrModels, fetchVelaLoginStatus } from '../../src/providers/daemon';
 import { listProjects, listTemplates } from '../../src/state/projects';
-import { resetWorkspaceContextCache } from '../../src/collab/useWorkspaceContext';
+import { resetWorkspaceContextCache } from '../../src/local/useWorkspaceContext';
 import { resetCoalescedGet } from '../../src/lib/coalesced-get';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 
 // The real router is deliberately NOT mocked: this spec is about which history
 // layer Back lands on, which only the real pushState/popstate bookkeeping can

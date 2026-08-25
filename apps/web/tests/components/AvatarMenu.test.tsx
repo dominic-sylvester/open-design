@@ -3,11 +3,11 @@
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { AvatarMenu } from '../../src/components/AvatarMenu';
 import { providerModelsCacheKey } from '../../src/components/providerModelsCache';
-import type { ProjectWorkspaceScopeState } from '../../src/collab/useProjectWorkspaceScope';
+import type { ProjectWorkspaceScopeState } from '../../src/local/useProjectWorkspaceScope';
 import type { AgentInfo, AppConfig, ExecMode } from '../../src/types';
 
 const { openExternalUrlMock } = vi.hoisted(() => ({
@@ -670,7 +670,6 @@ describe('AvatarMenu', () => {
           projectId: 'project-a',
           workspaceId: 'workspace-a',
           visibility: 'personal',
-          context: projectContext,
         },
       },
       agents: [{

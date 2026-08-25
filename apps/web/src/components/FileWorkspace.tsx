@@ -103,14 +103,8 @@ import {
   type ProjectFile,
   type ProjectFolder,
 } from '../types';
-import {
-  resolveLocalizedText,
-  type ChatSessionMode,
-  type InstalledPluginRecord,
-  type LocalizedText,
-  type WorkspaceCollabContext,
-  type WorkspaceContextItem,
-} from '@open-design/contracts';
+import { resolveLocalizedText, type ChatSessionMode, type InstalledPluginRecord, type LocalizedText, type WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   notifyTeamProjectsChanged,
   TEAM_PROJECTS_CHANGED_EVENT,

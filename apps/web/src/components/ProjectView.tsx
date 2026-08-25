@@ -62,16 +62,7 @@ import {
   resolveQuestionFormStrategyTaskExecutionId,
   strategySettledMessageFields,
 } from '../runtime/strategy-question-continuation';
-import {
-  hasCurrentAutomaticScenarioBinding,
-  type AmrWalletSnapshot,
-  type ByokChatProviderConfig,
-  type ByokMediaDefaults,
-  type ByokChatProtocol,
-  type ChatTaskExecutionAnalytics,
-  type ProjectWorkspaceScope,
-  type ResearchOptions,
-} from '@open-design/contracts';
+import { hasCurrentAutomaticScenarioBinding, type ByokChatProviderConfig, type ByokMediaDefaults, type ByokChatProtocol, type ChatTaskExecutionAnalytics, type ProjectWorkspaceScope, type ResearchOptions } from '@open-design/contracts';
 import {
   anonymizeArtifactId,
   artifactKindToTracking,
@@ -213,16 +204,8 @@ import {
   type SaveMessageOptions,
   waitGeneratedPluginShareTask,
 } from '../state/projects';
-import type {
-  AppliedPluginSnapshot,
-  BrandStatus,
-  ChatAnalyticsEntryFrom,
-  ChatSessionMode,
-  InstalledPluginRecord,
-  RunContextSelection,
-  WorkspaceCollabContext,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, BrandStatus, ChatAnalyticsEntryFrom, ChatSessionMode, InstalledPluginRecord, RunContextSelection, WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext, AmrWalletSnapshot } from '../local/types';
 import scenarioStyles from './ProjectScenarioControl.module.css';
 import type {
   AgentEvent,
