@@ -6,8 +6,9 @@ import type {
   ProjectContextPluginRef,
 } from './context.js';
 import type { ProjectSyncIntent, ProjectSyncIntentEvent, ProjectSyncState } from './project-sync.js';
-import type { TeamResourceState } from './team-resources.js';
-import type { WorkspaceCollabContext } from './collab.js';
+
+/** Lifecycle state of a team-scoped resource when workspace sharing is enabled. */
+export type TeamResourceState = 'active' | 'frozen' | 'deleted';
 
 export type ProjectKind =
   | 'prototype'
@@ -577,14 +578,12 @@ export type ProjectWorkspaceScope =
       projectId: string;
       workspaceId: string;
       visibility: ProjectVisibility;
-      context: WorkspaceCollabContext & { workspaceType: 'personal' };
     }
   | {
       kind: 'team';
       projectId: string;
       workspaceId: string;
       visibility: ProjectVisibility;
-      context: WorkspaceCollabContext & { workspaceType: 'team' };
     };
 
 /** GET /api/projects/:id/workspace-scope. */

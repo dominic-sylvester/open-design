@@ -49,7 +49,7 @@ import {
 } from '../providers/daemon';
 import { resetCloudSignInTipDismissal } from './CloudSignInTip';
 import { SignOutConfirmDialog } from './SignOutConfirmDialog';
-import { notifyAmrLoginStatusChanged } from './amrLoginPolling';
+import { notifyAmrLoginStatusChanged } from '../local/amrLoginPolling';
 import { Icon } from './Icon';
 import { GITHUB_STARS_FALLBACK_LABEL, formatStars, useGithubStars } from './useGithubStars';
 import { PlanWordmark, planBadgeTierForWorkspace } from './PlanWordmark';
@@ -70,11 +70,11 @@ import {
   workspaceBillingBalanceUsd,
   workspaceBillingSummaryForContext,
   workspaceIdentityCacheKey,
-} from '../collab/useWorkspaceContext';
-import { canUpgradeFromPlanTier, resolvePlanLabelTier } from '../collab/team-plan';
+} from '../local/useWorkspaceContext';
+import { canUpgradeFromPlanTier, resolvePlanLabelTier } from '../local/team-plan';
 import { shouldShowCreditsBalance } from './entry-rail-account-state';
-import { amrPlansUrlForProfile } from '../runtime/amr-guidance';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
+import { amrPlansUrlForProfile } from '../local/amr-guidance';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
 import { resolveDeepSeekV4FlashCampaignAudience } from '../campaigns/deepseek-v4-flash';
 import { useDeepSeekV4FlashCampaignVisibility } from '../campaigns/use-deepseek-v4-flash-campaign';
 import type { EntryHomeView } from '../router';

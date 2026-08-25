@@ -105,13 +105,13 @@ import {
   velaProjectSyncStateToProject,
   type VelaTeamProjectCatalogClient,
   type VelaTeamProjectRecord,
-} from '../../integrations/vela-team-projects.js';
-import type { ResourceHubPrincipal } from '../../collab/resource-principal.js';
+} from '../../workspace/team-project-stubs.js';
+import type { ResourceHubPrincipal } from '../../workspace/types.js';
 import {
   refuseTeamShareScope,
   type TeamShareScopeRefusal,
   type WorkspaceTypeRegistry,
-} from '../../collab/team-share-scope.js';
+} from '../../workspace/team-share-scope.js';
 import {
   headerValue,
   isWorkspaceResourceLocked as isWorkspaceLocked,
@@ -123,24 +123,24 @@ import {
   type WorkspaceResourceAccessInput,
   type WorkspaceResourceContext,
   type WorkspaceResourceMutationCapability,
-} from '../../collab/workspace-resource-mutation.js';
+} from '../../workspace/workspace-resource-mutation.js';
 import {
   resolveLocalProjectWorkspaceScope,
-} from '../../collab/project-workspace-scope.js';
+} from '../../workspace/project-workspace-scope.js';
 import {
   createAuthorizeProjectRequest,
   enforceLocalProjectDataPlaneRequest,
   type AuthorizeProjectRequest,
-} from '../../collab/project-request-authority.js';
+} from '../../workspace/project-request-authority.js';
 import {
   bindCreatedProjectToWorkspace,
   createCreatedProjectWorkspaceResolver,
   CreatedProjectWorkspaceResolutionError,
   localProjectWorkspaceAttribution,
   type CreatedProjectWorkspaceResolver,
-} from '../../collab/created-project-workspace.js';
+} from '../../workspace/created-project-workspace.js';
 import { localPluginRegistryScope } from '../../plugins/local-source.js';
-import type { WorkspaceDirectoryFetchResult } from '../../collab/vela-workspace-context.js';
+import type { WorkspaceDirectoryFetchResult } from '../../workspace/team-project-stubs.js';
 import { cancelRunsOwnedBy } from './cancel-owned-runs.js';
 
 export function rewriteOutsideExecutableHtmlRanges(
@@ -2084,6 +2084,7 @@ export function registerProjectRoutes(app: Express, ctx: RegisterProjectRoutesDe
       teamId: ctx.workspaceId,
       role: ctx.role,
       lifecycleState: ctx.lifecycleState,
+      workspaceType: 'team',
     };
   }
   function msFromIso(value: string): number {

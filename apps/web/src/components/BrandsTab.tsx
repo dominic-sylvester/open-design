@@ -14,11 +14,11 @@ import { BrandLogo, BrandPreviewCard, hostnameOf } from './BrandPreviewCard';
 import { BrandReferencePicker } from './BrandReferencePicker';
 import { NewBrandModal } from './NewBrandModal';
 import styles from './BrandsTab.module.css';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import {
   resolveWorkspaceResourceReadIdentity,
   workspaceResourceReadIdentityKey,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 
 export interface BrandsTabProps {
   /**

@@ -49,7 +49,7 @@ import {
   OPEN_DESIGN_BRIEF_APP_HTML,
   OPEN_DESIGN_BRIEF_APP_VERSION,
 } from './mcp-apps/brief-resource.js';
-import { DEFAULT_AMR_RECHARGE_URL } from './integrations/vela-errors.js';
+import { DEFAULT_AMR_RECHARGE_URL } from './workspace/amr-stubs.js';
 import {
   type ExternalPluginContext,
   logicalPluginRequestDigest,

@@ -15,7 +15,7 @@ import {
 } from '../i18n/content';
 import { fetchSkill } from '../providers/registry';
 import { Icon } from './Icon';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 
 interface Props {
   skill: SkillSummary;

@@ -1,6 +1,5 @@
 import { expect, test } from '@/playwright/suite';
 import { applyStandardMocks } from '@/playwright/mock-factory';
-import { mockAmrPersonalWorkspace } from '@/playwright/amr';
 import { ensureRailOpen } from '@/playwright/rail';
 import { T } from '@/timeouts';
 
@@ -82,7 +81,6 @@ for (const direction of ['ltr', 'rtl'] as const) {
   test(`[P1] signed-in ${direction.toUpperCase()} update prompt opens below the standalone rocket within the viewport`, async ({
     page,
   }) => {
-    await mockAmrPersonalWorkspace(page);
     await page.setViewportSize({ width: 700, height: 600 });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.getByText('Loading OpenDesign…').waitFor({ state: 'hidden', timeout: T.long });

@@ -3,7 +3,7 @@
 // dropdown chevron. Strokes are normalized to currentColor so the badge
 // follows the surrounding icon color.
 
-import { isTeamPlanTier } from '../collab/team-plan';
+import { isTeamPlanTier } from '../local/team-plan';
 
 export type PlanBadgeTier = 'free' | 'plus' | 'pro' | 'max' | 'team';
 

@@ -72,7 +72,7 @@ import { useKitModuleUpload } from '../runtime/kit-upload';
 import {
   appendResourceQuery,
   workspaceIdentityCacheKey,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   DesignKitView,
   type DesignKitActionFeedbackTone,
@@ -114,8 +114,8 @@ import {
 import {
   notifyTeamProjectsChanged,
   TEAM_PROJECTS_CHANGED_EVENT,
-} from '../collab/useWorkspaceContext';
-import { useProjectCollabContext } from '../collab/collab-context';
+} from '../local/useWorkspaceContext';
+import { useProjectCollabContext } from '../local/collab-context';
 import { createTerminal, killTerminal, listPlugins, moveWorkspaceProject } from '../state/projects';
 import { MoveToTeamConfirmDialog, moveConfirmSkipped } from './MoveToTeamConfirmDialog';
 import { DesignFilesPanel, type DesignFilesNavState } from './DesignFilesPanel';
@@ -132,8 +132,8 @@ import { APP_CHROME_FILE_ACTIONS_ID } from './AppChromeHeader';
 import { FileViewer, LiveArtifactViewer } from './FileViewer';
 import { useIframeKeepAlivePool } from './IframeKeepAlivePool';
 import { Icon, type IconName } from './Icon';
-import { projectIsSharedWithWorkspace } from '../collab/project-shared-status';
-import { FileSyncBadge, type FileSyncBadgeState } from '../collab/FileSyncBadge';
+import { projectIsSharedWithWorkspace } from '../local/project-shared-status';
+import { FileSyncBadge, type FileSyncBadgeState } from '../local/FileSyncBadge';
 import { Toast } from './Toast';
 import { TabLauncherMenu } from './workspace/TabLauncherMenu';
 import { buildLauncherActions, type LauncherContext } from './workspace/tab-launcher';

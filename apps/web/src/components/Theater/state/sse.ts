@@ -8,7 +8,7 @@ import {
 import type { WorkspaceCollabContext } from '@open-design/contracts';
 
 import type { CritiqueAction } from './reducer';
-import { workspaceResourceUrl } from '../../../collab/workspace-identity';
+import { workspaceResourceUrl } from '../../../local/workspace-identity';
 import { BackoffController } from '../../../lib/backoff';
 
 export interface CritiqueEventsConnection {

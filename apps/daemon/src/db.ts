@@ -9,19 +9,22 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import type {
-  CollabCloudComment,
   OdNextDevicePlatformV1,
   ProjectBrowserWorkspaceTab,
   ProjectTabsState,
 } from '@open-design/contracts';
+
+type CollabCloudComment = Record<string, unknown>;
 import { eventsEndedWithUnfinishedWork } from '@open-design/contracts';
-import { migrateCollabSyncSnapshots } from './collab/sync-snapshot-store.js';
-import { migrateCommentRelayOutbox } from './collab/comment-relay-outbox.js';
-import { migratePublicFilePublications } from './collab/public-file-publication-store.js';
+import {
+  migrateCollabSyncSnapshots,
+  migrateCommentRelayOutbox,
+  migratePublicFilePublications,
+} from './workspace/db-legacy-migrations.js';
 import {
   collapseWorkspaceProjectHomes,
   type WorkspaceProjectHomeRow,
-} from './collab/workspace-project-home.js';
+} from './workspace/workspace-project-home.js';
 import { migrateCritique } from './critique/persistence.js';
 import { migrateMediaTasks } from './media/tasks.js';
 import { migrateLibrary } from './library-store.js';

@@ -13,7 +13,7 @@ import {
 import {
   workspaceIdentityCacheKey,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 export interface ProjectFileChangeEvent {
   type: 'file-changed';
   path: string;

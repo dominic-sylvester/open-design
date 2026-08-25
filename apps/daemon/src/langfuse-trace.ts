@@ -31,7 +31,6 @@ import {
 
 import type { TelemetryPrefs } from './app-config.js';
 import { normalizeOpenDesignTelemetryRelayUrl } from './integrations/telemetry-relay.js';
-import { readVelaControlApiContext } from './integrations/vela.js';
 import {
   deriveRunTelemetryExportExpectation,
   exportRunObservation,
@@ -484,9 +483,8 @@ export function readTaskTelemetrySinkConfig(
   return readTelemetrySinkConfig(env);
 }
 
-function isVelaTelemetryEnabled(env: NodeJS.ProcessEnv): boolean {
-  const raw = env.OPEN_DESIGN_VELA_TELEMETRY?.trim().toLowerCase();
-  return raw !== '0' && raw !== 'false' && raw !== 'off' && raw !== 'no';
+function isVelaTelemetryEnabled(_env: NodeJS.ProcessEnv): boolean {
+  return false;
 }
 
 /**

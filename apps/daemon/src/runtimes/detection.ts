@@ -17,7 +17,6 @@ import {
   rememberUnusableExecutable,
   resolveAmrOpenCodeExecutable,
 } from './executables.js';
-import { resolveAmrProfile } from '../integrations/vela.js';
 import {
   buildAuthDiagnostic,
   buildCompatibilityDiagnostic,
@@ -179,8 +178,8 @@ function configuredEnvForAgent(
   return configuredEnvByAgent?.[configAgentId] ?? {};
 }
 
-function amrModelScopeFromEnv(env: NodeJS.ProcessEnv): string {
-  return resolveAmrProfile(env);
+function amrModelScopeFromEnv(_env: NodeJS.ProcessEnv): string {
+  return 'local';
 }
 
 function withRememberedAmrModels(

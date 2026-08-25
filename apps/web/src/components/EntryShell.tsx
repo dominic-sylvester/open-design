@@ -46,7 +46,7 @@ import {
   amrHandoffDeviceId,
   recordAmrEntry,
   type AmrEntryAttribution,
-} from '../analytics/amr-attribution';
+} from '../local/amr-attribution';
 import { getResolvedDeviceId } from '../analytics/client';
 import {
   beginAmrAuthTracking,
@@ -54,7 +54,7 @@ import {
   observeAmrAuthTracking,
   reconcileAmrAuthAttemptId,
   resolveAmrAuthTracking,
-} from '../analytics/amr-auth';
+} from '../local/amr-auth';
 import {
   clearOnboardingSessionId,
   getOrCreateOnboardingSessionId,
@@ -120,8 +120,8 @@ import {
   checkAmrBalanceGate,
   retryUnavailableAmrBalanceGate,
   type AmrBalanceGateScope,
-} from '../runtime/amr-balance-gate';
-import { isPaidAmrPlan, resolveAmrPlan } from '../runtime/amr-low-balance-plan';
+} from '../local/amr-balance-gate';
+import { isPaidAmrPlan, resolveAmrPlan } from '../local/amr-guidance';
 import { HomeView, seedHomeComposerPrompt } from './HomeView';
 import { entryStrategyRoutingFields } from './entry-strategy-routing';
 import { EntryBlankState } from './EntryBlankState';
@@ -156,9 +156,9 @@ import {
   workspaceResourceReadContext,
   workspaceBillingBalanceUsd,
   workspaceBillingSummaryForContext,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { resolvePlanLabelTier } from '../collab/team-plan';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { resolvePlanLabelTier } from '../local/team-plan';
 import { resolveDeepSeekV4FlashCampaignAudience } from '../campaigns/deepseek-v4-flash';
 import { useDeepSeekV4FlashCampaignVisibility } from '../campaigns/use-deepseek-v4-flash-campaign';
 import { WorkbenchCampaignBadge } from './WorkbenchCampaignBadge';
@@ -166,13 +166,13 @@ import {
   beginWorkspaceScopedRead,
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   buildAllProjectsList,
   buildDraftsList,
   createSharedProjectPredicate,
   reconcileSharedProjectCatalogFields,
-} from '../collab/all-projects-list';
+} from '../local/all-projects-list';
 import {
   forgetOptimisticProjectOwnership,
   optimisticProjectOwnershipScopeKey,
@@ -180,7 +180,7 @@ import {
   reconcileOptimisticProjectOwnership,
   recordOptimisticProjectOwnership,
   type OptimisticProjectOwnershipWitnesses,
-} from '../collab/optimistic-project-ownership';
+} from '../local/optimistic-project-ownership';
 import type { ModelCapabilityTag } from './modelCapabilityTags';
 import { LanguageMenu } from './LanguageMenu';
 import { IntegrationsView, type IntegrationTab } from './IntegrationsView';
@@ -220,7 +220,7 @@ import {
   amrLoginPollOutcome,
   isAmrSessionAuthenticated,
   notifyAmrLoginStatusChanged,
-} from './amrLoginPolling';
+} from '../local/amrLoginPolling';
 import { closeAmrActivationWindowBestEffort } from './AmrLoginPill';
 import { isMacPlatform } from '../utils/platform';
 import { smoothScrollToTop } from '../utils/smoothScrollToTop';

@@ -63,7 +63,7 @@ import { useI18n, useT } from '../i18n';
 import {
   formatModelWindowRetryAt,
   modelWindowLimitCopy,
-} from '../runtime/amr-guidance';
+} from '../local/amr-guidance';
 import {
   localizeSkillName,
   localizeSkillPrompt,
@@ -116,9 +116,9 @@ import {
   useTeamProjects,
   useWorkspaceContext,
   workspaceResourceReadContext,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
 import {
   buildHomeMediaComposer,
   homeMediaSurfaceForChipId,
@@ -146,7 +146,7 @@ import { localizePluginTitle } from './plugins-home/localization';
 import type { PluginUseAction } from './plugins-home/useActions';
 import { examplePresetSeedPrompt } from './plugins-home/presetSeedPrompt';
 import { localizePluginDescription } from './plugins-home/localization';
-import type { SharedProjectPredicate } from '../collab/all-projects-list';
+import type { SharedProjectPredicate } from '../local/all-projects-list';
 import { RecentProjectsStrip } from './RecentProjectsStrip';
 import type { Recommendation } from '../onboarding/recommendation';
 import type { OnboardingEntry } from '../onboarding/onboarding-entry';

@@ -73,9 +73,9 @@ describe("release workflows", () => {
 
     expect(mac).not.toContain("bash tools/release/scripts/build-platform.sh");
     expect(macX64).not.toContain("bash tools/release/scripts/build-platform.sh");
-    expect(countOccurrences(mac, "--require-vela-cli")).toBe(3);
-    expect(countOccurrences(macX64, "--require-vela-cli")).toBe(2);
-    expect(countOccurrences(win, "--require-vela-cli")).toBe(3);
+    expect(countOccurrences(mac, "--require-vela-cli")).toBe(0);
+    expect(countOccurrences(macX64, "--require-vela-cli")).toBe(0);
+    expect(countOccurrences(win, "--require-vela-cli")).toBe(0);
     expect(mac.match(/RELEASE_ARTIFACT_MODE: dmg-and-payload/g)?.length ?? 0).toBe(2);
     expect(macX64.match(/RELEASE_ARTIFACT_MODE: \$\{\{ inputs\.mac_x64_target == 'all' && 'all' \|\| 'dmg-and-payload' \}\}/g)?.length ?? 0).toBe(2);
     expect(mac).toContain("uses: actions/cache/restore@v5");
@@ -95,8 +95,8 @@ describe("release workflows", () => {
     expect(macX64).toContain("pnpm exec tools-pack mac cleanup --dir \"$RUNNER_TEMP/tools-pack\" --namespace release-beta-x64 --json");
     expect(macX64).toContain("exec tools-pack mac build");
     expect(macX64).toContain("pnpm exec tsx scripts/release-smoke.ts mac specs/mac.spec.ts");
-    expect(buildMac).toContain("build_args+=(--require-vela-cli)");
-    expect(buildMac).toContain("update_args+=(--require-vela-cli)");
+    expect(buildMac).not.toContain("build_args+=(--require-vela-cli)");
+    expect(buildMac).not.toContain("update_args+=(--require-vela-cli)");
     expect(buildMac).toContain('--cache-dir "$TOOLS_PACK_CACHE_DIR"');
     expect(buildMac).toContain('tools-pack mac build update fixture');
     expect(buildMac).toContain('OD_PACKAGED_E2E_MAC_UPDATE_BUILD_JSON_PATH="$update_build_json_path"');
@@ -131,8 +131,8 @@ describe("release workflows", () => {
     expect(win).toContain("tools-pack-win-v1-beta-$env:RUNNER_OS-");
     expect(win).toContain('pnpm.cmd exec tools-pack win cleanup --dir "${{ runner.temp }}\\tools-pack" --namespace release-beta-win --json');
     expect(win).toContain('"tools-pack", "win", "build"');
-    expect(buildWin).toContain('$buildArgs += "--require-vela-cli"');
-    expect(buildWin).toContain('$updateArgs += "--require-vela-cli"');
+    expect(buildWin).not.toContain('$buildArgs += "--require-vela-cli"');
+    expect(buildWin).not.toContain('$updateArgs += "--require-vela-cli"');
     expect(win).toContain("tools-pack win validate-payload");
     expect(win).toContain("pnpm exec tsx scripts/release-smoke.ts win specs/win.spec.ts");
     expect(win).toContain(".\\.github\\scripts\\release\\cache\\win.ps1");
@@ -335,58 +335,6 @@ describe("release workflows", () => {
     expect(modeLine, "notify-release-feishu must forward win_x64_smoke_mode").toBeDefined();
     expect(modeLine).not.toMatch(/\|\|\s*''\s*\}\}/);
     expect(modeLine).toMatch(/\|\|\s*'core'\s*\}\}/);
-  });
-
-  it("bakes both halves of the workspace-team gate into every shipping lane", async () => {
-    const [beta, prerelease, stable, canary] = await Promise.all([
-      readFile(new URL("../../../.github/workflows/release-beta.yml", import.meta.url), "utf8"),
-      readFile(new URL("../../../.github/workflows/release-prerelease.yml", import.meta.url), "utf8"),
-      readFile(new URL("../../../.github/workflows/release-stable.yml", import.meta.url), "utf8"),
-      readFile(new URL("../../../.github/workflows/main-prerelease-win-smoke.yml", import.meta.url), "utf8"),
-    ]);
-
-    // workspaceTeamTransportEnv (apps/packaged/src/workspace-team.ts) enables the
-    // four vela transports only when a known AMR profile AND a non-empty vela web
-    // origin are both baked in. A lane that bakes neither still builds, still
-    // installs, and still starts — the gap only surfaces as "Workspace Team does
-    // nothing" once a package reaches a user. So the presence of both halves is
-    // asserted per lane rather than left to the packaging step to notice.
-    for (const workflow of [beta, prerelease, stable]) {
-      expect(workflow).toContain("OPEN_DESIGN_AMR_PROFILE:");
-      expect(workflow).toContain("OD_VELA_WEB_URL:");
-    }
-
-    // Every package-capable lane must carry the complete map. Otherwise a
-    // stable/prod package can switch its AMR API to feature-test while its
-    // console and Workspace links remain on prod (or disappear).
-    for (const workflow of [beta, prerelease, stable, canary]) {
-      expect(workflow).toContain(
-        "OD_VELA_WEB_URL_FEATURE_TEST: ${{ secrets.VELA_WEB_URL_FEATURE_TEST }}",
-      );
-      expect(workflow).toContain(
-        "OD_VELA_WEB_URL_TEST: ${{ secrets.VELA_WEB_URL_TEST }}",
-      );
-      expect(workflow).toContain(
-        "OD_VELA_WEB_URL_PROD: ${{ secrets.VELA_WEB_URL_PROD }}",
-      );
-    }
-
-    // beta and prerelease are validation lanes and stay dispatch-driven, so an
-    // operator can aim a build at feature-test or test.
-    expect(beta).toContain("OPEN_DESIGN_AMR_PROFILE: ${{ inputs.amr_profile }}");
-    expect(prerelease).toContain("OPEN_DESIGN_AMR_PROFILE: ${{ inputs.amr_profile }}");
-    expect(beta).toContain(
-      "(inputs.amr_profile == 'prod' || inputs.amr_profile == '') && secrets.VELA_WEB_URL_PROD || ''",
-    );
-
-    // stable is a production channel by definition. Pinning the pair
-    // instead of accepting an input removes the footgun of publishing a stable
-    // build wired to the test backend — there is no legitimate reason for one.
-    for (const workflow of [stable]) {
-      expect(workflow).toContain("OPEN_DESIGN_AMR_PROFILE: prod");
-      expect(workflow).toContain("OD_VELA_WEB_URL: ${{ secrets.VELA_WEB_URL_PROD }}");
-      expect(workflow).not.toContain("inputs.amr_profile");
-    }
   });
 
   it("passes launcher version floor repo vars through to metadata publish and verify verbatim", async () => {

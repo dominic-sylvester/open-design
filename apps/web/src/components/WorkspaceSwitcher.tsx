@@ -3,7 +3,7 @@ import type { WorkspaceCollabContext } from '@open-design/contracts';
 import { Icon } from './Icon';
 import { useI18n } from '../i18n';
 import { navigate } from '../router';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import styles from './WorkspaceSwitcher.module.css';
 
 // The team-workspace affordance. When the signed-in identity is a team workspace,

@@ -9,7 +9,7 @@
 import { coalescedGet, evictCoalescedGet } from '../lib/coalesced-get';
 import { isDaemonProxyConnectionFailure } from '../runtime/daemon-proxy-failure';
 import { BackoffController, type BackoffOptions } from '../lib/backoff';
-import { markProjectCreatedByViewer } from '../collab/useProjectCollab';
+import { markProjectCreatedByViewer } from '../local/useProjectCollab';
 import { API_ERROR_CODES, type ApiErrorCode } from '@open-design/contracts';
 import type {
   AppliedPluginSnapshot,
@@ -35,8 +35,7 @@ import type {
   ProjectVisibility,
   ProjectWorkspaceScopeResponse,
   TerminalSession,
-  WorkspaceCollabContext,
-  WorkspaceProjectSummary,
+    WorkspaceProjectSummary,
   WorkspaceProjectsResponse,
 } from '@open-design/contracts';
 import { randomUUID } from '../utils/uuid';
@@ -45,12 +44,12 @@ import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   currentWorkspaceAccountGeneration,
   currentWorkspaceContextRequestToken,
-} from '../collab/useWorkspaceContext';
-import type { WorkspaceResourceReadIdentity } from '../collab/workspace-identity';
+} from '../local/useWorkspaceContext';
+import type { WorkspaceResourceReadIdentity } from '../local/workspace-identity';
 import type {
   ChatMessage,
   Conversation,
@@ -64,7 +63,7 @@ import { boundedRequestErrorCode } from '../analytics/workspace';
 
 export type { PluginInstallOutcome } from '@open-design/contracts';
 export type { PluginShareAction } from '@open-design/contracts';
-export { workspaceProjectHeaders } from '../collab/workspace-identity';
+export { workspaceProjectHeaders } from '../local/workspace-identity';
 
 export type WorkspaceProjectListView = 'all' | 'recent' | 'drafts' | 'team';
 
@@ -556,7 +555,7 @@ export async function bootstrapProjectRoute(
  * Progressive first-open lane for a Team project that is present in the hub
  * but absent from this daemon's local data root.
  *
- * `/collab/bootstrap` owns the exact-directory authorization, shared-owner
+ * `/local/bootstrap` owns the exact-directory authorization, shared-owner
  * discovery, placeholder stamp, and background single-flight pull. Its
  * idempotent PUT is safely replayable by the sidecar proxy after a reused
  * keep-alive socket resets. A current daemon atomically binds the placeholder
@@ -584,7 +583,7 @@ export async function bootstrapFirstOpenTeamProjectRoute(
   let bootstrapResponse: CollabProjectBootstrapResponse;
   try {
     const response = await fetch(
-      `/api/projects/${encodeURIComponent(projectId)}/collab/bootstrap`,
+      `/api/projects/${encodeURIComponent(projectId)}/local/bootstrap`,
       {
         method: 'PUT',
         cache: 'no-store',

@@ -1,6 +1,6 @@
 import type { WorkspaceCollabContext } from '@open-design/contracts';
 
-import { workspaceIdentityCacheKey } from '../collab/workspace-identity';
+import { workspaceIdentityCacheKey } from '../local/workspace-identity';
 import type { Project } from '../types';
 
 export type ProjectDisplayView = 'all' | 'recent' | 'drafts' | 'team';

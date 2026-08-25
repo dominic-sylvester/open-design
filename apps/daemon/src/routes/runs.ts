@@ -33,12 +33,12 @@ import { newInsertId, readAnalyticsContext } from '../analytics.js';
 import type { AnalyticsContext } from '../analytics.js';
 import { spawnEnvForAgent } from '../agents.js';
 import { agentCliEnvForAgent, readAppConfig } from '../app-config.js';
-import type { AuthorizeProjectRequest } from '../collab/project-request-authority.js';
+import type { AuthorizeProjectRequest } from '../workspace/project-request-authority.js';
 import {
   workspaceResourceContextFromRequest,
   type BoundWorkspaceResourceMutationGate,
   type WorkspaceResourceAccessInput,
-} from '../collab/workspace-resource-mutation.js';
+} from '../workspace/workspace-resource-mutation.js';
 import {
   codexSessionIdFromRunEvents,
   readCodexRolloutFirstCall,
@@ -53,7 +53,6 @@ import {
   updateProject,
   upsertMessage,
 } from '../db.js';
-import { readVelaLoginStatus } from '../integrations/vela.js';
 import {
   ensureDetectedRuntimeCapabilities,
   ensureDetectedRuntimeVersions,
@@ -186,7 +185,7 @@ import {
   accountScopedRunWorkspaceScopeForProject,
   pinRunWorkspaceScopeForProject,
   type RunWorkspaceScope,
-} from '../runtimes/project-amr-trace-env.js';
+} from '../workspace/run-workspace-scope.js';
 import {
   runArtifactCountForRun,
   runDesignSystemCreatedForRun,
@@ -1561,22 +1560,16 @@ export function registerRunRoutes(app: Express, ctx: RegisterRunRoutesDeps) {
       return { ok: true, workspaceScope };
     }
 
-    // This migration guard is deliberately AMR-only. Local CLIs, BYOK
-    // providers, and every other runtime retain the legacy unbound path and do
-    // not even probe AMR login or Workspace authority.
-    if (agentId !== 'amr' || !ctx.amrWorkspaceScope) {
-      return { ok: true, workspaceScope: null };
+    if (agentId === 'amr') {
+      sendApiError(
+        res,
+        400,
+        'AGENT_UNAVAILABLE',
+        'OpenDesign Cloud (AMR) is not available in this build',
+      );
+      return { ok: false };
     }
-    if (!await ctx.amrWorkspaceScope.isSignedIn()) {
-      return { ok: true, workspaceScope: null };
-    }
-
     if (requestContext === null) {
-      // A headerless, genuinely unbound project is the local/account-scoped
-      // compatibility lane. Home may create it before Workspace discovery
-      // settles, after already running the account balance gate; requiring a
-      // later identity here would turn that accepted first prompt into a 409.
-      // Explicitly bound projects still pin their persisted Workspace above.
       return {
         ok: true,
         workspaceScope: accountScopedRunWorkspaceScopeForProject(projectId),
@@ -1591,78 +1584,10 @@ export function registerRunRoutes(app: Express, ctx: RegisterRunRoutesDeps) {
       );
       return { ok: false };
     }
-
-    if (requestContext.workspaceTypeAsserted === 'team') {
-      sendApiError(
-        res,
-        409,
-        'AMR_PERSONAL_WORKSPACE_REQUIRED',
-        'historical projects can only be adopted into a Personal Workspace',
-      );
-      return { ok: false };
-    }
-    if (requestContext.workspaceTypeAsserted !== 'personal') {
-      return {
-        ok: true,
-        workspaceScope: accountScopedRunWorkspaceScopeForProject(projectId),
-      };
-    }
-    const ensureWorkspaceProject = ctx.projectStore.ensureWorkspaceProject;
-    if (!ensureWorkspaceProject) {
-      sendApiError(
-        res,
-        409,
-        'AMR_WORKSPACE_SCOPE_REQUIRED',
-        'the project must be migrated into a Personal Workspace before running AMR Cloud',
-      );
-      return { ok: false };
-    }
-
-    const project = toProjectRecord(getProject(db, projectId));
-    if (!project) {
-      sendApiError(res, 404, 'PROJECT_NOT_FOUND', 'project not found');
-      return { ok: false };
-    }
-    const { getWorkspaceProjectByProjectId } = ctx.projectStore;
-    const bindPersonal = db.transaction(() => {
-      const existing = getWorkspaceProjectByProjectId(db, projectId);
-      if (existing) return existing;
-      ensureWorkspaceProject(db, {
-        projectId,
-        workspaceId: requestContext.workspaceId,
-        visibility: 'personal',
-        resourceState: 'active',
-        createdByWorkspaceMemberId: requestContext.workspaceMemberId,
-        updatedByWorkspaceMemberId: requestContext.workspaceMemberId,
-        syncState: 'local_only',
-        resourceHubResourceId: null,
-        cloudTombstonedAt: null,
-        createdAt: project.createdAt,
-        updatedAt: project.updatedAt,
-      });
-      return getWorkspaceProjectByProjectId(db, projectId);
-    });
-    const adopted = bindPersonal();
-    if (adopted?.workspaceId !== requestContext.workspaceId) {
-      sendApiError(
-        res,
-        409,
-        'AMR_WORKSPACE_SCOPE_CONFLICT',
-        'the project was bound to another Workspace before AMR could start',
-      );
-      return { ok: false };
-    }
-    const workspaceScope = pinRunWorkspaceScopeForProject(db, projectId);
-    if (!workspaceScope || workspaceScope.workspaceId !== requestContext.workspaceId) {
-      sendApiError(
-        res,
-        409,
-        'AMR_WORKSPACE_SCOPE_CONFLICT',
-        'the project Workspace binding changed before the run could be pinned',
-      );
-      return { ok: false };
-    }
-    return { ok: true, workspaceScope };
+    return {
+      ok: true,
+      workspaceScope: accountScopedRunWorkspaceScopeForProject(projectId),
+    };
   }
 
   async function authorizeRunProject(
@@ -3236,22 +3161,12 @@ export function registerRunRoutes(app: Express, ctx: RegisterRunRoutesDeps) {
       const detectedAgentsForAnalytics = await detectAgents(
         toJsonRecord((appCfgForAnalytics as { agentCliEnv?: unknown }).agentCliEnv),
       ).catch((): Array<{ id: string; available: boolean }> => []);
-      const velaStatusForAnalytics = (() => {
-        try {
-          const configuredAmrEnv = agentCliEnvForAgent(
-            (appCfgForAnalytics as { agentCliEnv?: AgentCliEnv }).agentCliEnv,
-            'amr',
-          );
-          return readVelaLoginStatus(process.env, configuredAmrEnv);
-        } catch {
-          return null;
-        }
-      })();
+      const velaStatusForAnalytics = null;
       const configureGlobals = deriveConfigureGlobals({
         mode: 'daemon',
         agentId: typeof reqBody.agentId === 'string' ? reqBody.agentId : null,
         agents: detectedAgentsForAnalytics,
-        amrAuthorized: velaStatusForAnalytics?.loggedIn === true,
+        amrAuthorized: false,
       });
       const promptText =
         typeof reqBody.currentPrompt === 'string'

@@ -30,13 +30,13 @@ import { Icon } from './Icon';
 import { InviteDialog } from './InviteDialog';
 import { STATUS_LABEL_KEYS } from './DesignsTab';
 import { isDesignSystemProject, isPublishedDesignSystemProject } from './design-system-project';
-import type { SharedProjectPredicate } from '../collab/all-projects-list';
-import { useTeamMembers } from '../collab/useTeamMembers';
+import type { SharedProjectPredicate } from '../local/all-projects-list';
+import { useTeamMembers } from '../local/useTeamMembers';
 import {
   notifyTeamProjectsChanged,
   useWorkspaceBilling,
   useWorkspaceContext,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import {
   canAccessWorkspaceInviteFlow,
   resolveWorkspaceInviteTarget,
@@ -49,7 +49,7 @@ import {
   type WorkspaceCollabContext,
   type WorkspaceProjectSummary,
 } from '@open-design/contracts';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
 import {
   THUMBNAIL_OVERSCAN_MARGIN,
   resumeThumbnailLoads,
@@ -66,7 +66,7 @@ import { useInView } from './plugins-home/useInView';
 import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import { useAnalytics } from '../analytics/provider';
 import {
   trackProjectCollectionClick,

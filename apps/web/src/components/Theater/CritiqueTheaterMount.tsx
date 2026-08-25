@@ -4,11 +4,11 @@ import type { WorkspaceCollabContext } from '@open-design/contracts';
 import {
   projectWorkspaceContext,
   useProjectWorkspaceScope,
-} from '../../collab/useProjectWorkspaceScope';
+} from '../../local/useProjectWorkspaceScope';
 import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../../collab/workspace-identity';
+} from '../../local/workspace-identity';
 import { useCritiqueStream } from './hooks/useCritiqueStream';
 import { TheaterStage } from './TheaterStage';
 import type { CritiqueState } from './state/reducer';

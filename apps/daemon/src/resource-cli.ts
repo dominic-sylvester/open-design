@@ -1,4 +1,4 @@
-import { runVelaCommand } from './integrations/vela-command.js';
+import { runVelaCommand } from './workspace/vela-command-stub.js';
 
 /**
  * `od resource` is a compatibility entry point for the login-backed Vela

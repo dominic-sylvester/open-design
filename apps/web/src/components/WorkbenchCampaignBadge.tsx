@@ -7,7 +7,7 @@ import {
   amrHandoffDeviceId,
   attributedAmrUrl,
   recordAmrEntry,
-} from '../analytics/amr-attribution';
+} from '../local/amr-attribution';
 import { getResolvedDeviceId } from '../analytics/client';
 import { useAnalytics } from '../analytics/provider';
 import type { DeepSeekV4FlashCampaignAudience } from '../campaigns/deepseek-v4-flash';

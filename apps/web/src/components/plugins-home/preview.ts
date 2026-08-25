@@ -20,7 +20,7 @@ import type {
   InstalledPluginRecord,
   WorkspaceCollabContext,
 } from '@open-design/contracts';
-import { workspaceResourceUrl } from '../../collab/workspace-identity';
+import { workspaceResourceUrl } from '../../local/workspace-identity';
 
 export type PluginPreviewKind = 'media' | 'html' | 'design' | 'text';
 

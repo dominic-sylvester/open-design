@@ -22,7 +22,7 @@ import {
 import {
   adaptVelaChildRuntimeFactV1,
   type VelaChildRuntimeFact,
-} from '../runtimes/vela-child-evidence.js';
+} from '../runtimes/vela-child-evidence-stub.js';
 
 const MAX_MAIN_TOOL_OBSERVATIONS_PER_RUN = 256;
 const SAFE_TOOL_NAME_RE = /^[A-Za-z][A-Za-z0-9_.:-]{0,127}$/;

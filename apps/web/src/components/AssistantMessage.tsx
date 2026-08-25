@@ -12,8 +12,8 @@ import {
 } from "../runtime/in-project-link";
 import { navigate } from "../router";
 import { deleteProjectFile, projectFileUrl, uploadProjectFiles } from "../providers/registry";
-import { useProjectCollabContext } from "../collab/collab-context";
-import { workspaceProjectHeaders } from "../collab/workspace-identity";
+import { useProjectCollabContext } from "../local/collab-context";
+import { workspaceProjectHeaders } from "../local/workspace-identity";
 import { useAnalytics } from "../analytics/provider";
 import {
   trackAssistantFeedbackButtonClick,

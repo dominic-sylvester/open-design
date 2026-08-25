@@ -9,7 +9,6 @@ import {
 
 import {
   PACKAGED_NAMESPACE_ENV,
-  resolvePackagedAmrProfile,
   type PackagedConfig,
 } from "./config.js";
 import {
@@ -32,25 +31,17 @@ function resolveHeadlessNamespaceBaseRoot(): string {
   return join(dataBase, "open-design", "namespaces");
 }
 
-function resolveHeadlessAmrProfile(): PackagedConfig["amrProfile"] {
-  return resolvePackagedAmrProfile(process.env.OPEN_DESIGN_AMR_PROFILE);
-}
-
 function resolveHeadlessConfig(): PackagedConfig {
   const namespace = OPEN_DESIGN_SIDECAR_CONTRACT.normalizeNamespace(
     process.env[PACKAGED_NAMESPACE_ENV] ?? SIDECAR_DEFAULTS.namespace,
   );
   const namespaceBaseRoot = resolveHeadlessNamespaceBaseRoot();
 
-  // OD_RESOURCE_ROOT may be set by a launcher script; otherwise default to a
-  // sibling open-design/ directory relative to the node_modules that contain
-  // this file — the layout written by tools-pack linux headless-install.
   const resourceRoot =
     process.env.OD_RESOURCE_ROOT
     ?? join(__dirname, "..", "..", "..", "open-design");
 
   return {
-    amrProfile: resolveHeadlessAmrProfile(),
     appVersion: null,
     daemonCliEntry: null,
     daemonSidecarEntry: null,
@@ -63,14 +54,6 @@ function resolveHeadlessConfig(): PackagedConfig {
     updateMetadataUrl: process.env.OD_UPDATE_METADATA_URL?.trim() || null,
     posthogKey: process.env.POSTHOG_KEY?.trim() || null,
     posthogHost: process.env.POSTHOG_HOST?.trim() || null,
-    velaWebUrl: process.env.OD_VELA_WEB_URL?.trim() || null,
-    velaWebUrls: (() => {
-      try {
-        return JSON.parse(process.env.OD_VELA_WEB_URLS ?? '{}') as Record<string, string>;
-      } catch {
-        return {};
-      }
-    })(),
     webSidecarEntry: null,
     webStandaloneRoot: null,
     webOutputMode: "server",

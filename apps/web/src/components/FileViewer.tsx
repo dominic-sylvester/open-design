@@ -31,7 +31,7 @@ import {
   appendResourceQuery,
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   anonymizeArtifactId,
   artifactKindToTracking,
@@ -91,13 +91,13 @@ import { useDismissOnOutsideInteraction } from '../hooks/useDismissOnOutsideInte
 import {
   notifyTeamProjectsChanged,
   TEAM_PROJECTS_CHANGED_EVENT,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import {
   canPublishPublicFile,
   publicFileManualRevokePublication,
   publicFilePublishFailureKey,
   type PublicFilePublishFailureKey,
-} from '../collab/public-file-publish';
+} from '../local/public-file-publish';
 import { moveWorkspaceProject } from '../state/projects';
 import { MoveToTeamConfirmDialog, moveConfirmSkipped } from './MoveToTeamConfirmDialog';
 import type { Dict, Locale } from '../i18n/types';
@@ -229,7 +229,7 @@ import type {
 } from '../types';
 import { Icon } from './Icon';
 import { RemixIcon } from './RemixIcon';
-import { projectIsSharedWithWorkspace } from '../collab/project-shared-status';
+import { projectIsSharedWithWorkspace } from '../local/project-shared-status';
 import { HandoffButton } from './HandoffButton';
 import { SocialShareGrid } from './SocialShareGrid';
 import { Toast } from './Toast';
@@ -260,8 +260,8 @@ import {
 import {
   useProjectCollabContext,
   type ProjectResourceAuthority,
-} from '../collab/collab-context';
-import { currentUserDirectoryEntry, useTeamMembers } from '../collab/useTeamMembers';
+} from '../local/collab-context';
+import { currentUserDirectoryEntry, useTeamMembers } from '../local/useTeamMembers';
 import { applyPodMemberRemoval } from '../lib/pod-members';
 import { AnnotationHoverPopover, BoardComposerPopover } from './BoardComposerPopover';
 import {
