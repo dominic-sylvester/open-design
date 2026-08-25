@@ -887,12 +887,10 @@ function classifyRunFailureBase(
   if (/\binsufficient[ _-]?balance\b/i.test(text)) {
     return classification(
       'insufficient_balance',
-      amrFailure?.code === 'AMR_INSUFFICIENT_BALANCE'
-        ? 'amr_insufficient_balance'
-        : 'insufficient_balance',
+      'amr_insufficient_balance',
       'session_init',
       false,
-      amrFailure?.code === 'AMR_INSUFFICIENT_BALANCE' ? 'recharge' : 'none',
+      'none',
     );
   }
 
