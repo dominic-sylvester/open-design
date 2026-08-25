@@ -796,6 +796,7 @@ describe('FileWorkspace design-system project surface', () => {
       'refresh-files',
       'refresh-design-systems',
       '/api/projects/ds-acme/archive',
+      '/api/design-systems/user%3Aacme/archive',
     ]);
   });
 
