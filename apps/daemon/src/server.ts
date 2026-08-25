@@ -826,6 +826,7 @@ import {
   openDesignAmrTraceEnvForRun,
   pinRunWorkspaceScopeForProject,
 } from './workspace/run-workspace-scope.js';
+import { openDesignAmrRunAttempt } from './runtimes/env.js';
 import {
   authorizeCreatedProjectWorkspace,
   bindCreatedProjectToWorkspace,
@@ -841,8 +842,13 @@ import {
   teamResourceRequestScopeFromContext,
   unshareIfCurrentlyShared,
 } from './workspace/team-resource-share-stubs.js';
+import {
+  readTeamResourceMaterialization,
+  teamResourceWorkspaceRoot,
+} from './workspace/team-resource-materialization.js';
 import { createAuthorizeProjectRequest } from './workspace/project-request-authority.js';
 import {
+  resolveOptionalLocalWorkspaceRequestAuthority,
   workspaceResourceContextFromRequest,
 } from './workspace/workspace-resource-mutation.js';
 import {

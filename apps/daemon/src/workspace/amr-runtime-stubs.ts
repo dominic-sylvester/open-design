@@ -10,8 +10,9 @@ export async function stageAmrImagePaths(
 /** Identity stderr filter when AMR-specific filtering is unavailable. */
 export function createAgentStderrVisibilityFilter(_agentId: string) {
   return {
-    filter(chunk: string): string {
-      return chunk;
+    write(chunk: unknown): string {
+      if (chunk === null || chunk === undefined) return '';
+      return typeof chunk === 'string' ? chunk : String(chunk);
     },
     flush(): string {
       return '';

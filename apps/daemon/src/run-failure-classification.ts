@@ -884,6 +884,18 @@ function classifyRunFailureBase(
     );
   }
 
+  if (/\binsufficient[ _-]?balance\b/i.test(text)) {
+    return classification(
+      'insufficient_balance',
+      amrFailure?.code === 'AMR_INSUFFICIENT_BALANCE'
+        ? 'amr_insufficient_balance'
+        : 'insufficient_balance',
+      'session_init',
+      false,
+      amrFailure?.code === 'AMR_INSUFFICIENT_BALANCE' ? 'recharge' : 'none',
+    );
+  }
+
   if (errorCode === 'RATE_LIMITED' || serviceFailure === 'RATE_LIMITED' || isHardQuotaText(text) || isRateLimitText(text)) {
     // Checked BEFORE the hard-quota reading: vela phrases its rolling per-model
     // window as "…usage limit…", which `isHardQuotaText` matches, so without
