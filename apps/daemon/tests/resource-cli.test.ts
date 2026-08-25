@@ -4,7 +4,7 @@ const { runVelaCommandMock } = vi.hoisted(() => ({
   runVelaCommandMock: vi.fn(),
 }));
 
-vi.mock('../src/integrations/vela-command.js', () => ({
+vi.mock('../src/workspace/vela-command-stub.js', () => ({
   runVelaCommand: runVelaCommandMock,
 }));
 
@@ -53,13 +53,17 @@ describe('od resource Vela compatibility entry point', () => {
     expect(runVelaCommandMock).toHaveBeenCalledWith(['resource', '--help']);
   });
 
-  it('surfaces Vela errors as a failed od command', async () => {
-    runVelaCommandMock.mockRejectedValue(new Error('profile is not logged in'));
+  it('surfaces stub errors as a failed od command', async () => {
+    runVelaCommandMock.mockRejectedValue(
+      new Error('OpenDesign Cloud resource commands are not available in this build'),
+    );
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     await runResource(['shared', '--json']);
 
-    expect(error).toHaveBeenCalledWith('profile is not logged in');
+    expect(error).toHaveBeenCalledWith(
+      'OpenDesign Cloud resource commands are not available in this build',
+    );
     expect(process.exitCode).toBe(1);
   });
 });

@@ -810,6 +810,62 @@ import {
   recordWorkspaceAuthorityRevocationClear,
   recordWorkspaceAuthoritySuppressedRequest,
 } from './metrics/workspace-authority.js';
+import {
+  createWorkspaceAuthorityHealthCoordinator,
+  resolveWorkspaceAuthorityCacheMode,
+} from './workspace/workspace-authority-health.js';
+import {
+  amrModelLoadingCache,
+  fetchVelaPresetModels,
+  fetchVelaRemoteModelsWithRetry,
+  readVelaLoginStatus,
+  resolveAmrProfile,
+} from './workspace/amr-stubs.js';
+import {
+  AmrWorkspaceScopeRequiredError,
+  openDesignAmrTraceEnvForRun,
+  pinRunWorkspaceScopeForProject,
+} from './workspace/run-workspace-scope.js';
+import {
+  authorizeCreatedProjectWorkspace,
+  bindCreatedProjectToWorkspace,
+  createCreatedProjectWorkspaceResolver,
+  sendCreatedProjectWorkspaceError,
+} from './workspace/created-project-workspace.js';
+import {
+  createLocalTeamResourceListCache,
+  createLocalTeamResourceShareService,
+  createRememberedTeamResourceScope,
+  createResolveTeamResourceScope,
+  notifyDesignSystemLinkedMutationNoop,
+  teamResourceRequestScopeFromContext,
+  unshareIfCurrentlyShared,
+} from './workspace/team-resource-share-stubs.js';
+import { createAuthorizeProjectRequest } from './workspace/project-request-authority.js';
+import {
+  workspaceResourceContextFromRequest,
+} from './workspace/workspace-resource-mutation.js';
+import {
+  createDevTeamResourceStateProvider,
+} from './workspace/team-resource-state.js';
+import {
+  createLocalCollabSyncStub,
+} from './workspace/local-collab-stubs.js';
+import {
+  emitWorkspaceEventToAllScopes,
+  emitWorkspaceEventToScope,
+} from './workspace/workspace-events-stub.js';
+import {
+  createAgentStderrVisibilityFilter,
+  stageAmrImagePaths,
+} from './workspace/amr-runtime-stubs.js';
+import {
+  createWorkspaceTypeRegistry,
+} from './workspace/team-share-scope.js';
+import {
+  fetchLocalWorkspaceDirectory,
+  resolveAuthoritativeTeamWorkspaceContext as resolveAuthoritativeTeamWorkspaceContextStub,
+} from './workspace/workspace-directory-stub.js';
 import { registerTelemetryRoutes } from './routes/telemetry.js';
 import {
   assembleExample,
@@ -2622,6 +2678,7 @@ export async function startServer({
   host = normalizeDaemonBindHost(host);
   let resolvedPort = port;
   let daemonShuttingDown = false;
+  let workspaceAnalyticsService: AnalyticsService | null = null;
   const extraAllowedOrigins = configuredAllowedOrigins();
   const workspaceAuthorityCacheMode = resolveWorkspaceAuthorityCacheMode(
     process.env.OD_WORKSPACE_AUTHORITY_CACHE_MODE,
@@ -3272,6 +3329,42 @@ export async function startServer({
   const collab = { teamResources: null };
   const refreshWorkspaceHubAccountIdentity = (): void => {};
   const teamResourceStateProvider = createDevTeamResourceStateProvider();
+  const fetchWorkspaceDirectory = fetchLocalWorkspaceDirectory;
+  const fetchFreshBackgroundWorkspaceDirectory = fetchLocalWorkspaceDirectory;
+  const fetchProjectCreationWorkspaceDirectory = undefined;
+  const verifyPersonalProjectDeleteLeaseAuthority = undefined;
+  const resolveAuthoritativeTeamWorkspaceContext = resolveAuthoritativeTeamWorkspaceContextStub;
+  const workspaceTypes = createWorkspaceTypeRegistry();
+  const dirtyCommentProjects = new Set<string>();
+  const resolveSharedProjectOwner = async (
+    _projectId: string,
+    _explicitScope: { workspaceId: string; workspaceMemberId: string },
+  ): Promise<string | null> => null;
+  const resolveProjectCommentWorkspaceContext = (
+    _projectId: string,
+    _req?: unknown,
+  ) => null;
+  const resolveProjectCommentReadWorkspaceContext = (
+    _projectId: string,
+    _req?: unknown,
+  ) => null;
+  const resolveFreshProjectCommentWorkspaceContext = async (
+    _projectId: string,
+    _req?: unknown,
+  ) => ({ ok: false as const, context: null as null });
+  const rememberTeamResourceScope = createRememberedTeamResourceScope();
+  const resolveTeamResourceScope = createResolveTeamResourceScope({
+    verifyExplicitWorkspaceRequestContext,
+    rememberTeamResourceScope,
+  });
+  const designSystemsTeamShare = createLocalTeamResourceShareService();
+  const designSystemsTeamList = createLocalTeamResourceListCache(designSystemsTeamShare);
+  const notifyDesignSystemLinkedMutation = notifyDesignSystemLinkedMutationNoop;
+  const resolveCreatedProjectHome = createCreatedProjectWorkspaceResolver({
+    configuredEnv: configuredAmrEnv,
+  });
+  const hubEventRefreshes: { dispose?: () => void } | null = null;
+  const workspaceDirectoryRefreshes: { dispose?: () => void } | null = null;
 
   registerMemoryRoutes(app, {
     http: { createSseResponse, requireLocalDaemonRequest },

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('../src/integrations/vela-errors.js', () => ({
+vi.mock('../src/workspace/amr-stubs.js', () => ({
   classifyAmrAccountFailure(text: string) {
     const value = String(text || '').toLowerCase();
     // Mirror the real detector's signals exercised by these tests, including
