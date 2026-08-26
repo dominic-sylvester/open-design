@@ -10,7 +10,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ComponentProps } from "react";
 
-import { CollabProvider } from "../../src/collab/collab-context";
+import { CollabProvider } from "../../src/local/collab-context";
 import {
   DesignFilesPanel,
   type DesignFilesNavState,
@@ -22,7 +22,7 @@ import type {
   ProjectFolder,
 } from "../../src/types";
 import { VISUAL_STABILITY_STORAGE_KEY } from "../../src/utils/visualStability";
-import { workspaceContextFixture } from "../helpers/workspace-context";
+import { workspaceContextFixture } from "../helpers/local-workspace-context";
 
 function folder(path: string): ProjectFolder {
   return {

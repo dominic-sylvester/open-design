@@ -10,8 +10,8 @@
 // nothing (the modal hides the hero entirely).
 
 import { useMemo, useState } from 'react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
-import { workspaceResourceUrl } from '../../collab/workspace-identity';
+import type { WorkspaceCollabContext } from '../../local/types';
+import { workspaceResourceUrl } from '../../local/workspace-identity';
 import { Icon } from '../Icon';
 
 export interface PluginExampleEntry {

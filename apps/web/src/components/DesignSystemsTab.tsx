@@ -16,7 +16,7 @@ import type {
   TrackingDesignSystemStatusValue,
 } from '@open-design/contracts/analytics';
 import { useI18n } from '../i18n';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import {
   beginWorkspaceResourceScopedRead,
   beginWorkspaceScopedRead,
@@ -25,15 +25,13 @@ import {
   workspaceProjectHeaders,
   workspaceResourceReadIdentityKey,
   type WorkspaceResourceReadIdentity,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   useWorkspaceInvalidation,
-} from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
-import {
-  workspaceContextHasTeamIdentity,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+} from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
+import { workspaceContextHasTeamIdentity } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import type { Locale } from '../i18n/types';
 import {
   localizeDesignSystemCategory,

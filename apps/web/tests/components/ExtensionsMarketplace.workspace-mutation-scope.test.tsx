@@ -2,15 +2,13 @@
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type {
-  InstalledPluginRecord,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 import { ExtensionsMarketplace } from '../../src/components/PluginsView';
 import { I18nProvider } from '../../src/i18n';
-import { workspaceProjectHeaders } from '../../src/collab/workspace-identity';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceProjectHeaders } from '../../src/local/workspace-identity';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 vi.mock('../../src/analytics/provider', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../../src/analytics/provider')>()),
@@ -20,8 +18,8 @@ vi.mock('../../src/analytics/provider', async (importOriginal) => ({
 let workspaceContext: WorkspaceCollabContext | null;
 let workspaceContextLoading: boolean;
 
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>()),
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useWorkspaceContext')>()),
   useWorkspaceContext: () => ({
     context: workspaceContext,
     loading: workspaceContextLoading,

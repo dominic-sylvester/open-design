@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const ru: OpenDesignPluginCopy = {
   metadata: {
-    title: 'OpenDesign для Codex/ChatGPT | Установка плагина OpenDesign Cloud',
+    title: 'OpenDesign для Codex/ChatGPT | Установка плагина OpenDesign',
     description:
-      'Установите OpenDesign Cloud в Codex/ChatGPT и создавайте сайты, презентации, прототипы и дизайн-системы, не выходя из текущей задачи.',
+      'Установите OpenDesign в Codex/ChatGPT и создавайте сайты, презентации, прототипы и дизайн-системы, не выходя из текущей задачи.',
     keywords:
-      'плагин OpenDesign для Codex, плагин для приложения ChatGPT, установка плагина Codex, OpenDesign Cloud, плагин для дизайна в Codex, Codex MCP',
+      'плагин OpenDesign для Codex, плагин для приложения ChatGPT, установка плагина Codex, OpenDesign, плагин для дизайна в Codex, Codex MCP',
   },
   hero: {
     title: 'Плагин OpenDesign для Codex/ChatGPT',
     leadBefore: 'Введите инструкцию ниже в любую задачу в приложении',
     chatgptLabel: 'ChatGPT для компьютера',
-    installAria: 'Установить OpenDesign Cloud в Codex/ChatGPT',
+    installAria: 'Установить OpenDesign в Codex/ChatGPT',
     copy: 'Копировать',
     github: 'Открыть руководство по установке на GitHub ↗',
   },
@@ -87,7 +87,7 @@ const ru: OpenDesignPluginCopy = {
         label: 'Интерактивная история',
       },
     ],
-    promptListAria: 'Примеры запросов для OpenDesign Cloud',
+    promptListAria: 'Примеры запросов для OpenDesign',
     prompts: [
       { title: 'Сайт' },
       { title: 'Презентация' },
@@ -117,7 +117,7 @@ const ru: OpenDesignPluginCopy = {
       {
         q: 'Почему нужно начать новую задачу в Codex?',
         a:
-          'Codex загружает возможности плагинов и MCP при запуске задачи. Новая задача увидит только что установленный плагин OpenDesign Cloud.',
+          'Codex загружает возможности плагинов и MCP при запуске задачи. Новая задача увидит только что установленный плагин OpenDesign.',
       },
       {
         q: 'Нужно ли держать окно OpenDesign открытым?',
@@ -127,7 +127,7 @@ const ru: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'Установить OpenDesign Cloud в Codex/ChatGPT',
+    aria: 'Установить OpenDesign в Codex/ChatGPT',
     title: 'Добавьте OpenDesign в свою следующую задачу Codex/ChatGPT.',
     bodyBeforeMention: 'Установите плагин, подключите локальный MCP и введите',
     bodyAfterMention: '.',
@@ -141,8 +141,8 @@ const ru: OpenDesignPluginCopy = {
     failed: 'Выделите и скопируйте',
   },
   schema: {
-    pageName: 'Плагин OpenDesign Cloud для Codex/ChatGPT',
-    applicationName: 'Плагин OpenDesign Cloud для Codex/ChatGPT',
+    pageName: 'Плагин OpenDesign для Codex/ChatGPT',
+    applicationName: 'Плагин OpenDesign для Codex/ChatGPT',
   },
 };
 

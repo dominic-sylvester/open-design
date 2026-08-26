@@ -5,9 +5,9 @@ import type {
   PluginDuplicateProjectResponse,
   Project,
   ProjectMetadata,
-  WorkspaceCollabContext,
 } from '@open-design/contracts';
-import { TeamResourceCopyForbiddenError } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../workspace/types.js';
+import { TeamResourceCopyForbiddenError } from '../../workspace/types.js';
 import {
   duplicatePluginExampleIntoProject,
   PluginDuplicateProjectError,
@@ -15,20 +15,20 @@ import {
 import {
   enforceTeamResourceCopyAllowed,
   type TeamResourceStateProvider,
-} from '../../collab/team-resource-state.js';
+} from '../../workspace/team-resource-state.js';
 import {
   enforceVerifiedWorkspaceResourceMutation,
   resolveOptionalLocalWorkspaceRequestAuthority,
   type VerifyWorkspaceRequestAuthority,
-} from '../../collab/workspace-resource-mutation.js';
+} from '../../workspace/workspace-resource-mutation.js';
 import {
   authorizeCreatedProjectWorkspace,
   bindCreatedProjectToWorkspace,
   sendCreatedProjectWorkspaceError,
-} from '../../collab/created-project-workspace.js';
-import type { WorkspaceDirectoryFetchResult } from '../../collab/vela-workspace-context.js';
+} from '../../workspace/created-project-workspace.js';
+import type { WorkspaceDirectoryFetchResult } from '../../workspace/team-project-stubs.js';
 import type { PluginShareAction } from '../../services/plugin-share-tasks.js';
-import type { AuthorizeProjectRequest } from '../../collab/project-request-authority.js';
+import type { AuthorizeProjectRequest } from '../../workspace/project-request-authority.js';
 import { workspaceTeamPluginBindingResourceId } from '../../plugins/registry.js';
 import { localPluginRegistryScope } from '../../plugins/local-source.js';
 import {

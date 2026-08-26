@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 import { Button, VisuallyHidden } from '@open-design/components';
-import type {
-  AmrWalletSnapshot,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { AmrWalletSnapshot } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import { validateBaseUrl } from '@open-design/contracts/api/connectionTest';
 import {
   agentIdToTracking,
@@ -19,7 +17,7 @@ import {
   attributedAmrUrl,
   recordAmrEntry,
   type TrackingAmrEntrySource,
-} from '../analytics/amr-attribution';
+} from '../local/amr-attribution';
 import { getResolvedDeviceId } from '../analytics/client';
 import {
   trackByokPreflightBlocked,
@@ -51,7 +49,7 @@ import {
   AMR_LOGIN_STATUS_EVENT,
   amrLoginStatusEventReason,
   isAmrSessionAuthenticated,
-} from './amrLoginPolling';
+} from '../local/amrLoginPolling';
 import {
   fetchAmrWalletSnapshot,
   fetchVelaLoginStatus,
@@ -59,7 +57,7 @@ import {
   type VelaLoginStatus,
 } from '../providers/daemon';
 import { installDeepSeekHarnessCompanion } from '../providers/agent-companion';
-import { amrProfileBadgeLabel } from '../runtime/amr-guidance';
+import { amrProfileBadgeLabel } from '../local/amr-guidance';
 import {
   availableVisibleAgentCount,
   deepSeekHarnessNeedsSetup,
@@ -171,11 +169,11 @@ import {
   useWorkspaceBillingResponse,
   useWorkspaceContext,
   workspaceBillingSummaryForContext,
-} from '../collab/useWorkspaceContext';
-import { canUpgradeFromPlanTier, resolvePlanTier } from '../collab/team-plan';
+} from '../local/useWorkspaceContext';
+import { canUpgradeFromPlanTier, resolvePlanTier } from '../local/team-plan';
 import { planBadgeTierForWorkspace } from './PlanWordmark';
 import { workspaceUpgradeUrl } from './EntryNavRail';
-import { canShowWorkspaceSettings } from '../collab/settings-access';
+import { canShowWorkspaceSettings } from '../local/settings-access';
 import { ConnectorsBrowser } from './ConnectorsBrowser';
 import { MemoryModelInline } from './MemoryModelInline';
 import { MemorySection } from './MemorySection';
@@ -203,7 +201,7 @@ import {
   projectWorkspaceContext,
   projectWorkspaceScopeReady,
   useProjectWorkspaceScope,
-} from '../collab/useProjectWorkspaceScope';
+} from '../local/useProjectWorkspaceScope';
 import {
   applyAppearanceToDocument,
   resolveAccentColor,
@@ -1635,7 +1633,7 @@ export function SettingsDialog({
   // Workspace region gating (E-frontend, D4.3). One shared read of the workspace
   // context; the Workspace section only renders for a team workspace whose
   // viewer may see workspace settings. Gate on the folded permission bits,
-  // never a role re-derivation (see `../collab/settings-access`).
+  // never a role re-derivation (see `../local/settings-access`).
   // The Workspace nav item was removed to match the agreed 8-item nav, so this
   // gate now guards the deep-link (`initialSection='workspace'`) path — it must
   // stay, otherwise a deep link would hand workspace settings to a viewer the

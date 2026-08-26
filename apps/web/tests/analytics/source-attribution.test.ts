@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { recordAmrEntry } from '../../src/analytics/amr-attribution';
+import { recordAmrEntry } from '../../src/local/amr-attribution';
 import {
   readOnboardingProfile,
   saveOnboardingProfile,

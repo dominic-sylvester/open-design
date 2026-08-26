@@ -655,17 +655,17 @@ describe('native OpenCode child evidence', () => {
 
     // One child, one observation id, both halves of the lifecycle in replay
     // order — the exact shape `child_started_missing` was firing on.
-    expect(observations.map((observation) => ([
-      observation.identity.observationId,
-      observation.status,
+    expect(observations.filter(Boolean).map((observation) => ([
+      observation!.identity.observationId,
+      observation!.status,
     ]))).toEqual([
       [L2_OBSERVATION_ID, 'running'],
       [L2_OBSERVATION_ID, 'completed'],
     ]);
-    expect(observations.every((observation) => (
-      observation.kind === 'child_agent'
-      && observation.identity.parentObservationId === ADAPT_INPUT.taskRunObservationId
-      && observation.identity.runtimeSessionId === 'ses_child_synthetic'
+    expect(observations.filter(Boolean).every((observation) => (
+      observation!.kind === 'child_agent'
+      && observation!.identity.parentObservationId === ADAPT_INPUT.taskRunObservationId
+      && observation!.identity.runtimeSessionId === 'ses_child_synthetic'
     ))).toBe(true);
     // The bounded childInjected Prompt the L1 candidate already provided must
     // survive the upgrade rather than being traded away for the export.

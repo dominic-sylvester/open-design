@@ -23,9 +23,9 @@ import {
   currentWorkspaceAccountGeneration,
   useWorkspaceContext,
   workspaceIdentityCacheKey,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
 
 // Functional skills only — design templates render in EntryView's
 // Templates tab and are managed under their own daemon registry. See

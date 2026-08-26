@@ -3,12 +3,7 @@
 // exposes copy-to-CLI prompts for handing the same local folder to code agents.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  AgentInfo,
-  HostEditor,
-  HostEditorId,
-  HostEditorsResponse,
-} from '@open-design/contracts';
+import type { AgentInfo, HostEditor, HostEditorId, HostEditorsResponse } from '@open-design/contracts';
 import {
   handoffTargetIdToTracking,
   type TrackingArtifactKind,
@@ -21,7 +16,7 @@ import { copyToClipboard } from '../lib/copy-to-clipboard';
 import { Icon } from './Icon';
 import { EditorIcon } from './EditorIcon';
 import { AgentIcon } from './AgentIcon';
-import { useProjectCollabContext } from '../collab/collab-context';
+import { useProjectCollabContext } from '../local/collab-context';
 
 const PREFERRED_EDITOR_KEY = 'open-design:preferred-editor';
 const PREFERRED_FRAMEWORK_KEY = 'open-design:handoff-framework';

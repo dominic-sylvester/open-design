@@ -73,7 +73,7 @@ describe('NewProjectPanel media provider badges', () => {
     expect(screen.queryByTestId('model-picker-option-gpt-image-2')).toBeNull();
   });
 
-  it('uses Vela as the default image provider without media API credentials', async () => {
+  it('shows a model placeholder without media API credentials and still uses the default image model on create', async () => {
     const onCreate = vi.fn();
     render(
       <NewProjectPanel
@@ -91,10 +91,10 @@ describe('NewProjectPanel media provider badges', () => {
     fireEvent.click(screen.getByRole('tab', { name: 'Media' }));
     fireEvent.click(screen.getByRole('tab', { name: 'Image' }));
     await waitFor(() => {
-      expect(screen.getByTestId('model-picker-trigger').textContent).toContain('gpt-image-2 (Cloud)');
+      expect(screen.getByTestId('model-picker-trigger').textContent).toContain('Pick a model');
     });
     fireEvent.change(screen.getByTestId('new-project-name'), {
-      target: { value: 'Vela default image' },
+      target: { value: 'Default image model' },
     });
     fireEvent.click(screen.getByTestId('create-project'));
 
@@ -102,11 +102,11 @@ describe('NewProjectPanel media provider badges', () => {
       expect.objectContaining({
         metadata: expect.objectContaining({
           kind: 'image',
-          imageModel: 'vela/gpt-image-2',
           imageAspect: '1:1',
         }),
       }),
     );
+    expect(onCreate.mock.calls[0]?.[0]?.metadata?.imageModel).toBeUndefined();
   });
 
   it('does not treat OpenAI OAuth-only markers as usable image credentials', () => {
@@ -139,7 +139,7 @@ describe('NewProjectPanel media provider badges', () => {
     expect(screen.queryByTestId('model-picker-option-gpt-image-2')).toBeNull();
   });
 
-  it('keeps the managed Vela default when another provider is configured', () => {
+  it('uses the configured provider default when another provider is configured', () => {
     const onCreate = vi.fn();
     render(
       <NewProjectPanel
@@ -171,7 +171,7 @@ describe('NewProjectPanel media provider badges', () => {
     expect(onCreate).toHaveBeenCalledWith(
       expect.objectContaining({
         metadata: expect.objectContaining({
-          imageModel: 'vela/gpt-image-2',
+          imageModel: 'doubao-seedream-3-0-t2i-250415',
         }),
       }),
     );

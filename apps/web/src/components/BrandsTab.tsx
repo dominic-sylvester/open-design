@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@open-design/components';
-import type { BrandSummary, WorkspaceCollabContext } from '@open-design/contracts';
+import type { BrandSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { useT } from '../i18n';
 import { navigate, useRoute } from '../router';
 import {
@@ -14,11 +15,11 @@ import { BrandLogo, BrandPreviewCard, hostnameOf } from './BrandPreviewCard';
 import { BrandReferencePicker } from './BrandReferencePicker';
 import { NewBrandModal } from './NewBrandModal';
 import styles from './BrandsTab.module.css';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import {
   resolveWorkspaceResourceReadIdentity,
   workspaceResourceReadIdentityKey,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 
 export interface BrandsTabProps {
   /**

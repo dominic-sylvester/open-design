@@ -16,10 +16,8 @@
 
 import { Button, Input } from '@open-design/components';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  InstalledPluginRecord,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import { useI18n, useT } from '../i18n';
 import type { PluginShareAction } from '../state/projects';
 import { Icon } from './Icon';

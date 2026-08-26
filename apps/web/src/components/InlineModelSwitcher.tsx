@@ -18,7 +18,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react';
-import type { AmrWalletSnapshot } from '@open-design/contracts';
+import type { AmrWalletSnapshot } from '../local/types';
 import { VisuallyHidden } from '@open-design/components';
 import { useT } from '../i18n';
 import {
@@ -32,9 +32,9 @@ import {
   attributedAmrUrl,
   recordAmrEntry,
   type AmrEntryAttribution,
-} from '../analytics/amr-attribution';
-import { amrPlansUrlForProfile } from '../runtime/amr-guidance';
-import { codingPlanModelDecision } from '../runtime/amr-unlimited-models';
+} from '../local/amr-attribution';
+import { amrPlansUrlForProfile } from '../local/amr-guidance';
+import { codingPlanModelDecision } from '../local/amr-guidance';
 import { getResolvedDeviceId } from '../analytics/client';
 import {
   trackDeepSeekCampaignModelBenefitSurfaceView,
@@ -46,12 +46,12 @@ import {
   observeAmrAuthTracking,
   reconcileAmrAuthAttemptId,
   resolveAmrAuthTracking,
-} from '../analytics/amr-auth';
+} from '../local/amr-auth';
 import {
   useWorkspaceBillingResponse,
   useWorkspaceContext,
   workspaceBillingBalanceUsd,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import { KNOWN_PROVIDERS } from '../state/config';
 import { fetchProviderModels } from '../providers/provider-models';
 import { SUGGESTED_MODELS_BY_PROTOCOL } from '../state/apiProtocols';
@@ -79,7 +79,7 @@ import {
   amrLoginStatusEventReason,
   isAmrSessionAuthenticated,
   notifyAmrLoginStatusChanged,
-} from './amrLoginPolling';
+} from '../local/amrLoginPolling';
 import { orderAgentsWithOpenDesignFirst } from './agentOrdering';
 import {
   agentModelIsSelectable,

@@ -7,8 +7,8 @@
 // POST /api/projects/:projectId/genui/:surfaceId/revoke.
 
 import { useCallback, useEffect, useState } from 'react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
-import { workspaceProjectHeaders } from '../collab/workspace-identity';
+import type { WorkspaceCollabContext } from '../local/types';
+import { workspaceProjectHeaders } from '../local/workspace-identity';
 
 interface SurfaceRow {
   id: string;

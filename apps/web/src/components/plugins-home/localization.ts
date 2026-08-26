@@ -1,8 +1,4 @@
-import {
-  resolveLocalizedText,
-  type InstalledPluginRecord,
-  type LocalizedText,
-} from '@open-design/contracts';
+import { resolveLocalizedText, type InstalledPluginRecord, type LocalizedText } from '@open-design/contracts';
 
 export function localizePluginTitle(locale: string, record: InstalledPluginRecord): string {
   return resolveLocalizedText(localizedText(record.manifest?.title_i18n), locale) || record.title;

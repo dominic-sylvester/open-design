@@ -4,15 +4,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent, KeyboardEvent as ReactKeyboardEvent, ReactNode } from 'react';
-import type {
-  CreateRoutineRequest,
-  ConnectorDetail,
-  InstalledPluginRecord,
-  Routine,
-  RoutineProjectTarget,
-  RoutineSchedule,
-  Weekday,
-} from '@open-design/contracts';
+import type { CreateRoutineRequest, ConnectorDetail, InstalledPluginRecord, Routine, RoutineProjectTarget, RoutineSchedule, Weekday } from '@open-design/contracts';
 
 import { Icon, type IconName } from './Icon';
 import type { SkillSummary } from '../types';
@@ -23,8 +15,8 @@ import { useI18n, useT } from '../i18n';
 import type { Dict } from '../i18n/types';
 import { localizePluginDescription, localizePluginTitle } from './plugins-home/localization';
 import { describeRoutineSchedule, describeRoutineScheduleParts } from './routineScheduleLabels';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
-import { workspaceProjectHeaders } from '../collab/workspace-identity';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
+import { workspaceProjectHeaders } from '../local/workspace-identity';
 
 type ProjectSummary = { id: string; name: string };
 type ScheduleKind = RoutineSchedule['kind'];

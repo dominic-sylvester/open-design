@@ -5,7 +5,7 @@ import type Database from 'better-sqlite3';
 import {
   readTeamResourceMaterialization,
   teamResourceWorkspaceRoot,
-} from '../collab/team-resource-materialization.js';
+} from '../workspace/team-resource-materialization.js';
 import {
   getWorkspaceProjectByProjectId,
   getWorkspaceResourceByResourceId,

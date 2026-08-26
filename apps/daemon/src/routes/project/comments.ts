@@ -1,10 +1,10 @@
 import type { Express, Request } from 'express';
 import type {
   PreviewComment,
-  WorkspaceCollabContext,
 } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../workspace/types.js';
 import type { RouteDeps } from '../../server-context.js';
-import type { BoundWorkspaceResourceMutationGate } from '../../collab/workspace-resource-mutation.js';
+import type { BoundWorkspaceResourceMutationGate } from '../../workspace/workspace-resource-mutation.js';
 import { isProjectCommentAnchorConversationId } from '../../db.js';
 
 export type ProjectCommentWorkspaceContextResolution =
@@ -513,7 +513,7 @@ export function registerProjectCommentRoutes(app: Express, ctx: RegisterProjectC
                   billing_state: workspaceContext.billingState,
                   plan_bucket: !planId || planId === 'free' ? 'free' : 'paid',
                   provider_mode: workspaceContext.providerMode,
-                  seat_state: workspaceContext.seatSummary.isSeatFull ? 'full' : 'available',
+                  seat_state: workspaceContext.seatSummary?.isSeatFull ? 'full' : 'available',
                   $groups: { workspace: workspaceContext.workspaceId },
                 }
               : {}),

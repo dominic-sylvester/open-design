@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { getResolvedDeviceId } from '../analytics/client';
-import { amrHandoffDeviceId, attributedAmrUrl, recordAmrEntry } from '../analytics/amr-attribution';
+import { amrHandoffDeviceId, attributedAmrUrl, recordAmrEntry } from '../local/amr-attribution';
 import { useAnalytics } from '../analytics/provider';
 import { useT } from '../i18n';
 import { AgentIcon } from './AgentIcon';
@@ -27,18 +27,18 @@ import {
   type VelaLoginStatus,
 } from '../providers/daemon';
 import { openExternalUrl } from '../providers/registry';
-import { amrPlansUrlForWorkspace } from '../runtime/amr-guidance';
+import { amrPlansUrlForWorkspace } from '../local/amr-guidance';
 import { isMacPlatform } from '../utils/platform';
 import {
   useWorkspaceBillingResponse,
   useWorkspaceContext,
   workspaceBillingSnapshotForContext,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import {
   projectWorkspaceContext,
   projectWorkspaceScopeReady,
   type ProjectWorkspaceScopeState,
-} from '../collab/useProjectWorkspaceScope';
+} from '../local/useProjectWorkspaceScope';
 
 interface Props {
   config: AppConfig;

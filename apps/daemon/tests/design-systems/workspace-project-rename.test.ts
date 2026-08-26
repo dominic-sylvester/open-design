@@ -9,7 +9,7 @@ import {
   resolveWorkspaceProjectDesignSystemRoot,
   workspaceRenameDesignSystemId,
 } from '../../src/design-systems/index.js';
-import { teamResourceWorkspaceRoot } from '../../src/collab/team-resource-materialization.js';
+import { teamResourceWorkspaceRoot } from '../../src/workspace/team-resource-materialization.js';
 
 // Renaming a design-system workspace project used to revert silently:
 // ensureUserDesignSystemWorkspaceProject re-stamps the project name from

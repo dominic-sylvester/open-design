@@ -8,7 +8,11 @@ import type {
 } from '@open-design/contracts/analytics';
 import { isModelWindowLimitFailure } from '@open-design/contracts';
 
-import { classifyAmrAccountFailure } from './integrations/vela-errors.js';
+import {
+  classifyAmrAccountFailure,
+  classifyAmrAccountFailureSignal,
+  amrAccountFailureDetails,
+} from './workspace/amr-stubs.js';
 import { summarizeRunToolProgress } from './run-diagnostics.js';
 import { isAcpHandshakeRpcErrorText } from './runtimes/acp-handshake-id.js';
 import { classifyAgentServiceFailure } from './runtimes/auth.js';
@@ -877,6 +881,16 @@ function classifyRunFailureBase(
       'session_init',
       false,
       'login',
+    );
+  }
+
+  if (/\binsufficient[ _-]?balance\b/i.test(text)) {
+    return classification(
+      'insufficient_balance',
+      'amr_insufficient_balance',
+      'session_init',
+      false,
+      'none',
     );
   }
 

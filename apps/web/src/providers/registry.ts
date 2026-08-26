@@ -1,40 +1,7 @@
-import {
-  PUBLIC_FILE_MANUAL_REVOKE_REQUIRED,
-  workspaceContextHasTeamIdentity,
-  type PublicFileManualRevokeRequiredData,
-  type PublicProjectFilePublication,
-} from '@open-design/contracts';
+import { PUBLIC_FILE_MANUAL_REVOKE_REQUIRED, workspaceContextHasTeamIdentity, type PublicFileManualRevokeRequiredData, type PublicProjectFilePublication } from '../local/collab-contracts';
 import { boundedRequestErrorCode } from '../analytics/workspace';
-import type {
-  ConnectorAuthConfigPrepareResponse,
-  ConnectorDetail,
-  ConnectorConnectResponse,
-  ConnectorDiscoveryResponse,
-  ConnectorDetailResponse,
-  ConnectorListResponse,
-  ConnectorStatusResponse,
-  FigmaImportResult,
-  ImportGitHubDesignSystemRequest,
-  ImportGitHubDesignSystemResponse,
-  ImportShadcnDesignSystemRequest,
-  ImportShadcnDesignSystemResponse,
-  OpenDesignGithubLatestReleaseResponse,
-  ImportLocalDesignSystemRequest,
-  ImportLocalDesignSystemResponse,
-  ReplaceProjectWorkingDirResponse,
-  ProjectFileTextPreviewResponse,
-  ProjectFileResponse,
-  ProjectPreviewScopeRenewResponse,
-  ProjectPreviewUrlResponse,
-  ProjectFileVersion,
-  ProjectFileVersionSource,
-  ProjectFileVersionResponse,
-  ProjectFileVersionsResponse,
-  RestoreProjectFileVersionResponse,
-  SocialShareRequest,
-  SocialShareResponse,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { ConnectorAuthConfigPrepareResponse, ConnectorDetail, ConnectorConnectResponse, ConnectorDiscoveryResponse, ConnectorDetailResponse, ConnectorListResponse, ConnectorStatusResponse, FigmaImportResult, ImportGitHubDesignSystemRequest, ImportGitHubDesignSystemResponse, ImportShadcnDesignSystemRequest, ImportShadcnDesignSystemResponse, OpenDesignGithubLatestReleaseResponse, ImportLocalDesignSystemRequest, ImportLocalDesignSystemResponse, ReplaceProjectWorkingDirResponse, ProjectFileTextPreviewResponse, ProjectFileResponse, ProjectPreviewScopeRenewResponse, ProjectPreviewUrlResponse, ProjectFileVersion, ProjectFileVersionSource, ProjectFileVersionResponse, ProjectFileVersionsResponse, RestoreProjectFileVersionResponse, SocialShareRequest, SocialShareResponse } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import type {
   AgentInfo,
   AppVersionInfo,
@@ -102,8 +69,8 @@ import {
   appendResourceQuery,
   workspaceIdentityCacheKey,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
-import { PublicFilePublishError } from '../collab/public-file-publish';
+} from '../local/workspace-identity';
+import { PublicFilePublishError } from '../local/public-file-publish';
 
 export const DEFAULT_DEPLOY_PROVIDER_ID = 'vercel-self';
 export const CLOUDFLARE_PAGES_PROVIDER_ID = 'cloudflare-pages';
@@ -2584,7 +2551,7 @@ function projectFileVersionsUrl(projectId: string, name: string): string {
  * refused. It tells the daemon whose read this is, so a readonly member's read
  * of someone else's shared project stops bootstrapping a baseline version into
  * a project they cannot write (see `requestCanMutateWorkspaceResource` in
- * `apps/daemon/src/collab/workspace-resource-mutation.ts`). Without the
+ * `apps/daemon/src/local/workspace-resource-mutation.ts`). Without the
  * headers the daemon has no identity on this path and falls back to
  * bootstrapping, which is what made a member's mirror show one synthetic
  * "Version 1" instead of the owner's real history.
@@ -3492,16 +3459,7 @@ export async function uninstallDesignSystem(
 
 // --- OD Library ------------------------------------------------------------
 
-import type {
-  LibraryApplyResponse,
-  LibraryAsset,
-  LibraryAssetListResponse,
-  LibraryConnectionStatus,
-  LibraryEditAsPageResponse,
-  LibraryIngestResponse,
-  LibraryPairingStartResponse,
-  LibrarySyncResponse,
-} from '@open-design/contracts';
+import type { LibraryApplyResponse, LibraryAsset, LibraryAssetListResponse, LibraryConnectionStatus, LibraryEditAsPageResponse, LibraryIngestResponse, LibraryPairingStartResponse, LibrarySyncResponse } from '@open-design/contracts';
 import { LIBRARY_UPLOAD_MAX_BYTES, isLibraryUploadMimeAllowed } from '@open-design/contracts';
 
 /** Raw bytes URL for a library asset (image src / download href). */

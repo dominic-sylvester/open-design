@@ -41,7 +41,7 @@ const registryOriginals = vi.hoisted(() => ({
     projectId: string,
     options?: {
       signal?: AbortSignal;
-      workspaceContext?: import('@open-design/contracts').WorkspaceCollabContext | null;
+      workspaceContext?: import('../../src/local/types').WorkspaceCollabContext | null;
       fresh?: boolean;
       requireAuthoritative?: boolean;
     },
@@ -98,8 +98,8 @@ vi.mock('../../src/providers/project-events', () => ({
   useProjectFileEvents: vi.fn(),
 }));
 
-vi.mock('../../src/collab/useProjectWorkspaceScope', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../../src/collab/useProjectWorkspaceScope')>()),
+vi.mock('../../src/local/useProjectWorkspaceScope', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../src/local/useProjectWorkspaceScope')>()),
   useProjectWorkspaceScope: (projectId: string) => ({
     loading: false,
     scope: {

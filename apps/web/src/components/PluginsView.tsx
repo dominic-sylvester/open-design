@@ -11,16 +11,9 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Dialog } from '@open-design/components';
-import {
-  PLUGIN_SHARE_ACTION_PLUGIN_IDS,
-  resolveLocalizedText,
-  workspaceContextHasTeamIdentity,
-  type ApplyResult,
-  type InstalledPluginRecord,
-  type PluginSourceKind,
-  type SkillSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { PLUGIN_SHARE_ACTION_PLUGIN_IDS, resolveLocalizedText, type ApplyResult, type InstalledPluginRecord, type PluginSourceKind, type SkillSummary } from '@open-design/contracts'
+import { workspaceContextHasTeamIdentity } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   fetchSkills,
   importSkill,
@@ -93,11 +86,11 @@ import {
   currentWorkspaceAccountGeneration,
   useWorkspaceContext,
   workspaceIdentityCacheKey,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import {
   useWorkspaceInvalidation,
-} from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
+} from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
 
 type PluginsTab = 'installed' | 'available' | 'sources' | 'team';
 

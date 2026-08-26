@@ -10,10 +10,7 @@
 // the manifest from the same column.
 
 import { useEffect, useMemo, useState } from 'react';
-import type {
-  InstalledPluginRecord,
-  PluginManifest,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord, PluginManifest } from '@open-design/contracts';
 import { useI18n } from '../../i18n';
 import { localizePluginChrome } from '../../i18n/plugin-content';
 import { resolvePluginQueryFallback } from '../../state/projects';

@@ -1,8 +1,6 @@
-import {
-  API_ERROR_CODES,
-  workspaceSeatCapacityState,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { API_ERROR_CODES } from '@open-design/contracts';
+import { workspaceSeatCapacityState } from '../local/types';
+import type { WorkspaceCollabContext } from '../local/types';
 import type {
   TrackingCountBucket,
   TrackingWorkspaceDimensions,

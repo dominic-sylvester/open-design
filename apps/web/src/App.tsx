@@ -23,19 +23,11 @@ import {
   projectKindFromMetadataToTracking,
   fidelityToTracking,
 } from '@open-design/contracts/analytics';
-import type {
-  AmrModelsResponse,
-  ChatSessionMode,
-  CreateProjectExampleReference,
-  LocalCatalogScope,
-  RunContextSelection,
-  TeamProject,
-  WorkspaceCollabContext,
-  WorkspaceInvalidationSsePayload,
-  ProjectWorkspaceScope,
-  ProjectScenarioTaskProfile,
-  WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import type { ChatSessionMode, CreateProjectExampleReference, LocalCatalogScope, RunContextSelection, ProjectWorkspaceScope, ProjectScenarioTaskProfile, WorkspaceProjectSummary } from '@open-design/contracts';
+import type { AmrModelsResponse } from '@open-design/contracts';
+import { projectWorkspaceContext } from './local/useProjectWorkspaceScope';
+import type { WorkspaceCollabContext, TeamProject } from './local/types';
+import type { WorkspaceInvalidationSsePayload } from './local/workspace-events';
 import { DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID } from '@open-design/contracts';
 import { EntryView } from './components/EntryView';
 import type { ProjectTitleHint } from './components/EntryShell';
@@ -103,28 +95,27 @@ import {
 import { openFirstPartyExternalLinkFromClick } from './first-party-external-link';
 import {
   RUNS_CHANGED_EVENT,
+  listProjectRuns,
   fetchAmrModels,
   fetchVelaLoginStatus,
-  listProjectRuns,
   type VelaLoginStatus,
 } from './providers/daemon';
 import {
   AMR_LOGIN_STATUS_EVENT,
   amrLoginStatusEventReason,
   isAmrSessionAuthenticated,
-} from './components/amrLoginPolling';
-import { CollabDemoView } from './collab/CollabDemoView';
+} from './local/amrLoginPolling';
 import {
   WorkspaceMemberDirectoryPreloader,
-} from './collab/WorkspaceMemberDirectoryPreloader';
+} from './local/WorkspaceMemberDirectoryPreloader';
 import {
   beginTeamProjectMetadataRefresh,
   fetchTeamProjectCatalogEntry as fetchScopedTeamProjectCatalogEntry,
   fetchTeamProjectsCatalog,
-} from './collab/team-projects-catalog';
-import { useWorkspaceInvalidation } from './collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from './collab/workspace-snapshot-activation';
-import { workspaceProjectHeaders } from './collab/workspace-identity';
+} from './local/team-projects-catalog';
+import { useWorkspaceInvalidation } from './local/workspace-events';
+import { useWorkspaceSnapshotActivation } from './local/workspace-snapshot-activation';
+import { workspaceProjectHeaders } from './local/workspace-identity';
 import {
   beginWorkspaceScopedRead,
   currentWorkspaceAccountGeneration,
@@ -135,13 +126,13 @@ import {
   useWorkspaceContext,
   workspaceIdentityCacheKey,
   workspaceResourceReadContext,
-} from './collab/useWorkspaceContext';
+} from './local/useWorkspaceContext';
 import {
   projectResourceReadsCanStart,
   useProjectRouteWorkspaceContext,
-} from './collab/useProjectRouteWorkspaceContext';
-import { resolvePlanTier } from './collab/team-plan';
-import { deriveTabIdentityScope, UNSET_ACCOUNT_BUCKET } from './collab/tab-scope';
+} from './local/useProjectRouteWorkspaceContext';
+import { resolvePlanTier } from './local/team-plan';
+import { deriveTabIdentityScope, UNSET_ACCOUNT_BUCKET } from './local/tab-scope';
 import { CommunityView } from './components/CommunityView';
 import { seedHomeComposerPrompt } from './components/HomeView';
 import {
@@ -175,17 +166,17 @@ import { armCompletionFeedbackOnFirstGesture } from './utils/notifications';
 import {
   amrArtifactUpgradeHomeMockOffer,
   type AmrArtifactUpgradeHomeOffer,
-} from './runtime/amr-artifact-upgrade';
+} from './local/amr-artifact-upgrade';
 import {
   amrBalanceGateScopeForWorkspaceContext,
   amrBalanceGateScopesMatch,
   type AmrBalanceGateScope,
-} from './runtime/amr-balance-gate';
+} from './local/amr-balance-gate';
 import {
   AMR_AUTH_RETRY_CONTINUATION_TTL_MS,
   routeStillMatchesAmrAuthRetryContinuation,
   type AmrAuthRetryContinuation,
-} from './runtime/amr-auth-retry-continuation';
+} from './local/amr-auth-retry-continuation';
 import { installFontRecovery } from './runtime/font-recovery';
 import {
   bootstrapFirstOpenTeamProjectRoute,
@@ -619,7 +610,7 @@ function isAbortError(err: unknown): boolean {
  * not shared / no access) from "on the catalog but the local mirror hasn't
  * landed yet" must branch on `isTeamShared`, not on `pulled` — a pull can
  * return `ok: true` with no bytes materialized yet (see collab-sync.ts's
- * `/collab/pull` handler, which only registers the local project once
+ * `/local/pull` handler, which only registers the local project once
  * `pullLatest` resolves a non-null version).
  */
 type TeamSharedProjectPullOutcome = {
@@ -659,7 +650,7 @@ async function pullTeamSharedProjectIfAvailable(
   const lookup = await fetchTeamProjectCatalogEntry(projectId, workspaceContext);
   if (!lookup.ok || !lookup.project) return { isTeamShared: false, pulled: false };
   try {
-    const pullResponse = await fetch(`/api/projects/${encodeURIComponent(projectId)}/collab/pull`, {
+    const pullResponse = await fetch(`/api/projects/${encodeURIComponent(projectId)}/local/pull`, {
       method: 'POST',
       headers: workspaceProjectHeaders(workspaceContext),
     });
@@ -673,14 +664,14 @@ async function pullTeamSharedProjectIfAvailable(
 }
 
 // A member's first-ever open of a just-shared project races the daemon's
-// local materialization (POST /collab/pull's registerPulledProject, or
-// ProjectView's own /collab/status poll firing ensureSharedProjectPlaceholder
+// local materialization (POST /local/pull's registerPulledProject, or
+// ProjectView's own /local/status poll firing ensureSharedProjectPlaceholder
 // — see collab-sync.ts) against the deep-link bootstrap effect below. Give
 // that materialization a bounded window instead of trusting a single
 // immediate miss.
 //
 // 21 attempts * 600ms = ~12s total. The original budget here was 4 * 600ms =
-// ~2.4s, sized well under the real /collab/pull latency observed against a
+// ~2.4s, sized well under the real /local/pull latency observed against a
 // live vela-backed hub (up to ~10s for a fresh project's first pull) —
 // exhausting the window and falling through to "not found" while the pull
 // was still genuinely in flight is a false negative, not a correctness
@@ -4110,7 +4101,7 @@ function AppInner() {
     const routeSnapshot = routeProjectSnapshotRef.current;
     const routeSnapshotContext =
       routeSnapshot?.workspaceContext
-      ?? routeSnapshot?.workspaceScope?.context
+      ?? projectWorkspaceContext(routeSnapshot?.workspaceScope ?? null)
       ?? null;
     const routeSnapshotMatches =
       routeRef.current.kind === 'project'
@@ -4377,7 +4368,7 @@ function AppInner() {
     workspaceContextState,
     routeProjectSnapshotRef.current?.project.id === loadedActiveProject?.id
       ? routeProjectSnapshotRef.current?.workspaceContext
-        ?? routeProjectSnapshotRef.current?.workspaceScope?.context
+        ?? projectWorkspaceContext(routeProjectSnapshotRef.current?.workspaceScope ?? null)
       : null,
   );
   // Never mount ProjectView around the synthetic "Untitled" placeholder. Its
@@ -4490,8 +4481,8 @@ function AppInner() {
   //
   // A member's first open of a freshly-shared project is a genuine race: the
   // hub already confirms the project belongs to their team, but the local
-  // sqlite mirror (materialized by POST /collab/pull's registerPulledProject,
-  // or by ProjectView's own /collab/status poll firing
+  // sqlite mirror (materialized by POST /local/pull's registerPulledProject,
+  // or by ProjectView's own /local/status poll firing
   // ensureSharedProjectPlaceholder — see collab-sync.ts) hasn't landed yet. A
   // single immediate miss used to be indistinguishable from "this project
   // doesn't exist / I have no access", and navigated the member straight back
@@ -5005,7 +4996,7 @@ function AppInner() {
       />
     );
   } else if (route.kind === 'collab-demo') {
-    appMain = <CollabDemoView projectId={route.projectId} />;
+    appMain = null;
   } else if (route.kind === 'community') {
     appMain = (
       <CommunityView
@@ -5369,6 +5360,7 @@ function AppInner() {
         artifactUpgradeSlot={
           amrArtifactUpgradeHomeOffer ? (
             <AmrArtifactUpgradeHomeCard
+              offer={amrArtifactUpgradeHomeOffer}
               key={amrArtifactUpgradeHomeOffer.sessionKey}
               profile={amrLoginStatus?.profile ?? null}
               metricsConsent={config.telemetry?.metrics === true}
@@ -5511,7 +5503,9 @@ function AppInner() {
         onHomeOfferChange={
           amrArtifactUpgradeHomeMock
             ? undefined
-            : setAmrArtifactUpgradeHomeOffer
+            : (offer) => setAmrArtifactUpgradeHomeOffer(
+              offer as AmrArtifactUpgradeHomeOffer | null,
+            )
         }
       />
       <AnimatePresence>

@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ProjectView } from '../../src/components/ProjectView';
 import { useIframeKeepAlivePool } from '../../src/components/IframeKeepAlivePool';
-import { useProjectCollab, type ProjectCollab } from '../../src/collab/useProjectCollab';
+import { useProjectCollab, type ProjectCollab } from '../../src/local/useProjectCollab';
 import { useProjectFileEvents, type ProjectEvent } from '../../src/providers/project-events';
 import type {
   AgentInfo,
@@ -63,9 +63,9 @@ vi.mock('../../src/providers/project-events', () => ({
   useProjectFileEvents: vi.fn(),
 }));
 
-vi.mock('../../src/collab/useProjectCollab', async () => {
-  const actual = await vi.importActual<typeof import('../../src/collab/useProjectCollab')>(
-    '../../src/collab/useProjectCollab',
+vi.mock('../../src/local/useProjectCollab', async () => {
+  const actual = await vi.importActual<typeof import('../../src/local/useProjectCollab')>(
+    '../../src/local/useProjectCollab',
   );
   return {
     ...actual,
@@ -192,7 +192,7 @@ const designSystem: DesignSystemSummary = {
 };
 
 // Owner side of a team-shared project, mid-edit: this is exactly the state
-// `markLocalChangePending` (apps/daemon/src/collab/runtime.ts) puts the
+// `markLocalChangePending` (apps/daemon/src/local/runtime.ts) puts the
 // project in the instant a local file change is observed. The FileSyncBadge
 // "uploading" treatment (ProjectView.tsx's `fileSyncBadge` derivation) reads
 // straight off `syncState === 'pending_upload'`.
@@ -271,14 +271,14 @@ describe('ProjectView file-sync badge — status check on local file change', ()
 
   // recvqghymxqQQq: the owner's own edit lands on disk, the daemon's
   // collab-publish-watcher flips syncState to 'pending_upload' SYNCHRONOUSLY
-  // on that same chokidar event (apps/daemon/src/collab/runtime.ts
+  // on that same chokidar event (apps/daemon/src/local/runtime.ts
   // markLocalChangePending), then reverts to 'synced' once the debounced
   // publish resolves — a window that is typically well under a second
   // (CollabPublishScheduler's 400ms debounce + a fast/local publish).
   //
   // The owner's OWN browser tab, however, only learns the new syncState
   // through CollabClient's fixed 5s status poll (DEFAULT_STATUS_POLL_MS in
-  // apps/web/src/collab/collab-client.ts) UNLESS something calls
+  // apps/web/src/local/collab-client.ts) UNLESS something calls
   // `checkStatusNow()` sooner. ProjectView already does this reactively for
   // OTHER hub push signals (`project-metadata-changed` → "Run one status
   // check now ... instead of waiting for the next 5s status tick"), but the

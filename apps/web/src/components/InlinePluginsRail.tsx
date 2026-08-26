@@ -7,23 +7,20 @@
 // (hydrate the brief, show the input form, etc.).
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type {
-  ApplyResult,
-  InstalledPluginRecord,
-} from '@open-design/contracts';
+import type { ApplyResult, InstalledPluginRecord } from '@open-design/contracts';
 import {
   applyPlugin,
   listPlugins,
   resolvedWorkspaceContextForWrite,
 } from '../state/projects';
-import { useProjectCollabContext } from '../collab/collab-context';
+import { useProjectCollabContext } from '../local/collab-context';
 import {
   currentWorkspaceAccountGeneration,
   useWorkspaceContext,
   workspaceIdentityCacheKey,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
 import { useI18n } from '../i18n';
 import { localizePluginDescription, localizePluginTitle } from './plugins-home/localization';
 

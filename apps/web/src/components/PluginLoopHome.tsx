@@ -1,15 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  ApplyResult,
-  ChatSessionMode,
-  CreateProjectExampleReference,
-  InstalledPluginRecord,
-  ProjectKind,
-  ProjectMetadata,
-  ProjectScenarioTaskProfile,
-  LocalCatalogScope,
-  RunContextSelection,
-} from '@open-design/contracts';
+import type { ApplyResult, ChatSessionMode, CreateProjectExampleReference, InstalledPluginRecord, ProjectKind, ProjectMetadata, ProjectScenarioTaskProfile, LocalCatalogScope, RunContextSelection } from '@open-design/contracts';
 import {
   applyPlugin,
   duplicatePluginAsProject,
@@ -28,7 +18,7 @@ import { authorInitials, derivePluginSourceLinks } from '../runtime/plugin-sourc
 import { useAnalytics } from '../analytics/provider';
 import { trackPluginLoopClick } from '../analytics/events';
 import { navigate } from '../router';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 
 export interface PluginLoopSubmit {
   prompt: string;

@@ -3,8 +3,8 @@ import { fetchDesignSystemsResult } from '../providers/registry';
 import type { DesignSystemSummary } from '../types';
 import type { Dict } from '../i18n/types';
 import { Icon } from './Icon';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
-import { workspaceIdentityCacheKey } from '../collab/workspace-identity';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
+import { workspaceIdentityCacheKey } from '../local/workspace-identity';
 
 type TranslateFn = (key: keyof Dict, vars?: Record<string, string | number>) => string;
 

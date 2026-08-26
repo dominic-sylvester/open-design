@@ -27,8 +27,8 @@ import type { ProjectFile } from '../../src/types';
 // Keep the authorization scope resolved from the first render so cache keys
 // do not depend on the asynchronous workspace-context probe (same shape as
 // FileViewer.srcdoc-reload-races.test.tsx).
-vi.mock('../../src/collab/useWorkspaceContext', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../src/collab/useWorkspaceContext')>();
+vi.mock('../../src/local/useWorkspaceContext', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../src/local/useWorkspaceContext')>();
   return {
     ...actual,
     useWorkspaceContext: () => ({ context: null, loading: false }),

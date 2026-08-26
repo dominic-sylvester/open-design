@@ -13,8 +13,8 @@ import { fetchProjectFileText, writeProjectTextFile } from '../../src/providers/
 import {
   CollabProvider,
   type CollabContextValue,
-} from '../../src/collab/collab-context';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+} from '../../src/local/collab-context';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 
 vi.mock('../../src/providers/registry', async () => {
   const actual = await vi.importActual<typeof import('../../src/providers/registry')>(

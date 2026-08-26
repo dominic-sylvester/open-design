@@ -6,7 +6,7 @@
 //
 // Why this is a call-site spec and not a `state/projects` unit spec: the daemon
 // side already works. `authorizeCreatedProjectWorkspace`
-// (apps/daemon/src/collab/created-project-workspace.ts) treats a COMPLETELY
+// (apps/daemon/src/local/created-project-workspace.ts) treats a COMPLETELY
 // headerless create as a legal legacy/anonymous caller and deliberately leaves
 // the new project unbound — `bindCreatedProjectToWorkspace` is a no-op for a
 // null context. So a web call site that forgets to pass its workspace context
@@ -20,11 +20,8 @@
 // Same bypass class as c0bce3b8f (47 write/upload/rename call sites).
 
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { App } from '../../src/App';
@@ -34,7 +31,7 @@ import {
   resetTeamProjectsCache,
   resetWorkspaceBillingCache,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 import {
   daemonIsLive,
   fetchAgentsStream,
@@ -55,7 +52,7 @@ import {
 import { listProjects, listTemplates } from '../../src/state/projects';
 import type { Route } from '../../src/router';
 import type { AgentInfo, AppConfig } from '../../src/types';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 
 const TEMPLATE_ID = 'example-fundraising-deck';
 const TEMPLATE_PROMPT = 'Remix this seed round deck for my studio.';

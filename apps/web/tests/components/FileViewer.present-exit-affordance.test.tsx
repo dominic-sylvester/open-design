@@ -22,11 +22,11 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
-import { CollabProvider, type CollabContextValue } from '../../src/collab/collab-context';
+import { CollabProvider, type CollabContextValue } from '../../src/local/collab-context';
 import { FileViewer } from '../../src/components/FileViewer';
 import { resetSharedCancellableGet } from '../../src/lib/shared-cancellable-get';
 import type { ProjectFile } from '../../src/types';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 const WORKSPACE_CONTEXT = workspaceContextFixture({
   workspaceId: 'ws-present-exit',

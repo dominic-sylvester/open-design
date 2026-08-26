@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { CommentDriftDemo } from '../src/collab/CommentDriftDemo';
+import { CommentDriftDemo } from '../src/local/CommentDriftDemo';
 
 afterEach(cleanup);
 

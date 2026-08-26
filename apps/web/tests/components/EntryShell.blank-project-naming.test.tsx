@@ -11,11 +11,8 @@
 // panel's blank pick), which already tag `nameSource: 'generated'`.
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { EntryShell } from '../../src/components/EntryShell';
@@ -25,8 +22,8 @@ import {
   notifyWorkspaceContextRefresh,
   resetTeamProjectsCache,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
-import { workspaceDirectoryFixture } from '../helpers/workspace-context';
+} from '../../src/local/useWorkspaceContext';
+import { workspaceDirectoryFixture } from '../helpers/local-workspace-context';
 import {
   fetchProjectFiles,
   invalidateProjectFilesCache,

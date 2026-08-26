@@ -12,16 +12,13 @@
 
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import {
-  normalizeWorkspaceInviteCreateErrorCode,
-  type WorkspaceCollabContext,
-  type WorkspaceInviteRole,
-} from '@open-design/contracts';
+import { normalizeWorkspaceInviteCreateErrorCode, type WorkspaceInviteRole } from '../local/types'
+import type { WorkspaceCollabContext } from '../local/types';
 import { Button } from '@open-design/components';
 import { Icon } from './Icon';
 import { useI18n } from '../i18n';
-import { workspaceInviteErrorMessageKey } from '../collab/invite-error-copy';
-import { workspaceProjectHeaders } from '../collab/workspace-identity';
+import { workspaceInviteErrorMessageKey } from '../local/invite-error-copy';
+import { workspaceProjectHeaders } from '../local/workspace-identity';
 import { useAnalytics } from '../analytics/provider';
 import {
   trackWorkspaceInviteClick,

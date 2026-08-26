@@ -18,7 +18,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import { InviteDialog } from '../../src/components/InviteDialog';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 const TEAM_CONTEXT = workspaceContextFixture({
   workspaceId: 'workspace-team',

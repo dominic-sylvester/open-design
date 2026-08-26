@@ -20,11 +20,11 @@ import {
   isOpenDesignHostAvailable,
   printHostPdf,
 } from '@open-design/host';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   workspaceProjectHeaders,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import { sourceHasLegacyDeckScreenSlides } from './deck-slide-structure';
 
 // Re-exported so app components can gate desktop-only export paths without

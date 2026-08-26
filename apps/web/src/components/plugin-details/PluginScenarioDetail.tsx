@@ -9,11 +9,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Dialog } from '@open-design/components';
-import type {
-  InstalledPluginRecord,
-  PluginManifest,
-  WorkspaceCollabContext,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord, PluginManifest } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../local/types';
 import { useI18n } from '../../i18n';
 import { localizePluginChrome } from '../../i18n/plugin-content';
 import { Icon } from '../Icon';

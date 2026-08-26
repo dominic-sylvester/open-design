@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const copy: OpenDesignPluginCopy = {
   metadata: {
-    title: 'OpenDesign pour Codex/ChatGPT | Installer le plugin OpenDesign Cloud',
+    title: 'OpenDesign pour Codex/ChatGPT | Installer le plugin OpenDesign',
     description:
-      'Installez OpenDesign Cloud dans Codex/ChatGPT et créez des sites web, des présentations, des prototypes et des systèmes de design depuis la même tâche.',
+      'Installez OpenDesign dans Codex/ChatGPT et créez des sites web, des présentations, des prototypes et des systèmes de design depuis la même tâche.',
     keywords:
-      'plugin OpenDesign pour Codex, plugin ChatGPT desktop, installation plugin Codex, OpenDesign Cloud, plugin design Codex, Codex MCP',
+      'plugin OpenDesign pour Codex, plugin ChatGPT desktop, installation plugin Codex, OpenDesign, plugin design Codex, Codex MCP',
   },
   hero: {
     title: 'Plugin OpenDesign pour Codex/ChatGPT',
     leadBefore: 'Saisissez l’instruction ci-dessous dans n’importe quelle tâche de votre',
     chatgptLabel: 'application de bureau ChatGPT',
-    installAria: 'Installer OpenDesign Cloud dans Codex/ChatGPT',
+    installAria: 'Installer OpenDesign dans Codex/ChatGPT',
     copy: 'Copier',
     github: 'Voir le guide d’installation sur GitHub ↗',
   },
@@ -95,7 +95,7 @@ const copy: OpenDesignPluginCopy = {
         label: 'Récit interactif',
       },
     ],
-    promptListAria: 'Exemples de prompts OpenDesign Cloud',
+    promptListAria: 'Exemples de prompts OpenDesign',
     prompts: [
       { title: 'Site web' },
       { title: 'Présentations' },
@@ -126,7 +126,7 @@ const copy: OpenDesignPluginCopy = {
       {
         q: 'Pourquoi dois-je créer une nouvelle tâche Codex ?',
         a:
-          'Codex charge les fonctionnalités du plugin et du MCP au démarrage d’une tâche. Une nouvelle tâche détecte le plugin OpenDesign Cloud fraîchement installé.',
+          'Codex charge les fonctionnalités du plugin et du MCP au démarrage d’une tâche. Une nouvelle tâche détecte le plugin OpenDesign fraîchement installé.',
       },
       {
         q: 'La fenêtre OpenDesign doit-elle rester ouverte ?',
@@ -136,7 +136,7 @@ const copy: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'Installer OpenDesign Cloud dans Codex/ChatGPT',
+    aria: 'Installer OpenDesign dans Codex/ChatGPT',
     title: 'Ajoutez OpenDesign à votre prochaine tâche Codex/ChatGPT.',
     bodyBeforeMention: 'Installez le plugin, connectez le MCP local et invoquez',
     bodyAfterMention: '.',
@@ -150,8 +150,8 @@ const copy: OpenDesignPluginCopy = {
     failed: 'Sélectionner et copier',
   },
   schema: {
-    pageName: 'Plugin OpenDesign Cloud pour Codex/ChatGPT',
-    applicationName: 'Plugin OpenDesign Cloud pour Codex/ChatGPT',
+    pageName: 'Plugin OpenDesign pour Codex/ChatGPT',
+    applicationName: 'Plugin OpenDesign pour Codex/ChatGPT',
   },
 };
 

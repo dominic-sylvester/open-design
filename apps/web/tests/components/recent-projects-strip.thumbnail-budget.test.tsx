@@ -37,17 +37,17 @@ const registryMocks = vi.hoisted(() => ({
   fetchProjectFileText: vi.fn(async () => null),
 }));
 
-vi.mock('../../src/collab/useTeamMembers', () => ({
+vi.mock('../../src/local/useTeamMembers', () => ({
   useTeamMembers: () => ({ resolve: () => null }),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   notifyTeamProjectsChanged: vi.fn(),
   useWorkspaceBilling: () => null,
   useWorkspaceContext: () => ({ context: null }),
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn(),
 }));
 

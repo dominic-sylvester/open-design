@@ -3,17 +3,7 @@
 // the UI presents them as scheduled agent conversations.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type {
-  AutomationEvolutionProposal,
-  AutomationEvolutionProposalListResponse,
-  AutomationsClickProps,
-  AutomationTemplate as ContractAutomationTemplate,
-  AutomationTemplateListResponse,
-  ConnectorDetail,
-  Routine,
-  RoutineRun,
-  RoutineRunCrystallizeResponse,
-} from '@open-design/contracts';
+import type { AutomationEvolutionProposal, AutomationEvolutionProposalListResponse, AutomationsClickProps, AutomationTemplate as ContractAutomationTemplate, AutomationTemplateListResponse, ConnectorDetail, Routine, RoutineRun, RoutineRunCrystallizeResponse } from '@open-design/contracts';
 
 import { Icon, type IconName } from './Icon';
 import { navigate } from '../router';
@@ -29,13 +19,13 @@ import {
   type AutomationTemplateKind,
 } from './NewAutomationModal';
 import { describeRoutineSchedule } from './routineScheduleLabels';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import { listProjects } from '../state/projects';
 import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../collab/workspace-identity';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+} from '../local/workspace-identity';
+import type { WorkspaceCollabContext } from '../local/types';
 
 type ProjectSummary = { id: string; name: string };
 type TemplateFilter =

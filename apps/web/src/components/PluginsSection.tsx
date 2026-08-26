@@ -30,18 +30,14 @@ import {
   useImperativeHandle,
   useState,
 } from 'react';
-import type {
-  ApplyResult,
-  ContextItem,
-  InstalledPluginRecord,
-} from '@open-design/contracts';
+import type { ApplyResult, ContextItem, InstalledPluginRecord } from '@open-design/contracts';
 import {
   applyPlugin,
   renderPluginBriefTemplate,
   resolvedWorkspaceContextForWrite,
 } from '../state/projects';
-import { useProjectCollabContext } from '../collab/collab-context';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
+import { useProjectCollabContext } from '../local/collab-context';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
 import { useI18n } from '../i18n';
 import { ContextChipStrip } from './ContextChipStrip';
 import { InlinePluginsRail } from './InlinePluginsRail';

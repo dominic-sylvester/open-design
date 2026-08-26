@@ -1,19 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { BackoffController } from '../lib/backoff';
-import {
-  COLLAB_PROJECT_INVALIDATION_EVENTS,
-  PROJECT_CONTENT_TRANSFER_STATE_EVENT,
-  type CollabProjectInvalidationSsePayload,
-  type LiveArtifactRefreshSsePayload,
-  type LiveArtifactSsePayload,
-  type ProjectConversationCreatedSsePayload,
-  type ProjectContentTransferStateSsePayload,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { COLLAB_PROJECT_INVALIDATION_EVENTS, PROJECT_CONTENT_TRANSFER_STATE_EVENT, type CollabProjectInvalidationSsePayload, type ProjectContentTransferStateSsePayload } from '../local/collab-contracts';
+import type { LiveArtifactRefreshSsePayload, LiveArtifactSsePayload, ProjectConversationCreatedSsePayload } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   workspaceIdentityCacheKey,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 export interface ProjectFileChangeEvent {
   type: 'file-changed';
   path: string;

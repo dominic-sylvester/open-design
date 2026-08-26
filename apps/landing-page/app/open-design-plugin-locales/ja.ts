@@ -3,17 +3,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const ja: OpenDesignPluginCopy = {
   metadata: {
-    title: 'Codex/ChatGPT 向け OpenDesign | OpenDesign Cloud プラグインをインストール',
+    title: 'Codex/ChatGPT 向け OpenDesign | OpenDesign プラグインをインストール',
     description:
-      'OpenDesign Cloud を Codex/ChatGPT にインストールし、同じタスクの中で Web サイト、スライド、プロトタイプ、デザインシステムを制作できます。',
+      'OpenDesign を Codex/ChatGPT にインストールし、同じタスクの中で Web サイト、スライド、プロトタイプ、デザインシステムを制作できます。',
     keywords:
-      'OpenDesign Codex プラグイン, ChatGPT デスクトッププラグイン, Codex プラグイン インストール, OpenDesign Cloud, Codex デザインプラグイン, Codex MCP',
+      'OpenDesign Codex プラグイン, ChatGPT デスクトッププラグイン, Codex プラグイン インストール, OpenDesign, Codex デザインプラグイン, Codex MCP',
   },
   hero: {
     title: 'Codex/ChatGPT 向け OpenDesign プラグイン',
     leadBefore: '以下の指示を、お使いの',
     chatgptLabel: 'ChatGPT デスクトップアプリの任意のタスクに入力してください',
-    installAria: 'OpenDesign Cloud を Codex/ChatGPT にインストール',
+    installAria: 'OpenDesign を Codex/ChatGPT にインストール',
     copy: 'コピー',
     github: 'GitHub でインストールガイドを見る ↗',
   },
@@ -90,7 +90,7 @@ const ja: OpenDesignPluginCopy = {
         label: 'インタラクティブストーリー',
       },
     ],
-    promptListAria: 'OpenDesign Cloud のプロンプト例',
+    promptListAria: 'OpenDesign のプロンプト例',
     prompts: [
       { title: 'Web サイト' },
       { title: 'スライド' },
@@ -120,7 +120,7 @@ const ja: OpenDesignPluginCopy = {
       {
         q: 'なぜ新しい Codex タスクを始める必要がありますか？',
         a:
-          'Codex はタスクの開始時にプラグインと MCP の機能を読み込みます。新しいタスクを始めることで、インストールした OpenDesign Cloud プラグインが利用できるようになります。',
+          'Codex はタスクの開始時にプラグインと MCP の機能を読み込みます。新しいタスクを始めることで、インストールした OpenDesign プラグインが利用できるようになります。',
       },
       {
         q: 'OpenDesign のウィンドウは開いたままにする必要がありますか？',
@@ -130,7 +130,7 @@ const ja: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'OpenDesign Cloud を Codex/ChatGPT にインストール',
+    aria: 'OpenDesign を Codex/ChatGPT にインストール',
     title: '次の Codex/ChatGPT タスクに OpenDesign を。',
     bodyBeforeMention: 'プラグインをインストールしてローカル MCP を接続し、',
     bodyAfterMention: 'を呼び出します。',
@@ -144,8 +144,8 @@ const ja: OpenDesignPluginCopy = {
     failed: '選択してコピー',
   },
   schema: {
-    pageName: 'Codex/ChatGPT 向け OpenDesign Cloud プラグイン',
-    applicationName: 'Codex/ChatGPT 向け OpenDesign Cloud プラグイン',
+    pageName: 'Codex/ChatGPT 向け OpenDesign プラグイン',
+    applicationName: 'Codex/ChatGPT 向け OpenDesign プラグイン',
   },
 };
 

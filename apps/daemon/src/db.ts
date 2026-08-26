@@ -9,19 +9,48 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import type {
-  CollabCloudComment,
   OdNextDevicePlatformV1,
   ProjectBrowserWorkspaceTab,
   ProjectTabsState,
 } from '@open-design/contracts';
+
+type CollabCloudComment = {
+  id: string;
+  deleted?: boolean;
+  slideIndex?: number | null;
+  selectionKind?: string;
+  podMembers?: unknown[];
+  memberCount?: number;
+  status?: string;
+  attachments?: unknown[];
+  anchorState?: string;
+  anchoredVersion?: number | null;
+  updatedAt?: number;
+  createdAt?: number;
+  seq?: number;
+  memberId?: string | null;
+  filePath?: string;
+  elementId?: string | null;
+  selector?: string | null;
+  label?: string | null;
+  text?: string;
+  position?: { x: number; y: number; width: number; height: number };
+  htmlHint?: string;
+  style?: unknown;
+  note?: string | null;
+  authorMemberId?: string | null;
+  lastGoodPosition?: { x: number; y: number; width: number; height: number } | null;
+};
 import { eventsEndedWithUnfinishedWork } from '@open-design/contracts';
-import { migrateCollabSyncSnapshots } from './collab/sync-snapshot-store.js';
-import { migrateCommentRelayOutbox } from './collab/comment-relay-outbox.js';
-import { migratePublicFilePublications } from './collab/public-file-publication-store.js';
+import {
+  migrateCollabSyncSnapshots,
+  migrateCommentRelayOutbox,
+  migratePublicFilePublications,
+} from './workspace/db-legacy-migrations.js';
 import {
   collapseWorkspaceProjectHomes,
   type WorkspaceProjectHomeRow,
-} from './collab/workspace-project-home.js';
+} from './workspace/workspace-project-home.js';
 import { migrateCritique } from './critique/persistence.js';
 import { migrateMediaTasks } from './media/tasks.js';
 import { migrateLibrary } from './library-store.js';
@@ -3773,7 +3802,7 @@ export function mergeSyncedPreviewComment(
   const memberCount = selectionKind === 'pod'
     ? (podMembers?.length ?? (Number.isFinite(comment.memberCount) ? comment.memberCount : 0))
     : null;
-  const status = PREVIEW_COMMENT_STATUSES.has(comment.status) ? comment.status : 'open';
+  const status = comment.status && PREVIEW_COMMENT_STATUSES.has(comment.status) ? comment.status : 'open';
   const attachments = Array.isArray(comment.attachments) && comment.attachments.length > 0
     ? comment.attachments
     : null;
@@ -3836,8 +3865,8 @@ export function mergeSyncedPreviewComment(
   // somehow carries no real seq (e.g. an older relay build) so the row still
   // gets a usable number instead of a permanent NULL.
   const createdAt = Number.isFinite(comment.createdAt) ? comment.createdAt : now;
-  const hasWireSeq = Number.isFinite(comment.seq) && comment.seq > 0;
-  let pinSeq = hasWireSeq ? Math.round(comment.seq) : null;
+  const hasWireSeq = comment.seq != null && Number.isFinite(comment.seq) && comment.seq > 0;
+  let pinSeq = hasWireSeq ? Math.round(comment.seq as number) : null;
   if (!hasWireSeq) {
     const pinScope = db
       .prepare(

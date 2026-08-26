@@ -1,6 +1,7 @@
 import { Counter, Histogram, register } from 'prom-client';
 
-import type { WorkspaceAuthorityCacheMode } from '../collab/workspace-authority-health.js';
+// Workspace authority metrics removed with OpenDesign Cloud.
+export type WorkspaceAuthorityCacheMode = 'off' | 'observe' | 'enforce';
 
 export type WorkspaceAuthorityMetricSource =
   | 'cache'

@@ -1,24 +1,24 @@
 // @vitest-environment jsdom
 
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 const workspaceState = vi.hoisted(() => ({
   context: null as WorkspaceCollabContext | null,
 }));
 
-vi.mock('../../src/collab/useTeamMembers', () => ({
+vi.mock('../../src/local/useTeamMembers', () => ({
   useTeamMembers: () => ({ resolve: () => null }),
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   notifyTeamProjectsChanged: vi.fn(),
   useWorkspaceBilling: () => null,
   useWorkspaceContext: () => ({ context: workspaceState.context }),
 }));
 
-vi.mock('../../src/collab/workspace-events', () => ({
+vi.mock('../../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn(),
 }));
 

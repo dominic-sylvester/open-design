@@ -28,7 +28,7 @@ import {
   buildRecoveryTaskAnalytics,
   runAgentProviderId,
 } from '../analytics/run-task';
-import { amrHandoffDeviceId, attributedAmrUrl, recordAmrEntry } from '../analytics/amr-attribution';
+import { amrHandoffDeviceId, attributedAmrUrl, recordAmrEntry } from '../local/amr-attribution';
 import { useI18n, useT } from '../i18n';
 import { startersForProduct, type ProductType } from '../onboarding/recommendation';
 import { starterCopyFor } from '../onboarding/starter-copy';
@@ -47,18 +47,13 @@ import type { Dict } from '../i18n/types';
 import { copyToClipboard } from '../lib/copy-to-clipboard';
 import { useLiquidGlass } from '../hooks/useLiquidGlass';
 import { projectRawUrl } from '../providers/registry';
-import { appendResourceQuery } from '../collab/workspace-identity';
-import { useProjectCollabContext } from '../collab/collab-context';
+import { appendResourceQuery } from '../local/workspace-identity';
+import { useProjectCollabContext } from '../local/collab-context';
 import { takeComposerSeedFor } from '../state/libraryHandoff';
 import { splitOnQuestionForms } from '../artifacts/question-form';
 import { stripArtifact } from '../artifacts/strip';
 import type { TodoItem } from '../runtime/todos';
-import type {
-  AppliedPluginSnapshot,
-  ChatSessionMode,
-  RunContextSelection,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, ChatSessionMode, RunContextSelection, WorkspaceContextItem } from '@open-design/contracts';
 import type {
   TrackingProjectKind,
   TrackingRunRecoveryActionType,
@@ -89,13 +84,13 @@ import {
   AMR_LOGIN_STATUS_EVENT,
   amrLoginStatusEventReason,
   isAmrSessionAuthenticated,
-} from './amrLoginPolling';
+} from '../local/amrLoginPolling';
 import {
   amrPlansUrlForProfile,
   amrRechargeUrlForProfile,
   formatModelWindowRetryAt,
   resolveRunFailureUi,
-} from '../runtime/amr-guidance';
+} from '../local/amr-guidance';
 import {
   fetchVelaLoginStatus,
   type VelaLoginStatus,
@@ -105,7 +100,7 @@ import {
   canConsumeAmrAuthRetryContinuation,
   type AmrAuthRetryContinuation,
   type AmrAuthRetryPersonalAdoptionWitness,
-} from '../runtime/amr-auth-retry-continuation';
+} from '../local/amr-auth-retry-continuation';
 import {
   ChatComposer,
   type ChatComposerHandle,
@@ -2913,7 +2908,7 @@ export function ChatPane({
                                   });
                                 }
                               }}
-                              onStatusChange={(loginStatus) => {
+                              onStatusChange={(loginStatus: VelaLoginStatus) => {
                                 consumeAmrAuthRetryIfAuthorized(loginStatus);
                               }}
                             />

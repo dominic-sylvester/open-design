@@ -4,13 +4,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testi
 import type { ComponentProps } from 'react';
 import { KEY_ENTER_COMMAND } from 'lexical';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type {
-  InstalledPluginRecord,
-  McpServerConfig,
-  PluginSourceKind,
-  SkillSummary,
-  TrustTier,
-} from '@open-design/contracts';
+import type { InstalledPluginRecord, McpServerConfig, PluginSourceKind, SkillSummary, TrustTier } from '@open-design/contracts';
 
 vi.mock('../../src/components/home-hero/PlaceholderCarousel', () => ({
   PlaceholderCarousel: () => null,

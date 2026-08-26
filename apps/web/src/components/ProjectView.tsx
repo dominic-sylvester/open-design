@@ -57,21 +57,12 @@ import {
   runAgentProviderId,
 } from '../analytics/run-task';
 import { useCoalescedCallback } from '../hooks/useCoalescedCallback';
-import { requestAmrArtifactUpgrade } from '../runtime/amr-artifact-upgrade';
+import { requestAmrArtifactUpgrade } from '../local/amr-artifact-upgrade';
 import {
   resolveQuestionFormStrategyTaskExecutionId,
   strategySettledMessageFields,
 } from '../runtime/strategy-question-continuation';
-import {
-  hasCurrentAutomaticScenarioBinding,
-  type AmrWalletSnapshot,
-  type ByokChatProviderConfig,
-  type ByokMediaDefaults,
-  type ByokChatProtocol,
-  type ChatTaskExecutionAnalytics,
-  type ProjectWorkspaceScope,
-  type ResearchOptions,
-} from '@open-design/contracts';
+import { hasCurrentAutomaticScenarioBinding, type ByokChatProviderConfig, type ByokMediaDefaults, type ByokChatProtocol, type ChatTaskExecutionAnalytics, type ProjectWorkspaceScope, type ResearchOptions } from '@open-design/contracts';
 import {
   anonymizeArtifactId,
   artifactKindToTracking,
@@ -129,7 +120,7 @@ import type { TodoItem } from '../runtime/todos';
 import type {
   AmrAuthRetryContinuation,
   AmrAuthRetryPersonalAdoptionWitness,
-} from '../runtime/amr-auth-retry-continuation';
+} from '../local/amr-auth-retry-continuation';
 import {
   appendErrorStatusEvent,
   removeErrorStatusEvent,
@@ -151,8 +142,8 @@ import {
   checkAmrBalanceGate,
   isAmrBalanceGateScope,
   type AmrBalanceGateScope,
-} from '../runtime/amr-balance-gate';
-import { isPaidAmrPlan, resolveAmrPlan } from '../runtime/amr-low-balance-plan';
+} from '../local/amr-balance-gate';
+import { isPaidAmrPlan, resolveAmrPlan } from '../local/amr-guidance';
 import { AmrBalanceDialog } from './AmrBalanceDialog';
 import { AmrLowBalanceDialog, type AmrLowBalanceDecision } from './AmrLowBalanceDialog';
 import {
@@ -213,16 +204,8 @@ import {
   type SaveMessageOptions,
   waitGeneratedPluginShareTask,
 } from '../state/projects';
-import type {
-  AppliedPluginSnapshot,
-  BrandStatus,
-  ChatAnalyticsEntryFrom,
-  ChatSessionMode,
-  InstalledPluginRecord,
-  RunContextSelection,
-  WorkspaceCollabContext,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, BrandStatus, ChatAnalyticsEntryFrom, ChatSessionMode, InstalledPluginRecord, RunContextSelection, WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext, AmrWalletSnapshot } from '../local/types';
 import scenarioStyles from './ProjectScenarioControl.module.css';
 import type {
   AgentEvent,
@@ -261,17 +244,17 @@ import { Icon } from './Icon';
 import { useWorkspaceTabsDockRef } from './workspaceTabsDock';
 import { localizePluginTitle } from './plugins-home/localization';
 import { DesignSystemPicker } from './DesignSystemPicker';
-import { PresenceBar } from '../collab/PresenceBar';
-import { useProjectCollab } from '../collab/useProjectCollab';
+import { PresenceBar } from '../local/PresenceBar';
+import { useProjectCollab } from '../local/useProjectCollab';
 import {
   currentUserDirectoryEntry,
   useTeamMembers,
-} from '../collab/useTeamMembers';
-import { workspaceIdentityCacheKey } from '../collab/workspace-identity';
+} from '../local/useTeamMembers';
+import { workspaceIdentityCacheKey } from '../local/workspace-identity';
 import {
   useWorkspaceContext,
   workspaceIdentityCanBillAmr,
-} from '../collab/useWorkspaceContext';
+} from '../local/useWorkspaceContext';
 import {
   projectWorkspaceContext,
   projectWorkspaceScopeAuthorizesAmr,
@@ -279,13 +262,13 @@ import {
   runWorkspaceIdentity,
   runWorkspacePersonalAdoptionWitness,
   useProjectWorkspaceScope,
-} from '../collab/useProjectWorkspaceScope';
+} from '../local/useProjectWorkspaceScope';
 import {
   CollabProvider,
   type CollabContextValue,
   type ProjectResourceAuthority,
-} from '../collab/collab-context';
-import { persistCommentAnchors } from '../collab/comment-anchor-client';
+} from '../local/collab-context';
+import { persistCommentAnchors } from '../local/comment-anchor-client';
 import type { AnchorWriteBack } from '../comments';
 import { PluginDetailsModal } from './PluginDetailsModal';
 import { DesignSystemPreviewModal } from './DesignSystemPreviewModal';
@@ -1477,7 +1460,7 @@ export function projectSplitClassName(workspaceFocused: boolean): string {
  * Whether a project open should start with the chat pane collapsed (workspace
  * focus mode). Uses `useProjectCollab`'s confirmed shared-non-owner signal
  * (`isSharedNonOwner`) — not raw `isOwner` — so a catalog-confirmed owner whose
- * `/collab/status` payload is still missing `ownerMemberId` does not latch into
+ * `/local/status` payload is still missing `ownerMemberId` does not latch into
  * focus mode permanently (review: sticky apply ref).
  */
 export function shouldDefaultCollapseChatForSharedNonOwner(collab: {
@@ -3941,7 +3924,7 @@ export function ProjectView({
     // Team-share upload badge (recvqghymxqQQq): this fires on the SAME
     // chokidar-backed `file-changed` event the daemon's collab-publish-watcher
     // uses to flip `syncState` to 'pending_upload' (markLocalChangePending in
-    // apps/daemon/src/collab/runtime.ts), and that state typically reverts to
+    // apps/daemon/src/local/runtime.ts), and that state typically reverts to
     // 'synced' within one debounce window (~400ms) plus a publish — far
     // shorter than CollabClient's 5s status-poll cadence. Without checking
     // status right here, the owner's own tab almost never catches the
@@ -10081,7 +10064,7 @@ export function ProjectView({
   // tab already reads (via the `designSystems` prop) — this is a genuinely
   // separate signal from `projectCollab.viewerOnly` above. Team-sharing a
   // design system does NOT also register its backing project with the
-  // project-level collab/hub (`/api/projects/:id/collab/status` stays
+  // project-level collab/hub (`/api/projects/:id/local/status` stays
   // `local_only` for a teammate's synced copy), so `viewerOnly` alone never
   // catches this: a plain member opening a teammate's team-synced design
   // system through this in-project tab (reachable once `DesignSystemFlow`'s

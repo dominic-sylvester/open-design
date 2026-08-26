@@ -34,12 +34,7 @@ import {
   useState,
 } from 'react';
 import { useT } from '../i18n';
-import type {
-  MemoryExtractionConfig as MemoryExtractionConfigShape,
-  MemoryExtractionMaskedConfig,
-  MemoryExtractionProvider,
-  MemoryListResponse,
-} from '@open-design/contracts';
+import type { MemoryExtractionConfig as MemoryExtractionConfigShape, MemoryExtractionMaskedConfig, MemoryExtractionProvider, MemoryListResponse } from '@open-design/contracts';
 import type { AgentModelOption, ApiProtocol, ExecMode } from '../types';
 import {
   SUGGESTED_MODELS_BY_PROTOCOL,

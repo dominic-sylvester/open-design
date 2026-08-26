@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { WorkspaceDirectoryItem } from '@open-design/contracts';
+import type { WorkspaceDirectoryItem } from '../src/workspace/types.js';
 
 import {
   _resetMcpWorkspaceContextCacheForTests,
@@ -16,7 +16,6 @@ function item(overrides: Partial<WorkspaceDirectoryItem> = {}): WorkspaceDirecto
     workspaceName: 'Personal',
     workspaceType: 'personal',
     workspaceMemberId: 'mem-1',
-    role: 'owner',
     memberStatus: 'active',
     lifecycleState: 'active',
     ...overrides,

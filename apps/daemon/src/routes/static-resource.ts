@@ -4,13 +4,13 @@ import path from 'node:path';
 import fs from 'node:fs';
 import type {
   DesignSystemTokenContractRebuildJobResponse,
-  WorkspaceCollabContext,
 } from '@open-design/contracts';
-import { TeamResourceCopyForbiddenError } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../workspace/types.js';
+import { TeamResourceCopyForbiddenError } from '../workspace/types.js';
 import {
   enforceTeamResourceCopyAllowed,
   type TeamResourceStateProvider,
-} from '../collab/team-resource-state.js';
+} from '../workspace/team-resource-state.js';
 import { detectAgents, detectAgentsStream } from '../agents.js';
 import {
   SkillImportError,
@@ -34,7 +34,7 @@ import {
   enforceVerifiedWorkspaceResourceMutation,
   resolveOptionalLocalWorkspaceRequestAuthority,
   type VerifyWorkspaceRequestAuthority,
-} from '../collab/workspace-resource-mutation.js';
+} from '../workspace/workspace-resource-mutation.js';
 import { listCodexPets, readCodexPetSpritesheet } from '../codex-pets.js';
 import { syncCommunityPets } from '../community-pets-sync.js';
 import {

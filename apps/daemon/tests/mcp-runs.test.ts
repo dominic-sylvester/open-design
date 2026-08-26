@@ -306,7 +306,7 @@ describe('public MCP discovery + generation tools', () => {
     expect(parsed.previewUrl).toBeUndefined();
   });
 
-  it('get_run returns a recharge link and same-request resume instructions', async () => {
+  it('get_run omits cloud recharge links after local-only removal', async () => {
     const fetchMock = vi.fn(async (url: string) => {
       if (url.endsWith('/api/mcp/install-info')) {
         return new Response(JSON.stringify({ webBaseUrl: null }), { status: 200 });
@@ -315,10 +315,9 @@ describe('public MCP discovery + generation tools', () => {
         id: 'run-wallet',
         status: 'failed',
         projectId: 'project-1',
-        clientRequestId: 'brief-42-cloud',
-        agentId: 'amr',
-        errorCode: 'AMR_INSUFFICIENT_BALANCE',
-        failureAction: 'recharge',
+        clientRequestId: 'brief-42-local',
+        agentId: 'codex',
+        errorCode: 'AGENT_EXECUTION_FAILED',
       }), { status: 200 });
     });
     vi.stubGlobal('fetch', withDirectory(fetchMock));
@@ -331,11 +330,9 @@ describe('public MCP discovery + generation tools', () => {
     const parsed = JSON.parse(firstText(result));
     expect(parsed).toMatchObject({
       status: 'failed',
-      failureAction: 'recharge',
-      rechargeUrl: 'https://open-design.ai/amr/dashboard?source=open_design',
     });
-    expect(parsed.hint).toContain('same requestId');
-    expect(parsed.hint).toContain('resume:true');
+    expect(parsed.rechargeUrl).toBeUndefined();
+    expect(parsed.failureAction).toBeUndefined();
   });
 
   // When a run is mid-flight, the outer agent has no in-band signal

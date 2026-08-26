@@ -7,14 +7,14 @@
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../src/local/types';
 
-vi.mock('../src/collab/workspace-events', () => ({
+vi.mock('../src/local/workspace-events', () => ({
   useWorkspaceInvalidation: vi.fn(() => ({ connected: false })),
 }));
 
-import { useProjectWorkspaceScope } from '../src/collab/useProjectWorkspaceScope';
-import { notifyWorkspaceContextRefresh } from '../src/collab/useWorkspaceContext';
+import { useProjectWorkspaceScope } from '../src/local/useProjectWorkspaceScope';
+import { notifyWorkspaceContextRefresh } from '../src/local/useWorkspaceContext';
 
 const PROJECT_ID = 'project-unbound';
 

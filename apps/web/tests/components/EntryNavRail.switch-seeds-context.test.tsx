@@ -15,14 +15,14 @@
 // scope and passive tabs (which cannot be seeded) still need to re-read.
 
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { EntryNavRail, resetWorkspaceDirectoryCache } from '../../src/components/EntryNavRail';
 import {
   resetWorkspaceContextCache,
   useWorkspaceContext,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 import { resetCoalescedGet } from '../../src/lib/coalesced-get';
 import { I18nProvider } from '../../src/i18n';
 

@@ -7,7 +7,8 @@
 // daemon endpoint is required.
 
 import { useCallback, useState } from 'react';
-import type { Brand, WorkspaceCollabContext } from '@open-design/contracts';
+import type { Brand } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
 import {
   fetchProjectFileText,
   uploadProjectFile,

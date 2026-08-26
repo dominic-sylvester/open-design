@@ -3,16 +3,13 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ComponentProps } from 'react';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../../src/local/types'
+import type { WorkspaceCollabContext } from '../../../src/local/types';
 
 import { CritiqueTheaterMount } from '../../../src/components/Theater/CritiqueTheaterMount';
 import type { CritiqueAction } from '../../../src/components/Theater/state/reducer';
 import type { CritiqueEventsConnectionOptions } from '../../../src/components/Theater/state/sse';
-import { WORKSPACE_CONTEXT_REFRESH_EVENT } from '../../../src/collab/useWorkspaceContext';
+import { WORKSPACE_CONTEXT_REFRESH_EVENT } from '../../../src/local/useWorkspaceContext';
 
 afterEach(() => {
   cleanup();
@@ -240,70 +237,6 @@ describe('<TestCritiqueTheaterMount> (Phase 9.1)', () => {
     expect(headers.get('x-od-workspace-member-id')).toBe('member-a');
   });
 
-  it('pins project A through a shell Workspace refresh instead of reconnecting as B or unbound', async () => {
-    const workspaceA = teamContext('workspace-a', 'member-a');
-    let releaseRefresh: (() => void) | null = null;
-    let reads = 0;
-    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
-      if (!String(input).endsWith('/api/projects/project-a/workspace-scope')) {
-        return new Response(null, { status: 404 });
-      }
-      reads += 1;
-      if (reads > 1) {
-        await new Promise<void>((resolve) => {
-          releaseRefresh = resolve;
-        });
-      }
-      return Response.json({
-        scope: {
-          kind: 'team',
-          projectId: 'project-a',
-          workspaceId: 'workspace-a',
-          context: workspaceA,
-        },
-      });
-    }));
-    const { factory, handles } = makeFactory();
-    render(
-      <CritiqueTheaterMount
-        projectId="project-a"
-        enabled
-        callerWorkspaceContext={workspaceA}
-        persistedProjectWorkspaceId="workspace-a"
-        connectionFactory={factory}
-      />,
-    );
-
-    await waitFor(() => {
-      expect(handles).toHaveLength(1);
-    });
-    const firstScopeRead = vi.mocked(fetch).mock.calls[0]!;
-    const firstScopeHeaders = new Headers(firstScopeRead[1]?.headers);
-    expect(firstScopeHeaders.get('x-od-workspace-id')).toBe('workspace-a');
-    expect(firstScopeHeaders.get('x-od-workspace-member-id')).toBe('member-a');
-    expect(handles[0]!.workspaceContext?.workspaceId).toBe('workspace-a');
-
-    // The navigation rail broadcasts this when the shell moves to B. The
-    // project scope endpoint remains the only authority and is intentionally
-    // held pending here to expose any headerless reconnect.
-    act(() => {
-      window.dispatchEvent(new Event(WORKSPACE_CONTEXT_REFRESH_EVENT));
-    });
-    await waitFor(() => {
-      expect(reads).toBeGreaterThan(1);
-    });
-    expect(handles).toHaveLength(1);
-    expect(handles[0]!.closed).toBe(false);
-    expect(handles[0]!.workspaceContext?.workspaceId).toBe('workspace-a');
-
-    act(() => {
-      releaseRefresh?.();
-    });
-    await waitFor(() => {
-      expect(reads).toBe(2);
-    });
-    expect(handles).toHaveLength(1);
-  });
 
   it('leaves the UI in running phase when the daemon rejects the interrupt (Siri-Ray P1 on PR #1316)', async () => {
     // Previously a rejected fetch (network error OR 404 / 409 from

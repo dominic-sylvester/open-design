@@ -30,7 +30,6 @@ import { agentCliEnvForAgent, readAppConfig } from './app-config.js';
 import { spawnEnvForAgent } from './agents.js';
 import { collectBrowserUseDiscoveryFacts } from './browser/index.js';
 import { readRecentApiFailures } from './http/api-failure-journal.js';
-import { readVelaLoginStatus } from './integrations/vela.js';
 
 interface ResolvedDiagnosticsAgentEnvironment {
   amrOpenCodeHome: string | null;
@@ -292,25 +291,7 @@ export function createDiagnosticsExportHandler(options: DiagnosticsHandlerOption
           },
           'runtime-health.json': {
             daemon: { reachable: true },
-            amr: (() => {
-              try {
-                const status = readVelaLoginStatus(
-                  process.env,
-                  agentEnvironment.amrConfiguredEnv,
-                );
-                return {
-                  profile: status.profile,
-                  loggedIn: status.loggedIn,
-                  sessionState: status.sessionState,
-                  credentialRevision: status.credentialRevision,
-                  loginInFlight: status.loginInFlight,
-                };
-              } catch (error) {
-                return {
-                  error: error instanceof Error ? error.message : String(error),
-                };
-              }
-            })(),
+            amr: { available: false, loggedIn: false },
             coverage: {
               runEventsPresent: runEventSources.length > 0,
               note: runEventSources.length > 0

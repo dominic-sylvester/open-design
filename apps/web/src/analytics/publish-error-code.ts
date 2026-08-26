@@ -3,7 +3,7 @@
  * code for `artifact_publish_result.error_code`.
  *
  * The publish flow already routes user-facing copy through
- * `publicFilePublishFailureKey` (apps/web/src/collab/public-file-publish.ts),
+ * `publicFilePublishFailureKey` (apps/web/src/local/public-file-publish.ts),
  * but that returns an i18n MESSAGE KEY — screen copy, not a metric value.
  * Analytics wants a code that stays stable when the copy key is renamed, so
  * this maps the one actionable failure (workspace identity could not be
@@ -15,7 +15,7 @@
 
 import type { TrackingPublishErrorCode } from '@open-design/contracts/analytics';
 
-import { publicFilePublishFailureKey } from '../collab/public-file-publish';
+import { publicFilePublishFailureKey } from '../local/public-file-publish';
 
 export function publishErrorCode(err: unknown): TrackingPublishErrorCode {
   return publicFilePublishFailureKey(err) === 'fileViewer.publishFileRequiresWorkspace'

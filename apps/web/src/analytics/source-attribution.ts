@@ -3,7 +3,7 @@ import {
   readOnboardingProfile,
   type OnboardingProfile,
 } from '../state/onboarding-profile';
-import { readAmrAttribution } from './amr-attribution';
+import { readAmrAttribution } from '../local/amr-attribution';
 import { setAnalyticsPersonProperties } from './client';
 
 const ATTRIBUTION_COOKIE = 'od_attr';

@@ -9,25 +9,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Dialog, DialogFooter, DialogTitle } from '@open-design/components';
-import type {
-  ApplyResult,
-  ChatSessionMode,
-  ConnectorDetail,
-  CreateProjectExampleReference,
-  InputFieldSpec,
-  McpServerConfig,
-  InstalledPluginRecord,
-  LocalCatalogScope,
-  ProjectKind,
-  WorkspaceCollabContext,
-  WorkspaceProjectSummary,
-  AudioVoiceOption,
-  WorkspaceContextItem,
-} from '@open-design/contracts';
-import {
-  automaticStrategyTaskProfileForRouteId,
-  DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID,
-} from '@open-design/contracts';
+import type { ApplyResult, ChatSessionMode, ConnectorDetail, CreateProjectExampleReference, InputFieldSpec, McpServerConfig, InstalledPluginRecord, LocalCatalogScope, ProjectKind, WorkspaceProjectSummary, AudioVoiceOption, WorkspaceContextItem } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../local/types';
+import { automaticStrategyTaskProfileForRouteId, DEFAULT_UNSELECTED_SCENARIO_PLUGIN_ID } from '@open-design/contracts';
 import { projectKindFromMetadataToTracking } from '@open-design/contracts/analytics';
 import { useAnalytics } from '../analytics/provider';
 import {
@@ -63,7 +47,7 @@ import { useI18n, useT } from '../i18n';
 import {
   formatModelWindowRetryAt,
   modelWindowLimitCopy,
-} from '../runtime/amr-guidance';
+} from '../local/amr-guidance';
 import {
   localizeSkillName,
   localizeSkillPrompt,
@@ -116,9 +100,9 @@ import {
   useTeamProjects,
   useWorkspaceContext,
   workspaceResourceReadContext,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { useWorkspaceSnapshotActivation } from '../collab/workspace-snapshot-activation';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { useWorkspaceSnapshotActivation } from '../local/workspace-snapshot-activation';
 import {
   buildHomeMediaComposer,
   homeMediaSurfaceForChipId,
@@ -146,7 +130,7 @@ import { localizePluginTitle } from './plugins-home/localization';
 import type { PluginUseAction } from './plugins-home/useActions';
 import { examplePresetSeedPrompt } from './plugins-home/presetSeedPrompt';
 import { localizePluginDescription } from './plugins-home/localization';
-import type { SharedProjectPredicate } from '../collab/all-projects-list';
+import type { SharedProjectPredicate } from '../local/all-projects-list';
 import { RecentProjectsStrip } from './RecentProjectsStrip';
 import type { Recommendation } from '../onboarding/recommendation';
 import type { OnboardingEntry } from '../onboarding/onboarding-entry';

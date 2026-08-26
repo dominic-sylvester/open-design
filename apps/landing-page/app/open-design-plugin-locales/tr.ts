@@ -2,17 +2,17 @@ import type { OpenDesignPluginCopy } from '../open-design-plugin-i18n';
 
 const tr: OpenDesignPluginCopy = {
   metadata: {
-    title: 'Codex/ChatGPT için OpenDesign | OpenDesign Cloud Eklentisini Kurun',
+    title: 'Codex/ChatGPT için OpenDesign | OpenDesign Eklentisini Kurun',
     description:
-      'OpenDesign Cloud eklentisini Codex/ChatGPT’ye kurun; web siteleri, sunumlar, prototipler ve tasarım sistemlerini aynı görev içinde oluşturun.',
+      'OpenDesign eklentisini Codex/ChatGPT’ye kurun; web siteleri, sunumlar, prototipler ve tasarım sistemlerini aynı görev içinde oluşturun.',
     keywords:
-      'OpenDesign Codex eklentisi, ChatGPT masaüstü eklentisi, Codex eklenti kurulumu, OpenDesign Cloud, Codex tasarım eklentisi, Codex MCP',
+      'OpenDesign Codex eklentisi, ChatGPT masaüstü eklentisi, Codex eklenti kurulumu, OpenDesign, Codex tasarım eklentisi, Codex MCP',
   },
   hero: {
     title: 'Codex/ChatGPT için OpenDesign eklentisi',
     leadBefore: 'Aşağıdaki talimatı şu uygulamadaki herhangi bir göreve girin:',
     chatgptLabel: 'ChatGPT masaüstü uygulaması',
-    installAria: 'OpenDesign Cloud eklentisini Codex/ChatGPT’ye kur',
+    installAria: 'OpenDesign eklentisini Codex/ChatGPT’ye kur',
     copy: 'Kopyala',
     github: 'GitHub’da kurulum kılavuzunu görüntüle ↗',
   },
@@ -92,7 +92,7 @@ const tr: OpenDesignPluginCopy = {
         label: 'Etkileşimli hikâye',
       },
     ],
-    promptListAria: 'OpenDesign Cloud istem örnekleri',
+    promptListAria: 'OpenDesign istem örnekleri',
     prompts: [
       { title: 'Web sitesi' },
       { title: 'Sunumlar' },
@@ -122,7 +122,7 @@ const tr: OpenDesignPluginCopy = {
       {
         q: 'Neden yeni bir Codex görevi açmam gerekiyor?',
         a:
-          'Codex, eklenti ve MCP özelliklerini görev başlatılırken yükler. Yeni bir görev, az önce kurulan OpenDesign Cloud eklentisini algılar.',
+          'Codex, eklenti ve MCP özelliklerini görev başlatılırken yükler. Yeni bir görev, az önce kurulan OpenDesign eklentisini algılar.',
       },
       {
         q: 'OpenDesign penceresinin açık kalması gerekiyor mu?',
@@ -132,7 +132,7 @@ const tr: OpenDesignPluginCopy = {
     ],
   },
   final: {
-    aria: 'OpenDesign Cloud eklentisini Codex/ChatGPT’ye kur',
+    aria: 'OpenDesign eklentisini Codex/ChatGPT’ye kur',
     title: 'OpenDesign’ı bir sonraki Codex/ChatGPT görevinize taşıyın.',
     bodyBeforeMention: 'Eklentiyi kurun, yerel MCP bağlantısını yapın ve',
     bodyAfterMention: 'etiketini kullanın.',
@@ -146,8 +146,8 @@ const tr: OpenDesignPluginCopy = {
     failed: 'Seçip kopyalayın',
   },
   schema: {
-    pageName: 'Codex/ChatGPT için OpenDesign Cloud Eklentisi',
-    applicationName: 'Codex/ChatGPT için OpenDesign Cloud Eklentisi',
+    pageName: 'Codex/ChatGPT için OpenDesign Eklentisi',
+    applicationName: 'Codex/ChatGPT için OpenDesign Eklentisi',
   },
 };
 

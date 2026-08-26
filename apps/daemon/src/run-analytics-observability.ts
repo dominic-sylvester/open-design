@@ -12,7 +12,7 @@ import {
   agentIdToTracking,
   byokProtocolToTracking,
 } from '@open-design/contracts/analytics';
-import type { VelaLoginStatus } from './integrations/vela.js';
+type VelaLoginStatus = { loggedIn?: boolean; userId?: string | null } | null;
 
 const RUNTIME_TYPES: readonly TrackingRuntimeType[] = [
   'amr_cloud',
@@ -69,7 +69,7 @@ export function amrUserIdForRunAnalytics(
   status: VelaLoginStatus | null,
 ): Record<string, string> {
   if (status?.loggedIn !== true) return {};
-  const id = status.user?.id?.trim() ?? '';
+  const id = status.userId?.trim() ?? '';
   return id ? { user_id: id } : {};
 }
 

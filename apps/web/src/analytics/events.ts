@@ -74,8 +74,9 @@ import type {
   QuestionsFormClickProps,
   RunFailedToastClickProps,
   RunRecoveryActionClickProps,
-  AmrAuthResultProps,
-  AmrAuthStageProps,
+} from '@open-design/contracts/analytics';
+import type { AmrAuthResultProps, AmrAuthStageProps } from '../local/amr-analytics-types';
+import type {
   AmrEntryClickProps,
   PreviewRunStatusSurfaceViewProps,
   DeepSeekCampaignModalClickProps,

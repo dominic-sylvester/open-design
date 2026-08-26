@@ -21,18 +21,8 @@ import {
   type ReactNode,
   type SetStateAction,
 } from 'react';
-import {
-  automaticStrategyTaskProfileForProjectMetadata,
-  defaultScenarioPluginIdForProjectMetadata,
-  type AmrWalletSnapshot,
-  type ChatSessionMode,
-  type ConnectorDetail,
-  type CreateProjectExampleReference,
-  type InstalledPluginRecord,
-  type RunContextSelection,
-  type ProjectScenarioTaskProfile,
-  type WorkspaceProjectSummary,
-} from '@open-design/contracts';
+import { automaticStrategyTaskProfileForProjectMetadata, defaultScenarioPluginIdForProjectMetadata, type ChatSessionMode, type ConnectorDetail, type CreateProjectExampleReference, type InstalledPluginRecord, type RunContextSelection, type ProjectScenarioTaskProfile, type WorkspaceProjectSummary } from '@open-design/contracts';
+import type { AmrWalletSnapshot, AmrSessionState } from '../local/types';
 import type { OpenDesignHostProjectImportSuccess } from '@open-design/host';
 import { useAnalytics } from '../analytics/provider';
 import {
@@ -46,7 +36,7 @@ import {
   amrHandoffDeviceId,
   recordAmrEntry,
   type AmrEntryAttribution,
-} from '../analytics/amr-attribution';
+} from '../local/amr-attribution';
 import { getResolvedDeviceId } from '../analytics/client';
 import {
   beginAmrAuthTracking,
@@ -54,7 +44,7 @@ import {
   observeAmrAuthTracking,
   reconcileAmrAuthAttemptId,
   resolveAmrAuthTracking,
-} from '../analytics/amr-auth';
+} from '../local/amr-auth';
 import {
   clearOnboardingSessionId,
   getOrCreateOnboardingSessionId,
@@ -120,8 +110,8 @@ import {
   checkAmrBalanceGate,
   retryUnavailableAmrBalanceGate,
   type AmrBalanceGateScope,
-} from '../runtime/amr-balance-gate';
-import { isPaidAmrPlan, resolveAmrPlan } from '../runtime/amr-low-balance-plan';
+} from '../local/amr-balance-gate';
+import { isPaidAmrPlan, resolveAmrPlan } from '../local/amr-guidance';
 import { HomeView, seedHomeComposerPrompt } from './HomeView';
 import { entryStrategyRoutingFields } from './entry-strategy-routing';
 import { EntryBlankState } from './EntryBlankState';
@@ -156,9 +146,9 @@ import {
   workspaceResourceReadContext,
   workspaceBillingBalanceUsd,
   workspaceBillingSummaryForContext,
-} from '../collab/useWorkspaceContext';
-import { useWorkspaceInvalidation } from '../collab/workspace-events';
-import { resolvePlanLabelTier } from '../collab/team-plan';
+} from '../local/useWorkspaceContext';
+import { useWorkspaceInvalidation } from '../local/workspace-events';
+import { resolvePlanLabelTier } from '../local/team-plan';
 import { resolveDeepSeekV4FlashCampaignAudience } from '../campaigns/deepseek-v4-flash';
 import { useDeepSeekV4FlashCampaignVisibility } from '../campaigns/use-deepseek-v4-flash-campaign';
 import { WorkbenchCampaignBadge } from './WorkbenchCampaignBadge';
@@ -166,13 +156,13 @@ import {
   beginWorkspaceScopedRead,
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   buildAllProjectsList,
   buildDraftsList,
   createSharedProjectPredicate,
   reconcileSharedProjectCatalogFields,
-} from '../collab/all-projects-list';
+} from '../local/all-projects-list';
 import {
   forgetOptimisticProjectOwnership,
   optimisticProjectOwnershipScopeKey,
@@ -180,7 +170,7 @@ import {
   reconcileOptimisticProjectOwnership,
   recordOptimisticProjectOwnership,
   type OptimisticProjectOwnershipWitnesses,
-} from '../collab/optimistic-project-ownership';
+} from '../local/optimistic-project-ownership';
 import type { ModelCapabilityTag } from './modelCapabilityTags';
 import { LanguageMenu } from './LanguageMenu';
 import { IntegrationsView, type IntegrationTab } from './IntegrationsView';
@@ -220,7 +210,7 @@ import {
   amrLoginPollOutcome,
   isAmrSessionAuthenticated,
   notifyAmrLoginStatusChanged,
-} from './amrLoginPolling';
+} from '../local/amrLoginPolling';
 import { closeAmrActivationWindowBestEffort } from './AmrLoginPill';
 import { isMacPlatform } from '../utils/platform';
 import { smoothScrollToTop } from '../utils/smoothScrollToTop';
@@ -428,7 +418,7 @@ interface Props {
   // During a transient Cloud outage it prevents the rail from presenting a
   // still-signed-in user as signed out.
   amrLoggedIn?: boolean | null;
-  amrSessionState?: import('@open-design/contracts').AmrSessionState;
+  amrSessionState?: AmrSessionState;
   /**
    * vela login-status account/user plan (ACCOUNT-scoped). Used for personal
    * workspaces so a confirmed free account is not stuck as campaign audience
@@ -883,6 +873,7 @@ export function EntryShell({
   ]);
   useWorkspaceInvalidation({
     'team-project-content-ready': ({ projectId, workspaceId }) => {
+      if (!projectId || !workspaceId) return;
       const currentWorkspaceId = workspaceContext?.workspaceId;
       const currentWorkspaceMemberId = workspaceContext?.workspaceMemberId;
       if (

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Dialog, DialogDescription, DialogFooter, DialogTitle } from "@open-design/components";
-import type { WorkspaceCollabContext } from "@open-design/contracts";
+import type { WorkspaceCollabContext } from "../local/types";
 import { projectKindFromMetadataToTracking } from "@open-design/contracts/analytics";
 import { useAnalytics } from "../analytics/provider";
 import {
@@ -11,8 +11,8 @@ import {
   trackProjectsMorePopoverClick,
 } from "../analytics/events";
 import { useT } from "../i18n";
-import { useWorkspaceContext } from "../collab/useWorkspaceContext";
-import { workspaceIdentityCacheKey } from "../collab/workspace-identity";
+import { useWorkspaceContext } from "../local/useWorkspaceContext";
+import { workspaceIdentityCacheKey } from "../local/workspace-identity";
 import {
 	getProjectCoverSnapshot,
 	projectCoverSnapshotKey,

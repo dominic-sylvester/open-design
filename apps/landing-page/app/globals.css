@@ -452,7 +452,7 @@ body::before {
   .locale-menu { animation: none; }
   .locale-trigger-caret { transition: none; }
 }
-/* ---------- OpenDesign Cloud header account ---------- */
+/* ---------- Header community entry ---------- */
 /* The avatar menu stays out of layout until a live cloud session is found. */
 .nav-account {
   display: inline-flex;
@@ -482,7 +482,7 @@ body::before {
   outline-offset: 2px;
 }
 /* Circular avatar — a disc reads unmistakably as a user avatar. Dark tile +
-   single initial mirrors OpenDesign Cloud's identity styling. */
+   single initial mirrors the product identity styling. */
 .nav-avatar,
 .nav-avatar-fallback {
   width: 32px;

@@ -1,15 +1,46 @@
 import { expect, test } from '@/playwright/suite';
 import { ensureRailOpen, openNewProjectModal } from '@/playwright/rail';
-import { settingsSurface } from '@/playwright/amr';
+import { settingsSurface } from '@/playwright/ui-flow';
 import { expectStableCount } from '@/playwright/assertions';
 import { openHomeTemplateMenu } from '@/playwright/home-hero';
-import type {
-  WorkspaceCollabContext,
-  WorkspaceDirectoryItem,
-} from '@open-design/contracts';
 import type { Page, Request } from '@playwright/test';
 import { applyStandardMocks, fulfillAgentsRoute, routeSuccessfulRuns, STORAGE_KEY } from '@/playwright/mock-factory';
 import { T } from '@/timeouts';
+
+type WorkspaceDirectoryItem = {
+  workspaceId: string;
+  workspaceName: string;
+  workspaceType: 'personal' | 'team';
+  workspaceMemberId: string;
+  role: 'owner' | 'admin' | 'member';
+  memberStatus: 'active' | 'invited' | 'suspended';
+  lifecycleState: 'active' | 'locked' | 'deleted';
+};
+
+type WorkspaceCollabContext = WorkspaceDirectoryItem & {
+  billingState: string;
+  planId: string | null;
+  providerMode: string;
+  seatSummary: {
+    seatLimit: number;
+    usedSeats: number;
+    availableSeats: number;
+    isSeatFull: boolean;
+  };
+  permissions: {
+    canManageMembers: boolean;
+    canManageBilling: boolean;
+    canInviteMembers: boolean;
+    canManageAutoRecharge: boolean;
+    canShareProjects: boolean;
+    canWriteSyncedFiles: boolean;
+    canViewWorkspaceSettings: boolean;
+    canManageSharedResources: boolean;
+  };
+  teamId?: string;
+  teamName?: string;
+  workspaceSettingsUrl?: string;
+};
 const LOCAL_CLI_LABEL = /Local CLI|Local coding agent|本机 CLI|本地 CLI/i;
 const STARTER_PLUGIN = makeStarterPlugin({
   id: 'localized-plugin',

@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { WorkspaceCollabContext } from '@open-design/contracts';
+import type { WorkspaceCollabContext } from '../../local/types';
 
 import {
   projectWorkspaceContext,
   useProjectWorkspaceScope,
-} from '../../collab/useProjectWorkspaceScope';
+} from '../../local/useProjectWorkspaceScope';
 import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
-} from '../../collab/workspace-identity';
+} from '../../local/workspace-identity';
 import { useCritiqueStream } from './hooks/useCritiqueStream';
 import { TheaterStage } from './TheaterStage';
 import type { CritiqueState } from './state/reducer';

@@ -4,11 +4,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { ComposerPlusMenu } from '../../src/components/ComposerPlusMenu';
-import type {
-  ConnectorDetail,
-  InstalledPluginRecord,
-  McpServerConfig,
-} from '@open-design/contracts';
+import type { ConnectorDetail, InstalledPluginRecord, McpServerConfig } from '@open-design/contracts';
 
 // Regression coverage ported from the now-deleted
 // `ChatComposer.tools-menu-caret.test.tsx` (#3195 / #3368). The shared "+"

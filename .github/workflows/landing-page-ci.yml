@@ -223,15 +223,15 @@ jobs:
       # Publish this PR's built site to its own preview URL in the STAGING
       # project (`--branch=pr-<number>`) so reviewers see the rendered result
       # before merge. It lands in the staging project, never the production
-      # project. Gated to same-repo branches: fork PRs run without the
-      # Cloudflare secrets and with a read-only token, so they skip the
-      # deploy/comment and keep just the validation above.
+      # project. Gated to the upstream repo only: fork PRs and same-repo PRs
+      # on forks run without Cloudflare secrets, so they skip deploy/comment
+      # and keep just the validation above.
       - name: Prepare staging Pages configuration
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.repository == 'nexu-io/open-design'
         run: cp apps/landing-page/wrangler.staging.toml apps/landing-page/wrangler.toml
 
       - name: Apply attribution ledger migrations (staging)
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.repository == 'nexu-io/open-design'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -243,7 +243,7 @@ jobs:
 
       - name: Deploy PR preview to Cloudflare Pages
         id: preview
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.repository == 'nexu-io/open-design'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -256,7 +256,7 @@ jobs:
             --branch=pr-${{ github.event.pull_request.number }}
 
       - name: Comment preview URL on PR
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.repository == 'nexu-io/open-design'
         uses: actions/github-script@v7
         env:
           DEPLOY_URL: ${{ steps.preview.outputs.deployment-url }}

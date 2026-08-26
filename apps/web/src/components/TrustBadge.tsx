@@ -1,7 +1,4 @@
-import type {
-  MarketplaceTrust,
-  TrustTier,
-} from '@open-design/contracts';
+import type { MarketplaceTrust, TrustTier } from '@open-design/contracts';
 import { useT } from '../i18n';
 
 type TrustBadgeTrust = TrustTier | MarketplaceTrust;

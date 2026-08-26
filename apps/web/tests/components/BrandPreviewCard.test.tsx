@@ -3,8 +3,9 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { BrandSummary, WorkspaceCollabContext } from '@open-design/contracts';
-import { workspaceContextFixture } from '../helpers/workspace-context';
+import type { BrandSummary } from '@open-design/contracts'
+import type { WorkspaceCollabContext } from '../../src/local/types';
+import { workspaceContextFixture } from '../helpers/local-workspace-context';
 
 const workspaceContextState = vi.hoisted(() => ({
   context: null as WorkspaceCollabContext | null,
@@ -16,7 +17,7 @@ const workspaceContextState = vi.hoisted(() => ({
 }));
 const fetchProjectFileTextMock = vi.hoisted(() => vi.fn(async () => null as string | null));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => workspaceContextState,
   workspaceResourceReadContext: (state: typeof workspaceContextState) => state.context,
 }));

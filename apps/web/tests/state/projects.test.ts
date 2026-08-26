@@ -36,11 +36,8 @@ import {
   waitGeneratedPluginShareTask,
   workspaceProjectMoveErrorCode,
 } from '../../src/state/projects';
-import {
-  buildWorkspacePermissions,
-  buildWorkspaceSeatSummary,
-  type WorkspaceCollabContext,
-} from '@open-design/contracts';
+import { buildWorkspacePermissions, buildWorkspaceSeatSummary } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import {
   projectDisplaySnapshotKey,
   readProjectDisplaySnapshot,
@@ -54,7 +51,7 @@ import {
 import {
   currentWorkspaceContextRequestToken,
   resetWorkspaceContextCache,
-} from '../../src/collab/useWorkspaceContext';
+} from '../../src/local/useWorkspaceContext';
 
 function personalWorkspaceContext(): WorkspaceCollabContext {
   return {

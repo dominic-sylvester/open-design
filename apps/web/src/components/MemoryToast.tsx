@@ -9,10 +9,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import type {
-  MemoryChangeEvent,
-  MemoryExtractionEvent,
-} from '@open-design/contracts';
+import type { MemoryChangeEvent, MemoryExtractionEvent } from '@open-design/contracts';
 import { useT } from '../i18n';
 import { toastSlideUp } from '../motion';
 

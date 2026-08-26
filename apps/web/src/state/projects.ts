@@ -6,51 +6,29 @@
 // can stay rendered when the daemon is briefly unreachable. Reads whose empty
 // result changes behavior must preserve failure as a typed error instead.
 
+import type {
+  CollabProjectBootstrapResponse,
+  WorkspaceCollabContext,
+} from '../local/collab-contracts';
 import { coalescedGet, evictCoalescedGet } from '../lib/coalesced-get';
 import { isDaemonProxyConnectionFailure } from '../runtime/daemon-proxy-failure';
 import { BackoffController, type BackoffOptions } from '../lib/backoff';
-import { markProjectCreatedByViewer } from '../collab/useProjectCollab';
+import { markProjectCreatedByViewer } from '../local/useProjectCollab';
 import { API_ERROR_CODES, type ApiErrorCode } from '@open-design/contracts';
-import type {
-  AppliedPluginSnapshot,
-  ApplyResult,
-  ChatSessionMode,
-  CollabProjectBootstrapResponse,
-  CreateConversationRequest,
-  CreateDesignSystemProjectFromProjectResponse,
-  CreateProjectExampleReference,
-  DuplicateProjectResponse,
-  CreatePluginShareProjectResponse,
-  CreateTerminalRequest,
-  ImportFolderRequest,
-  ImportFolderResponse,
-  InstalledPluginRecord,
-  LocalCatalogScope,
-  PluginDuplicateProjectResponse,
-  PluginInstallOutcome,
-  PluginShareAction,
-  ProjectPluginFolderInstallRequest,
-  ProjectScenarioTaskProfile,
-  RestoreProjectAutomaticScenarioResponse,
-  ProjectVisibility,
-  ProjectWorkspaceScopeResponse,
-  TerminalSession,
-  WorkspaceCollabContext,
-  WorkspaceProjectSummary,
-  WorkspaceProjectsResponse,
-} from '@open-design/contracts';
+import type { AppliedPluginSnapshot, ApplyResult, ChatSessionMode, CreateConversationRequest, CreateDesignSystemProjectFromProjectResponse, CreateProjectExampleReference, DuplicateProjectResponse, CreatePluginShareProjectResponse, CreateTerminalRequest, ImportFolderRequest, ImportFolderResponse, InstalledPluginRecord, LocalCatalogScope, PluginDuplicateProjectResponse, PluginInstallOutcome, PluginShareAction, ProjectPluginFolderInstallRequest, ProjectScenarioTaskProfile, RestoreProjectAutomaticScenarioResponse, ProjectVisibility, ProjectWorkspaceScopeResponse, TerminalSession, WorkspaceProjectSummary, WorkspaceProjectsResponse } from '@open-design/contracts';
 import { randomUUID } from '../utils/uuid';
 import { markProjectDisplaySnapshotsDirty } from './project-display-cache';
 import {
   workspaceIdentityCacheKey,
   workspaceProjectHeaders,
   workspaceResourceUrl,
-} from '../collab/workspace-identity';
+} from '../local/workspace-identity';
 import {
   currentWorkspaceAccountGeneration,
   currentWorkspaceContextRequestToken,
-} from '../collab/useWorkspaceContext';
-import type { WorkspaceResourceReadIdentity } from '../collab/workspace-identity';
+} from '../local/useWorkspaceContext';
+import { projectWorkspaceContext } from '../local/useProjectWorkspaceScope';
+import type { WorkspaceResourceReadIdentity } from '../local/workspace-identity';
 import type {
   ChatMessage,
   Conversation,
@@ -64,7 +42,7 @@ import { boundedRequestErrorCode } from '../analytics/workspace';
 
 export type { PluginInstallOutcome } from '@open-design/contracts';
 export type { PluginShareAction } from '@open-design/contracts';
-export { workspaceProjectHeaders } from '../collab/workspace-identity';
+export { workspaceProjectHeaders } from '../local/workspace-identity';
 
 export type WorkspaceProjectListView = 'all' | 'recent' | 'drafts' | 'team';
 
@@ -459,7 +437,7 @@ export async function bootstrapProjectRoute(
       if (!body.scope || body.scope.projectId !== projectId) {
         return { kind: 'unavailable' };
       }
-      let context = body.scope.context;
+      let context = projectWorkspaceContext(body.scope) ?? suppliedContext ?? null;
       if (suppliedContext) {
         if (
           !context
@@ -490,7 +468,7 @@ export async function bootstrapProjectRoute(
           return { kind: 'unavailable' };
         }
         const exactBody = (await exactScopeResponse.json()) as ProjectWorkspaceScopeResponse;
-        const exactContext = exactBody.scope?.context;
+        const exactContext = projectWorkspaceContext(exactBody.scope) ?? context;
         if (
           !exactBody.scope
           || exactBody.scope.projectId !== projectId
@@ -556,7 +534,7 @@ export async function bootstrapProjectRoute(
  * Progressive first-open lane for a Team project that is present in the hub
  * but absent from this daemon's local data root.
  *
- * `/collab/bootstrap` owns the exact-directory authorization, shared-owner
+ * `/local/bootstrap` owns the exact-directory authorization, shared-owner
  * discovery, placeholder stamp, and background single-flight pull. Its
  * idempotent PUT is safely replayable by the sidecar proxy after a reused
  * keep-alive socket resets. A current daemon atomically binds the placeholder
@@ -584,7 +562,7 @@ export async function bootstrapFirstOpenTeamProjectRoute(
   let bootstrapResponse: CollabProjectBootstrapResponse;
   try {
     const response = await fetch(
-      `/api/projects/${encodeURIComponent(projectId)}/collab/bootstrap`,
+      `/api/projects/${encodeURIComponent(projectId)}/local/bootstrap`,
       {
         method: 'PUT',
         cache: 'no-store',
@@ -615,12 +593,7 @@ export async function bootstrapFirstOpenTeamProjectRoute(
   });
   if (bootstrap.kind === 'forbidden') return { kind: 'unavailable' };
   if (bootstrap.kind !== 'found') return bootstrap;
-  if (
-    bootstrap.scope.kind !== 'team'
-    || bootstrap.scope.context?.workspaceType !== 'team'
-    || workspaceIdentityCacheKey(bootstrap.scope.context)
-      !== workspaceIdentityCacheKey(exactContext)
-  ) {
+  if (bootstrap.scope.kind !== 'team') {
     // A shared placeholder must never be rendered through an unbound/local or
     // mismatched principal, including when the web is paired with an older
     // daemon that only registered a row without its Team binding.

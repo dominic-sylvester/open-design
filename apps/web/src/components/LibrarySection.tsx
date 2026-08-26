@@ -52,9 +52,9 @@ import { LibraryPreviewModal } from './LibraryPreviewModal';
 import { LibraryUploadModal } from './LibraryUploadModal';
 import styles from './LibrarySection.module.css';
 import { useT } from '../i18n';
-import { useWorkspaceContext } from '../collab/useWorkspaceContext';
-import { workspaceIdentityCacheKey } from '../collab/workspace-identity';
-import { resolveProjectWorkspaceContext } from '../collab/useProjectWorkspaceScope';
+import { useWorkspaceContext } from '../local/useWorkspaceContext';
+import { workspaceIdentityCacheKey } from '../local/workspace-identity';
+import { resolveProjectWorkspaceContext } from '../local/useProjectWorkspaceScope';
 
 type Translate = ReturnType<typeof useT>;
 

@@ -37,7 +37,7 @@ vi.mock('../../src/providers/registry', () => ({
   },
 }));
 
-vi.mock('../../src/collab/useWorkspaceContext', () => ({
+vi.mock('../../src/local/useWorkspaceContext', () => ({
   useWorkspaceContext: () => ({
     context: designsWorkspaceState.context,
 		loading: designsWorkspaceState.loading,

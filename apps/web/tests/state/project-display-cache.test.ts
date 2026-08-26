@@ -1,4 +1,5 @@
-import { buildWorkspacePermissions, type WorkspaceCollabContext } from '@open-design/contracts';
+import { buildWorkspacePermissions } from '../../src/local/types'
+import type { WorkspaceCollabContext } from '../../src/local/types';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import {
