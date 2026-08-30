@@ -125,12 +125,14 @@ od mcp install opencode
 od mcp install codex
 od mcp install antigravity
 od mcp install copilot
+od mcp install hermes --print   # manual YAML paste → ~/.hermes/config.yaml
 ```
 
 The installer writes to the agent config locations for the current WSL user,
 for example `~/.claude.json`, `~/.config/opencode/opencode.json`,
 `~/.codex/config.toml`, `~/.gemini/antigravity/mcp_config.json`, and
-`~/.copilot/mcp-config.json`.
+`~/.copilot/mcp-config.json`. Hermes is manual-only: copy the printed YAML
+into `~/.hermes/config.yaml` — see [`agents/hermes-mcp.md`](agents/hermes-mcp.md).
 
 ## Native module mismatch after changing Node versions
 

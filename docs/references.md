@@ -69,6 +69,7 @@ Every external project this spec leans on. Three questions per entry: what is it
 ### [Hermes Agent][hermes] (Nous Research)
 - **Repo:** [github.com/nousresearch/hermes-agent][hermes]
 - **Docs:** [hermes-agent.nousresearch.com/docs/skills](https://hermes-agent.nousresearch.com/docs/skills)
+- **OpenDesign integration:** [`docs/agents/hermes-mcp.md`](agents/hermes-mcp.md) (Hermes → OpenDesign MCP) · [open-design.ai/agents/hermes-design](https://open-design.ai/agents/hermes-design/) (design workflow guide)
 
 [hermes]: https://github.com/nousresearch/hermes-agent
 - **What it is:** Self-improving agent with persistent memory, skills created from experience, skill improvement during use, scheduled automations, and a large skill hub.

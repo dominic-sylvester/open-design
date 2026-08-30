@@ -1,6 +1,6 @@
 # Architecture
 
-**Parent:** [`spec.md`](spec.md) · **Siblings:** [`skills-protocol.md`](skills-protocol.md) · [`agent-adapters.md`](agent-adapters.md) · [`modes.md`](modes.md)
+**Parent:** [`spec.md`](spec.md) · **Siblings:** [`skills-protocol.md`](skills-protocol.md) · [`agent-adapters.md`](agent-adapters.md) · [`modes.md`](modes.md) · [`agents/hermes-mcp.md`](agents/hermes-mcp.md)
 
 This document describes the code-backed runtime topology and the boundaries
 between the web app, daemon, desktop/packaged shells, agent runtimes, and
