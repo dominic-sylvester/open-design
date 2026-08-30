@@ -131,9 +131,9 @@ Inside a project's Studio, the conversation, generated files, and live preview s
 | [Kiro](https://kiro.dev) | ✅ Supported | `od mcp install kiro` |
 | [Pi Agent](https://github.com/badlogic/pi-mono) | ✅ Supported | `od mcp install pi` |
 | [Mistral Vibe CLI](https://github.com/mistralai/mistral-vibe) | ✅ Supported | `od mcp install vibe` |
-| [Hermes Agent](https://github.com/nousresearch/hermes-agent) | ✅ Supported | `od mcp install hermes` |
+| [Hermes Agent](https://github.com/nousresearch/hermes-agent) | ✅ Supported | `od mcp install hermes` · [Hermes MCP guide](docs/agents/hermes-mcp.md) |
 
-For DeepSeek Harness, install the official `dsh` CLI first, then select it in OpenDesign or run `od agent setup deepseek-harness` to install/repair OD's connection component. For MCP integrations: `od mcp install <agent> --print` for a dry-run preview · `--uninstall` to remove · full list with `od mcp install --help`.
+For DeepSeek Harness, install the official `dsh` CLI first, then select it in OpenDesign or run `od agent setup deepseek-harness` to install/repair OD's connection component. For MCP integrations: `od mcp install <agent> --print` for a dry-run preview · `--uninstall` to remove · full list with `od mcp install --help`. Hermes uses manual YAML paste — see [`docs/agents/hermes-mcp.md`](docs/agents/hermes-mcp.md).
 
 ¹ Automatic MCP configuration for Claude Desktop is currently supported on macOS and Windows only.
 
